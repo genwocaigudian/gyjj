@@ -10,4 +10,4 @@
 // +----------------------------------------------------------------------
 use think\facade\Route;
 
-Route::get('index', 'index');
+Route::rule('test', 'index/hello', 'GET');
