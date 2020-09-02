@@ -10,4 +10,6 @@
 // +----------------------------------------------------------------------
 use think\facade\Route;
 
-Route::rule('test', 'index/hello', 'GET');
+Route::rule('index', 'index', 'GET');
+Route::rule('profile', 'wechat/profile', 'GET');
+Route::rule('callback', 'wechat/callback', 'GET');
