@@ -1,12 +1,18 @@
 <?php
 namespace app\admin\controller;
 
-use app\BaseController;
 
-class Index extends BaseController
+use think\facade\View;
+
+class Index extends AdminBase
 {
     public function index()
     {
-        echo 'haha';
+        return View::fetch();
+    }
+	
+	public function welcome()
+	{
+		return View::fetch();
     }
 }
