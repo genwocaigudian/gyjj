@@ -2,6 +2,7 @@
 namespace app\api\controller;
 
 use app\BaseController;
+use app\common\lib\Num;
 
 class Index extends BaseController
 {
@@ -12,7 +13,7 @@ class Index extends BaseController
 	
 	public function redis()
 	{
-		$code = rand(100000, 999999);
+		$code = Num::getCode(6);
 		cache(config('redis.code_pre').'18855479876', $code, config('redis.code_expire'));
 		echo 'redis';
     }

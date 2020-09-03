@@ -7,4 +7,5 @@
 return [
     'code_pre' => 'gyjj_code_pre_',
     'code_expire' => 60,
+	'token_pre' => 'gyjj_token_pre',
 ];
