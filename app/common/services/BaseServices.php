@@ -17,7 +17,6 @@ class BaseServices
         try {
             $this->model->save($data);
         }catch (\Exception $e) {
-            // 记录日志哦，便于后续问题的排查工作
             Log::error('错误信息:' . $e->getMessage());
             return 0;
         }

@@ -4,6 +4,7 @@
 namespace app\common\services;
 
 use app\common\model\User as UserModel;
+use think\facade\Log;
 
 class User extends BaseServices
 {
