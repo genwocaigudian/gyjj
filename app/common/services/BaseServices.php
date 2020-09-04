@@ -14,6 +14,7 @@ class BaseServices
      * @return int
      */
     public function add($data) {
+	    $data['status'] = config("status.mysql.table_normal");
         try {
             $this->model->save($data);
         }catch (\Exception $e) {
