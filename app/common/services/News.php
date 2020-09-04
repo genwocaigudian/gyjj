@@ -3,17 +3,17 @@
 
 namespace app\common\services;
 
-use app\common\model\Category as CategoryModel;
+use app\common\model\News as NewsModel;
 use think\Exception;
 use think\facade\Log;
 
-class Category extends BaseServices
+class News extends BaseServices
 {
     public $model = null;
 
     public function __construct()
     {
-        $this->model = new CategoryModel();
+        $this->model = new NewsModel();
     }
 	
 	public function getNormalAllCategorys()
