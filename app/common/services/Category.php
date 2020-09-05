@@ -5,7 +5,6 @@ namespace app\common\services;
 
 use app\common\model\Category as CategoryModel;
 use think\Exception;
-use think\facade\Log;
 
 class Category extends BaseServices
 {
@@ -15,22 +14,24 @@ class Category extends BaseServices
     {
         $this->model = new CategoryModel();
     }
-	
+
+    /**
+     * @return array|\think\Collection
+     * @throws Exception
+     */
 	public function getNormalAllCategorys()
 	{
 		$field = "id, name, pid";
 		try {
 			$categorys = $this->model->getNormalCategorys($field);
 		} catch (\Exception $e) {
-			Log::error('getNormalAllCategorys 错误:' . $e->getMessage());
-			throw new Exception('数据库内部异常');
+			throw new Exception($e->getMessage());
 		}
 		
 		if(!$categorys) {
 			return $categorys;
 		}
-		$categorys = $categorys->toArray();
-		return $categorys;
+		return $categorys->toArray();;
     }
 	
 	/**
@@ -67,7 +68,7 @@ class Category extends BaseServices
 		try {
 			$id = $this->add($data);
 		} catch (\Exception $e) {
-			throw new Exception('数据库内部异常');
+			throw new Exception($e->getMessage());
 		}
 		$result = [
 			'id' => $id

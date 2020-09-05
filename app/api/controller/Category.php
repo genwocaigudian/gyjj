@@ -20,7 +20,7 @@ class Category extends ApiBase
 			$cateService = new CateService();
 			$categorys = $cateService->getNormalAllCategorys();
 		}catch (\Exception $e) {
-			Log::error("category/index 报错:" . $e->getMessage());
+			Log::error("api/category/index 报错:" . $e->getMessage());
 			return Show::error('内部异常');
 		}
 		if(!$categorys) {
@@ -31,11 +31,10 @@ class Category extends ApiBase
 		$result = Arr::sliceTreeArr($result);
 		return Show::success($result);
 	}
-	
-	/**
-	 * 新增
-	 * @return \think\response\Json
-	 */
+
+    /**
+     * @return \think\response\Json
+     */
 	public function create()
 	{
 		if (!$this->request->isPost()) {
