@@ -3,16 +3,16 @@
 
 namespace app\api\controller;
 
-use app\common\lib\Arr;
 use app\common\lib\Show;
 use app\common\services\Category as CateService;
 use app\api\validate\Category as CateValidate;
 use think\facade\Log;
+use think\response\Json;
 
 class Category extends ApiBase
 {
 	/**
-	 * @return \think\response\Json
+	 * @return Json
 	 */
 	public function index()
 	{
@@ -23,17 +23,14 @@ class Category extends ApiBase
 			Log::error("api/category/index 报错:" . $e->getMessage());
 			return Show::error('内部异常');
 		}
-		if(!$categorys) {
-			return Show::success();
-		}
 		
-		$result = Arr::getTree($categorys);
-		$result = Arr::sliceTreeArr($result);
-		return Show::success($result);
+//		$result = Arr::getTree($categorys);
+//		$result = Arr::sliceTreeArr($result);
+        return Show::success($categorys);
 	}
 
     /**
-     * @return \think\response\Json
+     * @return Json
      */
 	public function create()
 	{

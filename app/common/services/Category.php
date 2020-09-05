@@ -4,6 +4,10 @@
 namespace app\common\services;
 
 use app\common\model\Category as CategoryModel;
+use think\Collection;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\Exception;
 
 class Category extends BaseServices
@@ -16,31 +20,28 @@ class Category extends BaseServices
     }
 
     /**
-     * @return array|\think\Collection
+     * @return array|Collection
      * @throws Exception
      */
 	public function getNormalAllCategorys()
 	{
-		$field = "id, name, pid";
+		$field = "id, name";
 		try {
 			$categorys = $this->model->getNormalCategorys($field);
 		} catch (\Exception $e) {
 			throw new Exception($e->getMessage());
 		}
-		
-		if(!$categorys) {
-			return $categorys;
-		}
-		return $categorys->toArray();;
+
+		return $categorys->toArray();
     }
 	
 	/**
 	 * 返回正常用户数据
 	 * @param $name
 	 * @return array
-	 * @throws \think\db\exception\DataNotFoundException
-	 * @throws \think\db\exception\DbException
-	 * @throws \think\db\exception\ModelNotFoundException
+	 * @throws DataNotFoundException
+	 * @throws DbException
+	 * @throws ModelNotFoundException
 	 */
 	public function getNormalCateByName($name) {
 		$cate = $this->model->getCateByName($name);
@@ -54,9 +55,9 @@ class Category extends BaseServices
 	 * @param $data
 	 * @return array
 	 * @throws Exception
-	 * @throws \think\db\exception\DataNotFoundException
-	 * @throws \think\db\exception\DbException
-	 * @throws \think\db\exception\ModelNotFoundException
+	 * @throws DataNotFoundException
+	 * @throws DbException
+	 * @throws ModelNotFoundException
 	 */
 	public function insertData($data)
 	{
@@ -70,9 +71,6 @@ class Category extends BaseServices
 		} catch (\Exception $e) {
 			throw new Exception($e->getMessage());
 		}
-		$result = [
-			'id' => $id
-		];
-		return $result;
+		return ['id' => $id];
     }
 }

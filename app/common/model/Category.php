@@ -3,14 +3,20 @@
 
 namespace app\common\model;
 
+use think\Collection;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
+use think\Model;
+
 class Category extends BaseModel
 {
 	/**
 	 * @param string $field
-	 * @return \think\Collection
-	 * @throws \think\db\exception\DataNotFoundException
-	 * @throws \think\db\exception\DbException
-	 * @throws \think\db\exception\ModelNotFoundException
+	 * @return Collection
+	 * @throws DataNotFoundException
+	 * @throws DbException
+	 * @throws ModelNotFoundException
 	 */
 	public function getNormalCategorys($field = "*") {
 		$where = [
@@ -19,7 +25,7 @@ class Category extends BaseModel
 		
 		$order = [
 			"sequence" => "desc",
-			"id" => "desc"
+			"id" => "asc"
 		];
 		$result = $this->where($where)
 			->field($field)
@@ -32,10 +38,10 @@ class Category extends BaseModel
 	/**
 	 * 根据name查询数据
 	 * @param $name
-	 * @return array|bool|\think\Model|null
-	 * @throws \think\db\exception\DataNotFoundException
-	 * @throws \think\db\exception\DbException
-	 * @throws \think\db\exception\ModelNotFoundException
+	 * @return array|bool|Model|null
+	 * @throws DataNotFoundException
+	 * @throws DbException
+	 * @throws ModelNotFoundException
 	 */
 	public function getCateByName($name)
 	{
@@ -52,10 +58,10 @@ class Category extends BaseModel
 	
 	/**
 	 * @param $id
-	 * @return array|bool|\think\Model|null
-	 * @throws \think\db\exception\DataNotFoundException
-	 * @throws \think\db\exception\DbException
-	 * @throws \think\db\exception\ModelNotFoundException
+	 * @return array|bool|Model|null
+	 * @throws DataNotFoundException
+	 * @throws DbException
+	 * @throws ModelNotFoundException
 	 */
 	public function getCateById($id)
 	{

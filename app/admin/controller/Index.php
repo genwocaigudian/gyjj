@@ -2,11 +2,12 @@
 namespace app\admin\controller;
 
 use app\BaseController;
+use app\common\lib\Show;
 
 class Index extends BaseController
 {
     public function index()
     {
-        echo 'haha';
+        return Show::success();
     }
 }
