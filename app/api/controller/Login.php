@@ -4,9 +4,9 @@
 namespace app\api\controller;
 
 
-use app\api\validate\User as UserValidate;
+use app\api\validate\AdminUser as UserValidate;
 use app\BaseController;
-use app\common\services\User;
+use app\common\services\AdminUser;
 
 class Login extends BaseController
 {
@@ -31,7 +31,7 @@ class Login extends BaseController
 		}
 		
 		try {
-			$result = (new User())->login($data);
+			$result = (new AdminUser())->login($data);
 		} catch (\Exception $e) {
 			return show($e->getCode(), $e->getMessage());
 		}

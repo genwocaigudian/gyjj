@@ -4,7 +4,7 @@
 namespace app\api\controller;
 
 
-use app\api\validate\User;
+use app\api\validate\AdminUser;
 use app\common\services\Sms as SmsServices;
 use think\exception\ValidateException;
 
@@ -18,7 +18,7 @@ class Sms
 		];
 		
 		try {
-			validate(User::class)->scene('send_code')->check($data);
+			validate(AdminUser::class)->scene('send_code')->check($data);
 		} catch (ValidateException $e) {
 			return show(config('status.error'), $e->getError());
 		}

@@ -4,8 +4,8 @@
 namespace app\api\controller;
 
 use app\common\lib\Show;
-use app\common\services\User as UserServices;
-use app\api\validate\User as UserValidate;
+use app\common\services\AdminUser as UserServices;
+use app\api\validate\AdminUser as UserValidate;
 
 class User extends AuthBase
 {

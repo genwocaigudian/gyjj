@@ -1,10 +1,9 @@
 <?php
 namespace app\admin\controller;
 
-use app\BaseController;
 use app\common\lib\Show;
 
-class Index extends BaseController
+class Index extends AdminAuthBase
 {
     public function index()
     {
