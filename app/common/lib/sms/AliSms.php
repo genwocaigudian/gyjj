@@ -5,8 +5,8 @@ namespace app\common\lib\sms;
 
 class AliSms implements SmsBase
 {
-	public static function sendCode(string $phone, int $code)
-	{
-		return true;
-	}
+    public static function sendCode(string $phone, int $code)
+    {
+        return true;
+    }
 }

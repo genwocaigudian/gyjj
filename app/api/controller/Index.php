@@ -16,11 +16,11 @@ class Index extends BaseController
 
         return Show::success();
     }
-	
-	public function redis()
-	{
-		$code = Num::getCode(6);
-		cache(config('redis.code_pre').'18855479876', $code, config('redis.code_expire'));
-		echo 'redis';
+    
+    public function redis()
+    {
+        $code = Num::getCode(6);
+        cache(config('redis.code_pre').'18855479876', $code, config('redis.code_expire'));
+        echo 'redis';
     }
 }

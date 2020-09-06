@@ -9,25 +9,25 @@ class Login extends AdminBase
 {
     public function index()
     {
-	    if (!$this->request->isPost()) {
-		    return Show::error('非法请求');
-	    }
-	    $data = input('post.');
-	
-	    $validate = new AdminUserValidate();
-	    if (!$validate->scene('login')->check($data)) {
-		    return Show::error($validate->getError());
-	    }
-	
-	    try {
-		    $result = (new AdminUserServices())->login($data);
-	    } catch (\Exception $e) {
-		    return Show::error($e->getMessage(), $e->getCode());
-	    }
-	    if ($result) {
-		    return Show::success($result, '登陆成功');
-	    }
-	    return Show::error('登陆失败');
+        if (!$this->request->isPost()) {
+            return Show::error('非法请求');
+        }
+        $data = input('post.');
+    
+        $validate = new AdminUserValidate();
+        if (!$validate->scene('login')->check($data)) {
+            return Show::error($validate->getError());
+        }
+    
+        try {
+            $result = (new AdminUserServices())->login($data);
+        } catch (\Exception $e) {
+            return Show::error($e->getMessage(), $e->getCode());
+        }
+        if ($result) {
+            return Show::success($result, '登陆成功');
+        }
+        return Show::error('登陆失败');
     }
     
     public function md5()

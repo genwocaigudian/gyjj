@@ -6,7 +6,6 @@ use EasyWeChat\Factory;
 
 class Wechat extends BaseController
 {
-
     public function profile()
     {
         $config = [
@@ -21,7 +20,6 @@ class Wechat extends BaseController
         $app = Factory::officialAccount($config);
         $oauth = $app->oauth;
         return $oauth->redirect();
-
     }
 
     public function callback()
