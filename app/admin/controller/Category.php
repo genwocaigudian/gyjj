@@ -1,36 +1,32 @@
 <?php
+namespace app\admin\controller;
 
-
-namespace app\api\controller;
-
+use app\api\validate\Category as CateValidate;
 use app\common\lib\Arr;
 use app\common\lib\Show;
 use app\common\services\Category as CategoryServices;
 use app\common\services\Category as CateService;
-use app\api\validate\Category as CateValidate;
 use think\facade\Log;
 use think\response\Json;
 
-class Category extends ApiBase
+class Category extends AdminAuthBase
 {
-    /**
-     * @return Json
-     */
     public function index()
     {
-	    $pid = input("param.pid", 0, "intval");
-	    $data = [
-		    "pid" => $pid,
-	    ];
-	    try {
-		    $categorys = (new CategoryServices())->getLists($data, 10);
-	    }catch (\Exception $e) {
-		    $categorys = Arr::getPaginateDefaultData(10);;
-	    }
-	
-	    return Show::success($categorys);
+        $pid = input("param.pid", 0, "intval");
+        $data = [
+            "pid" => $pid,
+        ];
+        try {
+            $categorys = (new CategoryServices())->getLists($data, 10);
+        } catch (\Exception $e) {
+            $categorys = Arr::getPaginateDefaultData(10);
+            ;
+        }
+        
+        return Show::success($categorys);
     }
-
+    
     /**
      * @return Json
      */
@@ -54,9 +50,5 @@ class Category extends ApiBase
         }
         
         return Show::success($result);
-    }
-    
-    public function read($id)
-    {
     }
 }

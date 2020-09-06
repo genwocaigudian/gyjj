@@ -74,4 +74,21 @@ class Category extends BaseServices
         }
         return ['id' => $id];
     }
+    
+    /**
+     * 获取列表数据
+     * @param $data
+     * @param $num
+     * @return array
+     */
+    public function getLists($data, $num)
+    {
+        $field = 'id , name, pid';
+        $list = $this->model->getLists($data, $field, $num);
+        if (!$list) {
+            return [];
+        }
+        $result = $list->toArray();
+        return $result;
+    }
 }

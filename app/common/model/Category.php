@@ -72,4 +72,27 @@ class Category extends BaseModel
         }
         return $this->find($id);
     }
+	
+	/**
+	 * 获取列表数据
+	 * @param $where
+	 * @param string $field
+	 * @param int $num
+	 * @return \think\Paginator
+	 * @throws DbException
+	 */
+	public function getLists($where, $field = '*', $num = 10) {
+		
+		$order = [
+			"sequence" => "desc",
+			"id" => "desc"
+		];
+		$result = $this->where("status", "<>", config("status.mysql.table_delete"))
+			->where($where)
+			->field($field)
+			->order($order)
+			->paginate($num);
+		//echo $this->getLastSql();exit;
+		return $result;
+	}
 }
