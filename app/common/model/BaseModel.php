@@ -3,14 +3,14 @@
 
 namespace app\common\model;
 
-
 use think\Model;
 
 class BaseModel extends Model
 {
     protected $autoWriteTimestamp = true;
 
-    public function updateById($id, $data) {
+    public function updateById($id, $data)
+    {
         $data['update_time'] = time();
         return $this->where(["id" => $id])->save($data);
     }
@@ -24,8 +24,9 @@ class BaseModel extends Model
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getByCondition($condition = [], $order = ["id" => "desc"]) {
-        if(!$condition || !is_array($condition)) {
+    public function getByCondition($condition = [], $order = ["id" => "desc"])
+    {
+        if (!$condition || !is_array($condition)) {
             return false;
         }
         $result = $this->where($condition)
