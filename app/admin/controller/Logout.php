@@ -7,11 +7,11 @@ class Logout extends AdminAuthBase
 {
     public function index()
     {
-	    // 删除 redis token 缓存
-	    $res = cache(config("admin.admin_token_pre").$this->accessToken, NULL);
-	    if($res) {
-		    return Show::success();
-	    }
-	    return Show::error();
+        // 删除 redis token 缓存
+        $res = cache(config("admin.admin_token_pre").$this->accessToken, null);
+        if ($res) {
+            return Show::success();
+        }
+        return Show::error();
     }
 }

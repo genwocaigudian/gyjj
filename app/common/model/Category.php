@@ -72,65 +72,67 @@ class Category extends BaseModel
         }
         return $this->find($id);
     }
-	
-	/**
-	 * 获取列表数据
-	 * @param $where
-	 * @param string $field
-	 * @param int $num
-	 * @return \think\Paginator
-	 * @throws DbException
-	 */
-	public function getLists($where, $field = '*', $num = 10) {
-		
-		$order = [
-			"sequence" => "desc",
-			"id" => "desc"
-		];
-		$result = $this->where("status", "<>", config("status.mysql.table_delete"))
-			->where($where)
-			->field($field)
-			->order($order)
-			->paginate($num);
-		//echo $this->getLastSql();exit;
-		return $result;
-	}
-	
-	/**
-	 * 根据主键ID更新数据表中的数据
-	 * @param $id
-	 * @param $data
-	 * @return bool
-	 */
-	public function updateById($id, $data) {
-		$id = intval($id);
-		if(empty($id) || empty($data) || !is_array($data)) {
-			return false;
-		}
-		
-		$where = [
-			"id" => $id,
-		];
-		
-		return $this->where($where)->save($data);
-	}
-	
-	/**
-	 * 根据主键ID更新数据表中的数据
-	 * @param $id
-	 * @param $data
-	 * @return bool
-	 */
-	public function deleteById($id, $data) {
-		$id = intval($id);
-		if(empty($id) || empty($data) || !is_array($data)) {
-			return false;
-		}
-		
-		$where = [
-			"id" => $id,
-		];
-		
-		return $this->where($where)->save($data);
-	}
+    
+    /**
+     * 获取列表数据
+     * @param $where
+     * @param string $field
+     * @param int $num
+     * @return \think\Paginator
+     * @throws DbException
+     */
+    public function getLists($where, $field = '*', $num = 10)
+    {
+        $order = [
+            "sequence" => "desc",
+            "id" => "desc"
+        ];
+        $result = $this->where("status", "<>", config("status.mysql.table_delete"))
+            ->where($where)
+            ->field($field)
+            ->order($order)
+            ->paginate($num);
+        //echo $this->getLastSql();exit;
+        return $result;
+    }
+    
+    /**
+     * 根据主键ID更新数据表中的数据
+     * @param $id
+     * @param $data
+     * @return bool
+     */
+    public function updateById($id, $data)
+    {
+        $id = intval($id);
+        if (empty($id) || empty($data) || !is_array($data)) {
+            return false;
+        }
+        
+        $where = [
+            "id" => $id,
+        ];
+        
+        return $this->where($where)->save($data);
+    }
+    
+    /**
+     * 根据主键ID更新数据表中的数据
+     * @param $id
+     * @param $data
+     * @return bool
+     */
+    public function deleteById($id, $data)
+    {
+        $id = intval($id);
+        if (empty($id) || empty($data) || !is_array($data)) {
+            return false;
+        }
+        
+        $where = [
+            "id" => $id,
+        ];
+        
+        return $this->where($where)->save($data);
+    }
 }

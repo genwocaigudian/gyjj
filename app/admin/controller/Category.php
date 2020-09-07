@@ -24,11 +24,11 @@ class Category extends AdminAuthBase
         
         return Show::success($categorys);
     }
-	
-	/**
-	 * 新增
-	 * @return Json
-	 */
+    
+    /**
+     * 新增
+     * @return Json
+     */
     public function save()
     {
         if (!$this->request->isPost()) {
@@ -44,52 +44,54 @@ class Category extends AdminAuthBase
         try {
             $result = (new CateService())->insertData($data);
         } catch (\Exception $e) {
-            Log::error('admin/category/create 错误:' . $e->getMessage());
+            Log::error('admin/category/save 错误:' . $e->getMessage());
             return Show::error($e->getMessage(), $e->getCode());
         }
         
         return Show::success($result);
     }
-	
-	/**
-	 * 更新数据
-	 * @return Json
-	 */
-	public function update($id) {
-		if(!$this->request->isPut()) {
-			return Show::error('非法请求');
-		}
-		
-		$data = input('post.');
-		
-		$validate = new CateValidate();
-		if (!$validate->scene('update')->check($data)) {
-			return Show::error($validate->getError(), config('status.name_not_null'));
-		}
-		try {
-			$res = (new CateService())->update($id, $data);
-		}catch (\Exception $e) {
-			return Show::error($e->getMessage());
-		}
-		
-		return Show::success();
-	}
-	
-	/**
-	 * 删除数据
-	 * @return Json
-	 */
-	public function delete($id) {
-		if(!$this->request->isDelete()) {
-			return Show::error('非法请求');
-		}
-		
-		try {
-			$res = (new CateService())->delete($id);
-		}catch (\Exception $e) {
-			return Show::error($e->getMessage());
-		}
-		
-		return Show::success();
-	}
+    
+    /**
+     * 更新数据
+     * @return Json
+     */
+    public function update($id)
+    {
+        if (!$this->request->isPut()) {
+            return Show::error('非法请求');
+        }
+        
+        $data = input('post.');
+        
+        $validate = new CateValidate();
+        if (!$validate->scene('update')->check($data)) {
+            return Show::error($validate->getError(), config('status.name_not_null'));
+        }
+        try {
+            $res = (new CateService())->update($id, $data);
+        } catch (\Exception $e) {
+            return Show::error($e->getMessage());
+        }
+        
+        return Show::success();
+    }
+    
+    /**
+     * 删除数据
+     * @return Json
+     */
+    public function delete($id)
+    {
+        if (!$this->request->isDelete()) {
+            return Show::error('非法请求');
+        }
+        
+        try {
+            $res = (new CateService())->delete($id);
+        } catch (\Exception $e) {
+            return Show::error($e->getMessage());
+        }
+        
+        return Show::success();
+    }
 }

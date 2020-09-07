@@ -5,6 +5,10 @@ namespace app\common\model;
 
 class User extends BaseModel
 {
+    public function news()
+    {
+        return $this->belongsTo(News::class);
+    }
     /**
      * 根据openid获取用户信息
      * @param $openid 微信openid

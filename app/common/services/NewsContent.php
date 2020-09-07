@@ -7,30 +7,13 @@ use app\common\model\News as NewsModel;
 use think\Exception;
 use think\facade\Log;
 
-class News extends BaseServices
+class NewsContent extends BaseServices
 {
     public $model = null;
 
     public function __construct()
     {
         $this->model = new NewsModel();
-    }
-    
-    /**
-     * 获取列表数据
-     * @param $data
-     * @param $num
-     * @return array
-     */
-    public function getLists($data, $num)
-    {
-        $field = 'id, title, status';
-        $list = $this->model->getLists($data, $field, $num);
-        if (!$list) {
-            return [];
-        }
-        $result = $list->toArray();
-        return $result;
     }
     
     public function getNormalAllCategorys()
@@ -58,13 +41,13 @@ class News extends BaseServices
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getNormalNewsByName($name)
+    public function getNormalCateByName($name)
     {
-        $res = $this->model->getNewsByName($name);
-        if (!$res || $res->status != config("status.mysql.table_normal")) {
+        $cate = $this->model->getCateByName($name);
+        if (!$cate || $cate->status != config("status.mysql.table_normal")) {
             return [];
         }
-        return $res->toArray();
+        return $cate->toArray();
     }
     
     /** 插入数据
@@ -77,14 +60,13 @@ class News extends BaseServices
      */
     public function insertData($data)
     {
-        $res = $this->getNormalNewsByName($data['title']);
-        if ($res) {
-            throw new Exception("新闻标题不可重复");
+        $cateResult = $this->getNormalCateByName($data['name']);
+        if ($cateResult) {
+            throw new Exception("数据已存在");
         }
         
         try {
             $id = $this->add($data);
-            $this->model->NewsContent()->save(['content'=>$data['content']]);
         } catch (\Exception $e) {
             throw new Exception('数据库内部异常');
         }
