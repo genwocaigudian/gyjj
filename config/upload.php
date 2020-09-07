@@ -9,7 +9,9 @@ return [
         //允许图片上传的后缀
         'image'     =>  'jpg,jpeg,png,gif',
         //允许上传文件的后缀
-        'file'      =>  'zip,gz,doc,txt,pdf,xls,mp4',
+        'file'      =>  'zip,gz,doc,txt,pdf,xls',
+        //允许上传视频的后缀
+        'video'      =>  'mp4',
         //...
     ],
     //定义允许上传文件大小的数组
@@ -17,8 +19,9 @@ return [
         //允许图片上传的大小
         'image'     =>  2,
         //允许文件上传的大小
-        'file'      =>  2
-    
+        'file'      =>  2,
+        //允许视频上传的大小
+        'video'      =>  10
     ],
 
 ];

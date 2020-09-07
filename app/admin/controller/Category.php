@@ -21,7 +21,6 @@ class Category extends AdminAuthBase
             $categorys = (new CategoryServices())->getLists($data, 10);
         } catch (\Exception $e) {
             $categorys = Arr::getPaginateDefaultData(10);
-            ;
         }
         
         return Show::success($categorys);
@@ -45,7 +44,7 @@ class Category extends AdminAuthBase
         try {
             $result = (new CateService())->insertData($data);
         } catch (\Exception $e) {
-            Log::error('api/category/create 错误:' . $e->getMessage());
+            Log::error('admin/category/create 错误:' . $e->getMessage());
             return Show::error($e->getMessage(), $e->getCode());
         }
         
