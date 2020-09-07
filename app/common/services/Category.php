@@ -91,4 +91,78 @@ class Category extends BaseServices
         $result = $list->toArray();
         return $result;
     }
+	
+	/**
+	 * @param $id
+	 * @param $data
+	 * @return bool
+	 * @throws DataNotFoundException
+	 * @throws DbException
+	 * @throws Exception
+	 * @throws ModelNotFoundException
+	 */
+	public function update($id, $data) {
+		$user = $this->getNormalCateById($id);
+		if(!$user) {
+			throw new Exception("数据不存在");
+		}
+		
+		//检查名称是否存在
+		$cateResult = $this->getNormalCateByCatename($data['name']);
+		if($cateResult && $cateResult['id'] != $id) {
+			throw new Exception("分类名称不可重复");
+		}
+		return $this->model->updateById($id, $data);
+	}
+	
+	/**
+	 * @param $id
+	 * @param $data
+	 * @return bool
+	 * @throws DataNotFoundException
+	 * @throws DbException
+	 * @throws Exception
+	 * @throws ModelNotFoundException
+	 */
+	public function delete($id) {
+		$cate = $this->getNormalCateById($id);
+		if(!$cate) {
+			throw new Exception("数据不存在");
+		}
+		
+		$data = [
+			'status' => config('status.mysql.table_delete')
+		];
+		
+		return $this->model->deleteById($id, $data);
+	}
+	
+	/**
+	 * @param $id
+	 * @return array
+	 * @throws \think\db\exception\DataNotFoundException
+	 * @throws \think\db\exception\DbException
+	 * @throws \think\db\exception\ModelNotFoundException
+	 */
+	public function getNormalCateById($id)
+	{
+		$cate = $this->model->getCateById($id);
+		if (!$cate || $cate->status != config('status.mysql.table_normal')) {
+			return [];
+		}
+		return $cate->toArray();
+	}
+	
+	/**
+	 * @param $catename
+	 * @return array
+	 */
+	public function getNormalCateByCatename($catename)
+	{
+		$cate = $this->model->getCateByName($catename);
+		if (!$cate || $cate->status != config('status.mysql.table_normal')) {
+			return [];
+		}
+		return $cate->toArray();
+	}
 }

@@ -95,4 +95,42 @@ class Category extends BaseModel
 		//echo $this->getLastSql();exit;
 		return $result;
 	}
+	
+	/**
+	 * 根据主键ID更新数据表中的数据
+	 * @param $id
+	 * @param $data
+	 * @return bool
+	 */
+	public function updateById($id, $data) {
+		$id = intval($id);
+		if(empty($id) || empty($data) || !is_array($data)) {
+			return false;
+		}
+		
+		$where = [
+			"id" => $id,
+		];
+		
+		return $this->where($where)->save($data);
+	}
+	
+	/**
+	 * 根据主键ID更新数据表中的数据
+	 * @param $id
+	 * @param $data
+	 * @return bool
+	 */
+	public function deleteById($id, $data) {
+		$id = intval($id);
+		if(empty($id) || empty($data) || !is_array($data)) {
+			return false;
+		}
+		
+		$where = [
+			"id" => $id,
+		];
+		
+		return $this->where($where)->save($data);
+	}
 }

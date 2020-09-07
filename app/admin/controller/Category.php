@@ -1,10 +1,9 @@
 <?php
 namespace app\admin\controller;
 
-use app\api\validate\Category as CateValidate;
+use app\admin\validate\Category as CateValidate;
 use app\common\lib\Arr;
 use app\common\lib\Show;
-use app\common\services\Category as CategoryServices;
 use app\common\services\Category as CateService;
 use think\facade\Log;
 use think\response\Json;
@@ -18,18 +17,19 @@ class Category extends AdminAuthBase
             "pid" => $pid,
         ];
         try {
-            $categorys = (new CategoryServices())->getLists($data, 10);
+            $categorys = (new CateService())->getLists($data, 10);
         } catch (\Exception $e) {
             $categorys = Arr::getPaginateDefaultData(10);
         }
         
         return Show::success($categorys);
     }
-    
-    /**
-     * @return Json
-     */
-    public function create()
+	
+	/**
+	 * 新增
+	 * @return Json
+	 */
+    public function save()
     {
         if (!$this->request->isPost()) {
             return Show::error('非法请求');
@@ -37,7 +37,7 @@ class Category extends AdminAuthBase
         $data = input('post.');
         
         $validate = new CateValidate();
-        if (!$validate->scene('register')->check($data)) {
+        if (!$validate->scene('save')->check($data)) {
             return Show::error($validate->getError(), config('status.name_not_null'));
         }
         
@@ -50,4 +50,46 @@ class Category extends AdminAuthBase
         
         return Show::success($result);
     }
+	
+	/**
+	 * 更新数据
+	 * @return Json
+	 */
+	public function update($id) {
+		if(!$this->request->isPut()) {
+			return Show::error('非法请求');
+		}
+		
+		$data = input('post.');
+		
+		$validate = new CateValidate();
+		if (!$validate->scene('update')->check($data)) {
+			return Show::error($validate->getError(), config('status.name_not_null'));
+		}
+		try {
+			$res = (new CateService())->update($id, $data);
+		}catch (\Exception $e) {
+			return Show::error($e->getMessage());
+		}
+		
+		return Show::success();
+	}
+	
+	/**
+	 * 删除数据
+	 * @return Json
+	 */
+	public function delete($id) {
+		if(!$this->request->isDelete()) {
+			return Show::error('非法请求');
+		}
+		
+		try {
+			$res = (new CateService())->delete($id);
+		}catch (\Exception $e) {
+			return Show::error($e->getMessage());
+		}
+		
+		return Show::success();
+	}
 }
