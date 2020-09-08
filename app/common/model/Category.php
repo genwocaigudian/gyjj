@@ -72,6 +72,23 @@ class Category extends BaseModel
         }
         return $this->find($id);
     }
+	
+	/**
+	 * 根据ids获取分类信息
+	 * @param array $ids
+	 * @return bool|\think\Collection
+	 * @throws \think\db\exception\DataNotFoundException
+	 * @throws \think\db\exception\DbException
+	 * @throws \think\db\exception\ModelNotFoundException
+	 */
+	public function getCateByIds($ids = [])
+	{
+		if (empty($ids)) {
+			return false;
+		}
+		
+		return $this->whereIn('id', $ids)->select();
+	}
     
     /**
      * 获取列表数据

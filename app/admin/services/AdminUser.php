@@ -103,4 +103,21 @@ class AdminUser extends AdminBaseServices
         //redis需要同步
         return $this->model->updateById1($id, $data);
     }
+	
+	/**
+	 * 获取列表数据
+	 * @param $data
+	 * @param $num
+	 * @return array
+	 */
+	public function getAdminUserByIds($ids = [])
+	{
+		$list = $this->model->getAdminUserByIds($ids);
+		if (!$list) {
+			return [];
+		}
+		$result = $list->toArray();
+		$cates = array_column($result, 'username', 'id');
+		return $cates;
+	}
 }

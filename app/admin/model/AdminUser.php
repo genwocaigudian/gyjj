@@ -46,4 +46,21 @@ class AdminUser extends BaseModel
         
         return $this->where($where)->find();
     }
+	
+	/**
+	 * 根据ids获取用户信息
+	 * @param array $ids
+	 * @return bool|\think\Collection
+	 * @throws \think\db\exception\DataNotFoundException
+	 * @throws \think\db\exception\DbException
+	 * @throws \think\db\exception\ModelNotFoundException
+	 */
+	public function getAdminUserByIds($ids = [])
+	{
+		if (empty($ids)) {
+			return false;
+		}
+		
+		return $this->whereIn('id', $ids)->select();
+	}
 }

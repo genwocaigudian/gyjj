@@ -3,6 +3,7 @@
 
 namespace app\common\services;
 
+use app\admin\services\AdminUser as AdminUserService;
 use app\common\model\News as NewsModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -167,9 +168,13 @@ class News extends BaseServices
             return [];
         }
 
-        //TODO
-        $result = $this->transNewsUidToUserName($result);
-        $result = $this->transNewsByCateIdToCateName($result);
+	    $cates = (new Category())->getCateByIds(array($result['cate_id']));
+	    $users = (new AdminUserService())->getAdminUserByIds(array($result['user_id']));
+	    $result['cate_name'] = $cates[$result['cate_id']]??'';
+	    $result['user_name'] = $users[$result['user_id']]??'';
+	    $result['content'] = $result['newsContent']['content']??'';
+	    unset($result['newsContent']);
+	    
         return $result;
     }
 

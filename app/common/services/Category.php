@@ -91,6 +91,23 @@ class Category extends BaseServices
         $result = $list->toArray();
         return $result;
     }
+	
+	/**
+	 * 获取列表数据
+	 * @param $data
+	 * @param $num
+	 * @return array
+	 */
+	public function getCateByIds($ids = [])
+	{
+		$list = $this->model->getCateByIds($ids);
+		if (!$list) {
+			return [];
+		}
+		$result = $list->toArray();
+		$users = array_column($result, 'name', 'id');
+		return $users;
+	}
     
     /**
      * @param $id

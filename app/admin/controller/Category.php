@@ -50,6 +50,23 @@ class Category extends AdminAuthBase
         
         return Show::success($result);
     }
+	
+	/**
+	 * 详情
+	 * @param $id
+	 * @return Json
+	 */
+	public function read($id)
+	{
+		try {
+			$result = (new CateService())->getNormalCateById($id);
+		} catch (\Exception $e) {
+			Log::error('admin/category/read 错误:' . $e->getMessage());
+			return Show::error($e->getMessage(), $e->getCode());
+		}
+		
+		return Show::success($result);
+	}
     
     /**
      * 更新数据

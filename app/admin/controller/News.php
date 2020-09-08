@@ -64,10 +64,9 @@ class News extends AdminAuthBase
     public function read($id)
     {
         try {
-            $result = (new NewsService())->getNormalNewsById($id);
-            halt($result);
+            $result = (new NewsService())->formatNews($id);
         } catch (\Exception $e) {
-            Log::error('admin/news/save 错误:' . $e->getMessage());
+            Log::error('admin/news/read 错误:' . $e->getMessage());
             return Show::error($e->getMessage(), $e->getCode());
         }
 
