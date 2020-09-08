@@ -33,7 +33,7 @@ class Image extends AdminAuthBase
             ])->check(['file'=>$file]);
             $filename = Filesystem::disk('public')->putFile('images', $file);
             if (!$filename) {
-                return Show::error('上传图片失败');
+                return Show::error('上传失败');
             }
         } catch (ValidateException $e) {
             return Show::error($e->getMessage());
@@ -42,6 +42,6 @@ class Image extends AdminAuthBase
         $imageUrl = [
             "image"  =>  "/upload/".$filename
         ];
-        return Show::success($imageUrl, '图片上传成功');
+        return Show::success($imageUrl, '上传成功');
     }
 }

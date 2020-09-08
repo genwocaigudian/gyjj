@@ -19,7 +19,8 @@ class User extends BaseServices
     }
 
     /**
-     * 新增逻辑
+     * @param $data
+     * @return int|mixed
      */
     public function add($data)
     {
@@ -35,7 +36,15 @@ class User extends BaseServices
         // // 返回主键ID
         return $this->model->id;
     }
-    
+
+    /**
+     * @param $data
+     * @return array|bool
+     * @throws Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function login($data)
     {
         $redisCode = cache(config('redis.code_pre').$data['phone_number']);
@@ -74,7 +83,7 @@ class User extends BaseServices
         
         return $res ? ['token' => $token, 'username' => $username] : false;
     }
-    
+
     /**
      * @param $id
      * @return array
@@ -90,7 +99,11 @@ class User extends BaseServices
         }
         return $user->toArray();
     }
-    
+
+    /**
+     * @param $username
+     * @return array
+     */
     public function getNormalUserByUsername($username)
     {
         $user = $this->model->getUserByUesrname($username);
@@ -99,7 +112,16 @@ class User extends BaseServices
         }
         return $user->toArray();
     }
-    
+
+    /**
+     * @param $id
+     * @param $data
+     * @return bool
+     * @throws Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function update($id, $data)
     {
         $user = $this->getNormalUserById($id);

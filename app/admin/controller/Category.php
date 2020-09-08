@@ -79,6 +79,7 @@ class Category extends AdminAuthBase
     
     /**
      * 删除数据
+     * @param $id
      * @return Json
      */
     public function delete($id)

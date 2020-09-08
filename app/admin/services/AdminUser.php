@@ -19,6 +19,8 @@ class AdminUser extends AdminBaseServices
 
     /**
      * 新增逻辑
+     * @param $data
+     * @return int|mixed
      */
     public function add($data)
     {
@@ -59,13 +61,10 @@ class AdminUser extends AdminBaseServices
         
         return $res ? ['token' => $token, 'user_id' => $user->id] : false;
     }
-    
+
     /**
      * @param $id
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function getNormalUserById($id)
     {
@@ -84,7 +83,13 @@ class AdminUser extends AdminBaseServices
         }
         return $user->toArray();
     }
-    
+
+    /**
+     * @param $id
+     * @param $data
+     * @return mixed
+     * @throws Exception
+     */
     public function update($id, $data)
     {
         $user = $this->getNormalUserById($id);

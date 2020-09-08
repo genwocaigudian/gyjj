@@ -32,14 +32,11 @@ class NewsContent extends BaseServices
         $categorys = $categorys->toArray();
         return $categorys;
     }
-    
+
     /**
-     * 返回正常用户数据
+     * 返回正常数据
      * @param $name
      * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
     public function getNormalCateByName($name)
     {

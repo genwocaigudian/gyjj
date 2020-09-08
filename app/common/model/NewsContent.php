@@ -5,6 +5,10 @@ namespace app\common\model;
 
 class NewsContent extends BaseModel
 {
+    public $allowField = [
+        'content',
+    ];
+
     /**
      * @param string $field
      * @return \think\Collection
