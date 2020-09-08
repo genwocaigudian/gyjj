@@ -53,6 +53,7 @@ class Category extends AdminAuthBase
     
     /**
      * 更新数据
+     * @param $id
      * @return Json
      */
     public function update($id)
