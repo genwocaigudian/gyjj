@@ -168,13 +168,13 @@ class News extends BaseServices
             return [];
         }
 
-	    $cates = (new Category())->getCateByIds(array($result['cate_id']));
-	    $users = (new AdminUserService())->getAdminUserByIds(array($result['user_id']));
-	    $result['cate_name'] = $cates[$result['cate_id']]??'';
-	    $result['user_name'] = $users[$result['user_id']]??'';
-	    $result['content'] = $result['newsContent']['content']??'';
-	    unset($result['newsContent']);
-	    
+        $cates = (new Category())->getCateByIds(array($result['cate_id']));
+        $users = (new AdminUserService())->getAdminUserByIds(array($result['user_id']));
+        $result['cate_name'] = $cates[$result['cate_id']]??'';
+        $result['user_name'] = $users[$result['user_id']]??'';
+        $result['content'] = $result['newsContent']['content']??'';
+        unset($result['newsContent']);
+        
         return $result;
     }
 
@@ -215,5 +215,4 @@ class News extends BaseServices
 
         return $this->model->deleteById($id, $data);
     }
-
 }

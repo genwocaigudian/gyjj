@@ -3,6 +3,7 @@
 
 namespace app\common\services;
 
+use app\common\lib\Arr;
 use app\common\model\Category as CategoryModel;
 use think\Collection;
 use think\db\exception\DataNotFoundException;
@@ -83,6 +84,29 @@ class Category extends BaseServices
      */
     public function getLists($data, $num)
     {
+        $likeKeys = [];
+        if (!empty($data)) {
+            $likeKeys = array_keys($data);
+        }
+    
+        $field = 'id , name, pid';
+        try {
+            $list = $this->model->getLists($likeKeys, $data, $field, $num);
+            $result = $list->toArray();
+        } catch (\Exception $e) {
+            $result = Arr::getPaginateDefaultData($num);
+        }
+        return $result;
+    }
+    
+    /**
+     * 获取列表数据
+     * @param $data
+     * @param $num
+     * @return array
+     */
+    public function getLists1($data, $num)
+    {
         $field = 'id , name, pid';
         $list = $this->model->getLists($data, $field, $num);
         if (!$list) {
@@ -91,23 +115,23 @@ class Category extends BaseServices
         $result = $list->toArray();
         return $result;
     }
-	
-	/**
-	 * 获取列表数据
-	 * @param $data
-	 * @param $num
-	 * @return array
-	 */
-	public function getCateByIds($ids = [])
-	{
-		$list = $this->model->getCateByIds($ids);
-		if (!$list) {
-			return [];
-		}
-		$result = $list->toArray();
-		$users = array_column($result, 'name', 'id');
-		return $users;
-	}
+    
+    /**
+     * 获取列表数据
+     * @param $data
+     * @param $num
+     * @return array
+     */
+    public function getCateByIds($ids = [])
+    {
+        $list = $this->model->getCateByIds($ids);
+        if (!$list) {
+            return [];
+        }
+        $result = $list->toArray();
+        $users = array_column($result, 'name', 'id');
+        return $users;
+    }
     
     /**
      * @param $id

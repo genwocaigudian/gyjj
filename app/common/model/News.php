@@ -102,7 +102,7 @@ class News extends BaseModel
         if (!$id) {
             return false;
         }
-        $res = $this->withJoin(['newsContent' => function(Relation $query){
+        $res = $this->withJoin(['newsContent' => function (Relation $query) {
             $query->withField(['content']);
         }])->find($id);
         return $res;

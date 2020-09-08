@@ -12,18 +12,35 @@ class Category extends AdminAuthBase
 {
     public function index()
     {
-        $pid = input("param.pid", 0, "intval");
-        $data = [
-            "pid" => $pid,
-        ];
-        try {
-            $categorys = (new CateService())->getLists($data, 10);
-        } catch (\Exception $e) {
-            $categorys = Arr::getPaginateDefaultData(10);
+    	$data = [];
+    	$name = input('param.name', '', 'trim');
+    	$time = input('param.time', '', 'trim');
+        if (!empty($name)) {
+        	$data['name'] = $name;
         }
+        if (!empty($time)) {
+        	$data['create_time'] = explode("-", $time);
+        }
+        
+        $categorys = (new CateService())->getLists($data, 10);
         
         return Show::success($categorys);
     }
+	
+	public function index1()
+	{
+		$pid = input("param.pid", 0, "intval");
+		$data = [
+			"pid" => $pid,
+		];
+		try {
+			$categorys = (new CateService())->getLists($data, 10);
+		} catch (\Exception $e) {
+			$categorys = Arr::getPaginateDefaultData(10);
+		}
+		
+		return Show::success($categorys);
+	}
     
     /**
      * 新增

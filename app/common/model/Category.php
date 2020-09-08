@@ -72,23 +72,39 @@ class Category extends BaseModel
         }
         return $this->find($id);
     }
-	
-	/**
-	 * 根据ids获取分类信息
-	 * @param array $ids
-	 * @return bool|\think\Collection
-	 * @throws \think\db\exception\DataNotFoundException
-	 * @throws \think\db\exception\DbException
-	 * @throws \think\db\exception\ModelNotFoundException
-	 */
-	public function getCateByIds($ids = [])
-	{
-		if (empty($ids)) {
-			return false;
-		}
-		
-		return $this->whereIn('id', $ids)->select();
-	}
+    
+    /**
+     * 根据ids获取分类信息
+     * @param array $ids
+     * @return bool|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getCateByIds($ids = [])
+    {
+        if (empty($ids)) {
+            return false;
+        }
+        
+        return $this->whereIn('id', $ids)->select();
+    }
+    
+    /**
+     * name查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchNameAttr($query, $value)
+    {
+        $query->where('name', 'like', '%' . $value . '%');
+    }
+    
+    public function searchCreateTimeAttr($query, $value)
+    {
+        $query->whereBetweenTime('create_time', $value[0], $value[1]);
+    }
     
     /**
      * 获取列表数据
@@ -98,7 +114,34 @@ class Category extends BaseModel
      * @return \think\Paginator
      * @throws DbException
      */
-    public function getLists($where, $field = '*', $num = 10)
+    public function getLists($likeKeys, $data, $field = '*', $num = 10)
+    {
+        $order = [
+            "sequence" => "desc",
+            "id" => "desc"
+        ];
+        if (!empty($likeKeys)) {
+            $res = $this->withSearch($likeKeys, $data);
+        } else {
+            $res = $this;
+        }
+        $result = $res->whereIn('status', [0, 1])
+            ->field($field)
+            ->order($order)
+            ->paginate($num);
+//        echo $this->getLastSql();exit();
+        return $result;
+    }
+    
+    /**
+     * 获取列表数据
+     * @param $where
+     * @param string $field
+     * @param int $num
+     * @return \think\Paginator
+     * @throws DbException
+     */
+    public function getLists1($where, $field = '*', $num = 10)
     {
         $order = [
             "sequence" => "desc",
