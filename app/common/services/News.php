@@ -125,8 +125,8 @@ class News extends BaseServices
         }
 
         try {
-            if ($data['content']) {
-                $res = $this->model->updateContentRelation($id, $data['content']);
+            if (isset($data['content'])) {
+                $res = $this->model->updateContentRelation($id, $data);
             } else {
                 $res = $this->model->updateById($id, $data);
             }

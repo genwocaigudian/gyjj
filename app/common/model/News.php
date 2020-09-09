@@ -112,20 +112,18 @@ class News extends BaseModel
     /**
      * 根据id更新关联模型newsContent数据
      * @param $id
-     * @param $content
+     * @param $data
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function updateContentRelation($id, $content)
+    public function updateContentRelation($id, $data)
     {
-        $data = [
-            'update_time' => time(),
-            'content' => $content
-        ];
         $res = $this->find($id);
-        return $res->NewsContent->save($data);
+        $res->NewsContent->content = $data['content'];
+        $res->NewsContent->update_time = time();
+        return $res->together(['NewsContent'])->save($data);
     }
 
     /**
