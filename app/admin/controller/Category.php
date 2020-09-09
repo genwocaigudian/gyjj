@@ -90,12 +90,13 @@ class Category extends AdminAuthBase
      * @param $id
      * @return Json
      */
-    public function update($id)
+    public function update()
     {
-        if (!$this->request->isPut()) {
+        if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
-        
+	
+	    $id = input("param.id", 0, "intval");
         $data = input('post.');
         
         $validate = new CateValidate();
@@ -113,14 +114,15 @@ class Category extends AdminAuthBase
     
     /**
      * 删除数据
-     * @param $id
      * @return Json
      */
-    public function delete($id)
+    public function delete()
     {
-        if (!$this->request->isDelete()) {
+        if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
+	
+	    $id = input("param.id", 0, "intval");
         
         try {
             $res = (new CateService())->delete($id);

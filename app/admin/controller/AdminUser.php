@@ -58,10 +58,9 @@ class AdminUser extends AdminAuthBase
 
     /**
      * 详情
-     * @param $id
      * @return Json
      */
-    public function read($id)
+    public function read()
     {
         try {
             $result = (new AdminUserService())->getNormalUserById($this->userId);
@@ -75,15 +74,15 @@ class AdminUser extends AdminAuthBase
 
     /**
      * 更新数据
-     * @param $id
      * @return Json
      */
-    public function update($id)
+    public function update()
     {
-        if (!$this->request->isPut()) {
+        if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
 
+        $id = input('param.id', 0, 'intval');
         $data = input('post.');
 
         try {
@@ -97,14 +96,15 @@ class AdminUser extends AdminAuthBase
 
     /**
      * 删除数据
-     * @param $id
      * @return Json
      */
-    public function delete($id)
+    public function delete()
     {
-        if (!$this->request->isDelete()) {
+        if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
+        
+        $id = input('param.id', 0, 'intval');
 
         try {
             $res = (new AdminUserService())->delete($id);

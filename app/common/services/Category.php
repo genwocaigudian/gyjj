@@ -152,7 +152,7 @@ class Category extends BaseServices
         //检查名称是否存在
         $cateResult = [];
         if ($data['name']) {
-            $cateResult = $this->getNormalCateByCatename($data['name']);
+            $cateResult = $this->getNormalCateByName($data['name']);
         }
         if ($cateResult && $cateResult['id'] != $id) {
             throw new Exception("分类名称不可重复");
