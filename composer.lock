@@ -4,8 +4,196 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e188dbbfae360a15128f73391d607752",
+    "content-hash": "0c136c7fe5830aca2d8c3f9e82e1606f",
     "packages": [
+        {
+            "name": "casbin/casbin",
+            "version": "v2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-casbin/php-casbin.git",
+                "reference": "8d6d87011f2c024af409d71534197c50c9767491"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-casbin/php-casbin/zipball/8d6d87011f2c024af409d71534197c50c9767491",
+                "reference": "8d6d87011f2c024af409d71534197c50c9767491",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.1.0",
+                "s1lentium/iptools": "^1.1",
+                "symfony/expression-language": "^3.4|^4.0|^5.0"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpstan/phpstan": "^0.12",
+                "phpunit/phpunit": "~7.0|~8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Casbin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "TechLee",
+                    "email": "techlee@qq.com"
+                }
+            ],
+            "description": "a powerful and efficient open-source access control library for php projects.",
+            "keywords": [
+                "abac",
+                "access control",
+                "acl",
+                "authorization",
+                "casbin",
+                "permission",
+                "rbac"
+            ],
+            "funding": [
+                {
+                    "url": "https://opencollective.com/casbin",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2020-07-18T04:48:30+00:00"
+        },
+        {
+            "name": "casbin/psr3-bridge",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-casbin/psr3-bridge.git",
+                "reference": "2144617b061780233b244aa4982dd56843f0d5c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-casbin/psr3-bridge/zipball/2144617b061780233b244aa4982dd56843f0d5c8",
+                "reference": "2144617b061780233b244aa4982dd56843f0d5c8",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "casbin/casbin": "^2.0",
+                "psr/log": "^1.1"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.2",
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpunit/phpunit": "~7.0|~8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Casbin\\Bridge\\Logger\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "TechLee",
+                    "email": "techlee@qq.com"
+                }
+            ],
+            "description": "This library provides a PSR-3 compliant bridge for Casbin Logger.",
+            "keywords": [
+                "acl",
+                "casbin",
+                "logger",
+                "permission",
+                "psr-3",
+                "rbac"
+            ],
+            "time": "2019-10-12T06:45:06+00:00"
+        },
+        {
+            "name": "casbin/think-authz",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-casbin/think-authz.git",
+                "reference": "a1bbf4ea95b23ffeb37aa91fcadc4c8cd3dec863"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-casbin/think-authz/zipball/a1bbf4ea95b23ffeb37aa91fcadc4c8cd3dec863",
+                "reference": "a1bbf4ea95b23ffeb37aa91fcadc4c8cd3dec863",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "casbin/casbin": "~2.1",
+                "casbin/psr3-bridge": "^1.1",
+                "topthink/framework": "^6.0.0",
+                "topthink/think-migration": "^3.0"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.1",
+                "phpunit/phpunit": "~7.0",
+                "topthink/think": "^6.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "think": {
+                    "services": [
+                        "tauthz\\TauthzService"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "tauthz\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "TechLee",
+                    "email": "techlee@qq.com"
+                }
+            ],
+            "description": "An authorization library that supports access control models like ACL, RBAC, ABAC in ThinkPHP 6. ",
+            "keywords": [
+                "abac",
+                "access-control",
+                "acl",
+                "authorization",
+                "authz",
+                "casbin",
+                "permission",
+                "rbac",
+                "thinkphp"
+            ],
+            "time": "2019-12-02T03:15:28+00:00"
+        },
         {
             "name": "easywechat-composer/easywechat-composer",
             "version": "1.4.0",
@@ -1247,6 +1435,63 @@
             "time": "2019-03-08T08:55:37+00:00"
         },
         {
+            "name": "s1lentium/iptools",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/S1lentium/IPTools.git",
+                "reference": "f6f8ab6132ca7443bd7cced1681f5066d725fd5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/S1lentium/IPTools/zipball/f6f8ab6132ca7443bd7cced1681f5066d725fd5f",
+                "reference": "f6f8ab6132ca7443bd7cced1681f5066d725fd5f",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-bcmath": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "satooshi/php-coveralls": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "IPTools\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Safarov Alisher",
+                    "email": "alisher.safarov@outlook.com",
+                    "homepage": "https://github.com/S1lentium"
+                }
+            ],
+            "description": "PHP Library for manipulating network addresses (IPv4 and IPv6)",
+            "keywords": [
+                "IP",
+                "IP-Tools",
+                "cidr",
+                "ipv4",
+                "ipv6",
+                "network",
+                "subnet"
+            ],
+            "time": "2018-09-19T06:15:53+00:00"
+        },
+        {
             "name": "symfony/cache",
             "version": "v5.1.4",
             "source": {
@@ -1671,6 +1916,78 @@
                 }
             ],
             "time": "2020-07-06T13:23:11+00:00"
+        },
+        {
+            "name": "symfony/expression-language",
+            "version": "v5.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/expression-language.git",
+                "reference": "6675d937852379a251017db6e5144dd57506fbbd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/expression-language/zipball/6675d937852379a251017db6e5144dd57506fbbd",
+                "reference": "6675d937852379a251017db6e5144dd57506fbbd",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.2.5",
+                "symfony/cache": "^4.4|^5.0",
+                "symfony/polyfill-php80": "^1.15",
+                "symfony/service-contracts": "^1.1|^2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\ExpressionLanguage\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony ExpressionLanguage Component",
+            "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-05-31T07:33:39+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -2579,6 +2896,62 @@
             ],
             "description": "The ThinkPHP6 Helper Package",
             "time": "2019-11-08T08:01:10+00:00"
+        },
+        {
+            "name": "topthink/think-migration",
+            "version": "v3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/top-think/think-migration.git",
+                "reference": "e8b3396505617732a57309d2818d70ffe187385c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/top-think/think-migration/zipball/e8b3396505617732a57309d2818d70ffe187385c",
+                "reference": "e8b3396505617732a57309d2818d70ffe187385c",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "topthink/framework": "^6.0.0",
+                "topthink/think-helper": "^3.0.3"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "^1.8"
+            },
+            "suggest": {
+                "fzaninotto/faker": "Required to use the factory builder (^1.8)."
+            },
+            "type": "library",
+            "extra": {
+                "think": {
+                    "services": [
+                        "think\\migration\\Service"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Phinx\\": "phinx/src/Phinx",
+                    "think\\migration\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "yunwuxin",
+                    "email": "448901948@qq.com"
+                }
+            ],
+            "time": "2019-06-17T10:13:39+00:00"
         },
         {
             "name": "topthink/think-multi-app",
