@@ -5,6 +5,9 @@ namespace app\admin\services;
 use app\common\lib\Str;
 use app\common\lib\Time;
 use app\admin\model\AdminUser as AdminUserModel;
+use think\db\exception\DataNotFoundException;
+use think\db\exception\DbException;
+use think\db\exception\ModelNotFoundException;
 use think\Exception;
 use think\facade\Log;
 
@@ -18,24 +21,10 @@ class AdminUser extends AdminBaseServices
     }
 
     /**
-     * 新增逻辑
      * @param $data
-     * @return int|mixed
+     * @return array|bool
+     * @throws Exception
      */
-    public function add($data)
-    {
-//        $data['status'] = config("status.mysql.table_normal");
-        try {
-            $this->model->save($data);
-        } catch (\Exception $e) {
-            Log::error('错误信息:' . $e->getMessage());
-            return 0;
-        }
-
-        // // 返回主键ID
-        return $this->model->id;
-    }
-    
     public function login($data)
     {
         $username = $data['username'];
@@ -65,19 +54,29 @@ class AdminUser extends AdminBaseServices
     /**
      * @param $id
      * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function getNormalUserById($id)
     {
-        $user = $this->model->getUserById($id);
+        $user = $this->model->getAdminUserById($id);
         if (!$user || $user->status != config('status.mysql.table_normal')) {
             return [];
         }
         return $user->toArray();
     }
-    
+
+    /**
+     * @param $username
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
     public function getNormalUserByUsername($username)
     {
-        $user = $this->model->getUserByUesrname($username);
+        $user = $this->model->getAdminUserByUserName($username);
         if (!$user || $user->status != config('status.mysql.table_normal')) {
             return [];
         }
@@ -89,6 +88,9 @@ class AdminUser extends AdminBaseServices
      * @param $data
      * @return mixed
      * @throws Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function update($id, $data)
     {
@@ -100,16 +102,16 @@ class AdminUser extends AdminBaseServices
         if ($userResult && $userResult['id'] != $id) {
             throw new Exception('该用户已存在');
         }
-        //redis需要同步
-        return $this->model->updateById1($id, $data);
+        return $this->model->updateById($id, $data);
     }
-	
-	/**
-	 * 获取列表数据
-	 * @param $data
-	 * @param $num
-	 * @return array
-	 */
+
+    /**
+     * @param array $ids
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
 	public function getAdminUserByIds($ids = [])
 	{
 		$list = $this->model->getAdminUserByIds($ids);
@@ -120,4 +122,77 @@ class AdminUser extends AdminBaseServices
 		$cates = array_column($result, 'username', 'id');
 		return $cates;
 	}
+
+    /**
+     * 获取列表数据
+     * @param $data
+     * @param $num
+     * @return array
+     * @throws \think\db\exception\DbException
+     */
+    public function getLists($data, $num)
+    {
+        $field = 'id, username, status';
+        $list = $this->model->getLists($data, $field, $num);
+        if (!$list) {
+            return [];
+        }
+        $result = $list->toArray();
+        return $result;
+    }
+
+    /** 插入数据
+     * @param $data
+     * @return array
+     * @throws Exception
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function insertData($data)
+    {
+        $result = $this->getNormalUserByUsername($data['username']);
+        if ($result) {
+            throw new Exception("数据已存在");
+        }
+
+        $insertData = [
+            'username' => $data['username'],
+            'password' => md5($data['password'].config('admin.password_suffix')),
+            'create_time' => time(),
+            'update_time' => time(),
+            'last_login_time' => time(),
+            'last_login_ip' => $data['last_login_ip'],
+            'operate_user' => 'admin',
+        ];
+
+        try {
+            $id = $this->add($insertData);
+        } catch (\Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+        return ['id' => $id];
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws Exception
+     * @throws ModelNotFoundException
+     */
+    public function delete($id)
+    {
+        $cate = $this->getNormalUserById($id);
+        if (!$cate) {
+            throw new Exception("数据不存在");
+        }
+
+        $data = [
+            'status' => config('status.mysql.table_delete')
+        ];
+
+        return $this->model->deleteById($id, $data);
+    }
 }

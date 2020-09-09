@@ -18,5 +18,6 @@ class AdminUser extends Validate
     
     protected $scene = [
         'login' => ['username', 'password'],
+        'save' => ['username', 'password'],
     ];
 }
