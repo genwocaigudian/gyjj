@@ -83,7 +83,8 @@ class News extends BaseModel
         }
         
         $where = [
-            'title' => $title
+            'title' => $title,
+            'status' => config('status.mysql.table_normal'),
         ];
         
         return $this->where($where)->find();

@@ -12,5 +12,5 @@ use think\facade\Route;
 
 Route::get('index', 'index');
 Route::resource('category', 'Category');
-Route::resource('news', 'News');
+//Route::resource('news', 'News');
 Route::resource('user', 'AdminUser');
