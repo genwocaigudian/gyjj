@@ -85,7 +85,8 @@ class News extends AdminAuthBase
         }
 
         $id = input('param.id', 0, 'intval');
-        $data = input('post.');
+//        $data = input('post.');
+        $data = $this->request->only(['title', 'content'], 'post');
 
         try {
             $res = (new NewsService())->update($id, $data);
