@@ -44,7 +44,7 @@ class Banner extends BaseServices
      */
     public function getLists($num)
     {
-        $field = 'id, img_url, is_show, status';
+        $field = 'id, img_url, is_show, sequence';
         $list = $this->model->getLists($field, $num);
         if (!$list) {
             return [];

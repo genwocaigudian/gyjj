@@ -184,15 +184,19 @@ class Category extends BaseModel
      */
     public function deleteById($id, $data)
     {
-        $id = intval($id);
         if (empty($id) || empty($data) || !is_array($data)) {
             return false;
         }
-        
-        $where = [
-            "id" => $id,
-        ];
-        
+
+        $where = [];
+
+        if (is_array($id)) {
+            $where[] = ['id', 'in', $id];
+        } else {
+            $where[] = ['id', '=', intval($id)];
+        }
+
         return $this->where($where)->save($data);
+//        echo $this->getLastSql();exit();
     }
 }

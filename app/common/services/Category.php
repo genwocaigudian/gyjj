@@ -170,11 +170,6 @@ class Category extends BaseServices
      */
     public function delete($id)
     {
-        $cate = $this->getNormalCateById($id);
-        if (!$cate) {
-            throw new Exception("数据不存在");
-        }
-        
         $data = [
             'status' => config('status.mysql.table_delete')
         ];

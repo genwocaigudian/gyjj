@@ -13,12 +13,12 @@ class Banner extends AdminAuthBase
 	public function index()
 	{
 		try {
-			$categorys = (new BannerService())->getLists(10);
+			$res = (new BannerService())->getLists(10);
 		} catch (\Exception $e) {
-			$categorys = Arr::getPaginateDefaultData(10);
+            $res = Arr::getPaginateDefaultData(10);
 		}
 		
-		return Show::success($categorys);
+		return Show::success($res);
 	}
     
     /**

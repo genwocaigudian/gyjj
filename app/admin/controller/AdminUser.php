@@ -104,7 +104,7 @@ class AdminUser extends AdminAuthBase
             return Show::error('非法请求');
         }
         
-        $id = input('param.id', 0, 'intval');
+        $id = input('param.id');
 
         try {
             $res = (new AdminUserService())->delete($id);

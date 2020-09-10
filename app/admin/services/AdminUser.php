@@ -184,11 +184,6 @@ class AdminUser extends AdminBaseServices
      */
     public function delete($id)
     {
-        $cate = $this->getNormalUserById($id);
-        if (!$cate) {
-            throw new Exception("数据不存在");
-        }
-
         $data = [
             'status' => config('status.mysql.table_delete')
         ];

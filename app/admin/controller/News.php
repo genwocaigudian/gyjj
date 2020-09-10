@@ -107,7 +107,7 @@ class News extends AdminAuthBase
             return Show::error('非法请求');
         }
 
-        $id = input('param.id', 0, 'intval');
+        $id = input('post.id');
 
         try {
             $res = (new NewsService())->delete($id);

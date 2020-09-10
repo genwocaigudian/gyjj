@@ -204,11 +204,6 @@ class News extends BaseServices
      */
     public function delete($id)
     {
-        $res = $this->getNormalNewsById($id);
-        if (!$res) {
-            throw new Exception("数据不存在");
-        }
-
         $data = [
             'status' => config('status.mysql.table_delete')
         ];
