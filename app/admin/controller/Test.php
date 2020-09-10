@@ -17,13 +17,14 @@ class Test extends AdminBase
 //		$res = Enforcer::getPolicy();
 //        给用户分配角色
 //        Enforcer::addRoleForUser('admin', 'admin');
-//        Enforcer::addRoleForUser('admin1', 'member');
-
+//        Enforcer::addRoleForUser('admin', 'member');
+//
 //        Enforcer::addPermissionForUser('member', '/admin/news', 'GET');
 //        Enforcer::addPermissionForUser('admin', '/admin/news', 'POST');
 //        Enforcer::addPermissionForUser('admin', '/admin/news', 'GET');
 
-        $res = Enforcer::enforce('admin', '/admin/news', 'GET'); // true
+//        $res = Enforcer::enforce('admin', '/admin/news', 'GET'); // true
+		$res = Enforcer::deletePermissionForUser("writer", "articles", "edit");
 
         return Show::success($res);
     }
