@@ -82,7 +82,7 @@ class Category extends BaseServices
      * @param $num
      * @return array
      */
-    public function getLists($data, $num)
+    public function getLists1($data, $num)
     {
         $likeKeys = [];
         if (!empty($data)) {
@@ -105,14 +105,20 @@ class Category extends BaseServices
      * @param $num
      * @return array
      */
-    public function getLists1($data, $num)
+    public function getLists($data, $num)
     {
         $field = 'id , name, pid';
-        $list = $this->model->getLists($data, $field, $num);
-        if (!$list) {
-            return [];
+        try {
+            $list = $this->model->getLists($data, $field, $num);
+            $result = $list->toArray();
+            if ($result['data']) {
+                foreach ($result['data'] as &$datum) {
+                    $datum['url'] = '/api/news/index?cate_id=' . $datum['id'];
+                }
+            }
+        } catch (\Exception $e) {
+            $result = Arr::getPaginateDefaultData($num);
         }
-        $result = $list->toArray();
         return $result;
     }
     

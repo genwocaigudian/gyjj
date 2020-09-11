@@ -114,7 +114,7 @@ class Category extends BaseModel
      * @return \think\Paginator
      * @throws DbException
      */
-    public function getLists($likeKeys, $data, $field = '*', $num = 10)
+    public function getLists1($likeKeys, $data, $field = '*', $num = 10)
     {
         $order = [
             "sequence" => "desc",
@@ -141,18 +141,18 @@ class Category extends BaseModel
      * @return \think\Paginator
      * @throws DbException
      */
-    public function getLists1($where, $field = '*', $num = 10)
+    public function getLists($where, $field = '*', $num = 10)
     {
         $order = [
             "sequence" => "desc",
             "id" => "desc"
         ];
-        $result = $this->where("status", "<>", config("status.mysql.table_delete"))
+        $result = $this->where("status", "=", config("status.mysql.table_normal"))
             ->where($where)
             ->field($field)
             ->order($order)
             ->paginate($num);
-        //echo $this->getLastSql();exit;
+//        echo $this->getLastSql();exit;
         return $result;
     }
     

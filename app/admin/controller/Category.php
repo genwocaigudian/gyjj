@@ -57,6 +57,8 @@ class Category extends AdminAuthBase
         if (!$validate->scene('save')->check($data)) {
             return Show::error($validate->getError(), config('status.name_not_null'));
         }
+
+        $data['is_show'] = 1;
         
         try {
             $result = (new CateService())->insertData($data);

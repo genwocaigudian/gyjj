@@ -28,7 +28,7 @@ class News extends BaseServices
      */
     public function getLists($data, $num)
     {
-        $field = 'id, title, status';
+        $field = 'id, title, is_top, is_hot, status';
         $list = $this->model->getLists($data, $field, $num);
         if (!$list) {
             return [];
@@ -117,7 +117,7 @@ class News extends BaseServices
 
         //检查名称是否存在
         $result = [];
-        if ($data['title']) {
+        if (isset($data['title'])) {
             $result = $this->getNormalNewsByTitle($data['title']);
         }
         if ($result && $result['id'] != $id) {

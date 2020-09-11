@@ -13,17 +13,15 @@ use think\response\Json;
 
 class Category extends ApiBase
 {
-    /**
-     * @return Json
-     */
     public function index()
     {
 	    $pid = input("param.pid", 0, "intval");
 	    $data = [
 		    "pid" => $pid,
+		    "is_show" => 1,
 	    ];
 	    try {
-		    $categorys = (new CategoryServices())->getLists($data, 10);
+		    $categorys = (new CategoryServices())->getLists($data, 20);
 	    }catch (\Exception $e) {
 		    $categorys = Arr::getPaginateDefaultData(10);;
 	    }

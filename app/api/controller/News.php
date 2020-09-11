@@ -11,25 +11,18 @@ use think\facade\Log;
 
 class News extends ApiBase
 {
-    /**
-     * @return \think\response\Json
-     */
     public function index()
     {
+        $cid = input('post.cate_id', 0, 'intval');
+        $data = [
+            'cate_id' => $cid,
+        ];
         try {
-            $cateService = new CateService();
-            $categorys = $cateService->getNormalAllCategorys();
+            $list = (new NewsService())->getLists($data, 10);
         } catch (\Exception $e) {
-            Log::error("category/index 报错:" . $e->getMessage());
-            return Show::error('内部异常');
+            $list = [];
         }
-        if (!$categorys) {
-            return Show::success();
-        }
-        
-        $result = Arr::getTree($categorys);
-        $result = Arr::sliceTreeArr($result);
-        return Show::success($result);
+        return Show::success($list);
     }
     
     /**

@@ -24,8 +24,10 @@ class Test extends AdminBase
 //        Enforcer::addPermissionForUser('admin', '/admin/news', 'GET');
 
 //        $res = Enforcer::enforce('admin', '/admin/news', 'GET'); // true
-		$res = Enforcer::deletePermissionForUser("writer", "articles", "edit");
+//		Enforcer::deletePermissionForUser("member", "/admin/news", "GET");
+//		Enforcer::deletePermissionsForUser('admin');
+        Enforcer::deleteRolesForUser('admin');
 
-        return Show::success($res);
+        return Show::success();
     }
 }

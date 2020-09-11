@@ -27,6 +27,9 @@ class News extends BaseModel
      */
     public function getLists($where, $field = '*', $num = 10)
     {
+        if (!$where['cate_id']) {
+            unset($where['cate_id']);
+        }
         $order = [
             "id" => "desc"
         ];

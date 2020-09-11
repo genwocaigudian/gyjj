@@ -8,7 +8,7 @@ use app\common\lib\Show;
 use think\facade\Log;
 use think\response\Json;
 
-class AdminUser extends AdminAuthBase
+class User extends AdminAuthBase
 {
     /**
      * @return Json
