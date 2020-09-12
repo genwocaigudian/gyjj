@@ -70,7 +70,6 @@ class Salary extends AdminAuthBase
 //        $filename = "报修数据文档".date('YmdHis');
         $filename = "薪酬数据文档";
         $header = [
-            ['column' => 'id', 'name' => '编号', 'width' => 15],
             ['column' => 'username', 'name' => '姓名', 'width' => 15],
             ['column' => 'month', 'name' => '月份', 'width' => 15],
             ['column' => 'card_number', 'name' => '老师编号', 'width' => 15],
