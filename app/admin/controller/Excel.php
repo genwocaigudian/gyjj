@@ -5,7 +5,7 @@ use \app\common\lib\Excel as ExcelLib;
 use app\common\lib\Show;
 use think\facade\Db;
 
-class Excel extends AdminBase
+class Excel extends AdminAuthBase
 {
     public function export(){
         // 查询要导出的数据
