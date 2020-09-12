@@ -1,12 +1,11 @@
 <?php
 namespace app\admin\controller;
 
-use app\api\controller\ApiBase;
 use \app\common\lib\Excel as ExcelLib;
 use app\common\lib\Show;
 use think\facade\Db;
 
-class Excel extends ApiBase
+class Excel extends AdminAuthBase
 {
     public function export(){
         // 查询要导出的数据
