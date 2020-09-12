@@ -36,19 +36,21 @@ class Repair extends BaseServices
     }
 
     /**
+     * @param $data
      * @return array
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
      */
-    public function getList()
+    public function getList($data)
     {
-        $field = 'id, name';
-        $list = $this->model->getList($field);
-        if (!$list) {
-            return [];
+        $likeKeys = [];
+        if (!empty($data)) {
+            $likeKeys = array_keys($data);
         }
-        $result = $list->toArray();
+        try {
+            $list = $this->model->getList($likeKeys, $data);
+            $result = $list->toArray();
+        } catch (\Exception $e) {
+            $result = [];
+        }
         return $result;
     }
 
@@ -70,15 +72,19 @@ class Repair extends BaseServices
     }
 
     /**
+     * @param $data
      * @param int $num
      * @return array
      * @throws DbException
      */
-    public function getPaginateList($num = 10)
+    public function getPaginateList($data, $num = 10)
     {
-        $field = 'id, name';
+        $likeKeys = [];
+        if (!empty($data)) {
+            $likeKeys = array_keys($data);
+        }
         try {
-            $list = $this->model->getPaginateList($field = '*', $num);
+            $list = $this->model->getPaginateList($likeKeys, $data, $field = '*', $num);
             $result = $list->toArray();
         } catch (\Exception $e) {
             $result = Arr::getPaginateDefaultData($num);

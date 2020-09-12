@@ -51,34 +51,67 @@ class Repair extends BaseModel
     }
 
     /**
-     * @param $where
+     * @param $likeKeys
+     * @param $data
      * @param string $field
      * @return Collection
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getList($where, $field = "*")
+    public function getList($likeKeys, $data, $field = "*")
     {
-        $query = $this->newQuery();
-        if ($where) {
-            $query->where($where);
+        $res = $this->newQuery();
+        if (!empty($likeKeys)) {
+            $res = $res->withSearch($likeKeys, $data);
         }
 
-        $result = $query->field($field)->select();
-        //echo $this->getLastSql();exit;
+        $result = $res->field($field)->select();
+//        echo $res->getLastSql();exit;
         return $result;
     }
 
     /**
+     * name查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchRepairDescAttr($query, $value)
+    {
+        $query->where('repair_desc', 'like', '%' . $value . '%');
+    }
+
+    public function searchCreateTimeAttr($query, $value)
+    {
+        $query->whereBetweenTime('create_time', $value[0], $value[1]);
+    }
+
+    public function searchCateIdAttr($query, $value)
+    {
+        $query->where('repair_cate_id', '=', $value);
+    }
+
+    public function searchIdAttr($query, $value)
+    {
+        $query->whereIn('id', $value);
+    }
+
+    /**
+     * @param $likeKeys
+     * @param $data
      * @param string $field
      * @param int $num
      * @return \think\Paginator
      * @throws DbException
      */
-    public function getPaginateList($field = "*", $num = 10)
+    public function getPaginateList($likeKeys, $data, $field = "*", $num = 10)
     {
-        $result = $this->newQuery()->field($field)->paginate($num);
+        $res = $this->newQuery();
+        if (!empty($likeKeys)) {
+            $res = $res->withSearch($likeKeys, $data);
+        }
+        $result = $res->field($field)->paginate($num);
         //echo $this->getLastSql();exit;
         return $result;
     }
