@@ -265,7 +265,7 @@ class Excel
         if ($res['code']) {
             $data = $res['data'];
             //修正路径
-            $filename = 'uploads/' . str_replace('\\', '/', $data);
+            $filename = 'upload/' . str_replace('\\', '/', $data);
             //进行读取
             $spreadsheet = IOFactory::load($filename);
             $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);

@@ -24,4 +24,21 @@ class BaseServices
 
         return $this->model->id;
     }
+
+    /**
+     * 批量新增
+     * @param $data
+     * @return bool|int
+     */
+    public function addAll($data)
+    {
+        try {
+            $res = $this->model->saveAll($data);
+        } catch (\Exception $e) {
+            Log::error('错误信息:' . $e->getMessage());
+            return 0;
+        }
+
+        return true;
+    }
 }

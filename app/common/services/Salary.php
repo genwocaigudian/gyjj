@@ -146,4 +146,14 @@ class Salary extends BaseServices
         
         return $this->model->updateById($id, $data);
     }
+
+    /**
+     * @param $data
+     * @return \think\Collection
+     * @throws \Exception
+     */
+    public function insertAll($data)
+    {
+        return $res = $this->model->saveAll($data);
+    }
 }

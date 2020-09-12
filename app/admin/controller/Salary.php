@@ -53,7 +53,6 @@ class Salary extends AdminAuthBase
         $data = [];
 
         foreach ($result as $k => $v){
-            $data[$k]['id']=$v['id'];
             $data[$k]['username']=$v['username'];
             $data[$k]['card_number']=$v['card_number'];
             $data[$k]['department']=$v['department'];
@@ -90,5 +89,41 @@ class Salary extends AdminAuthBase
         }
 
         return Show::error();
+    }
+
+    public function import()
+    {
+        $excel = new ExcelLib();
+        $data = $excel->importExcel();
+
+        if (empty($data)) {
+            return Show::error('导入内容为空');
+        }
+
+        $insertData = [];
+        foreach ($data as $datum) {
+            $temp = [
+                'username' => $datum['A'],
+                'month' => $datum['B'],
+                'card_number' => $datum['C'],
+                'department' => $datum['D'],
+                'basic_salary' => $datum['E'],
+                'post_salary' => $datum['F'],
+                'attendance_deduction' => $datum['G'],
+                'other_deduction' => $datum['H'],
+                'social_security' => $datum['I'],
+                'provident_fund' => $datum['J'],
+                'taxes' => $datum['K'],
+                'paid_salary' => $datum['L'],
+                'status' => config('status.mysql.table_normal'),
+            ];
+            array_push($insertData, $temp);
+        }
+
+        $res = (new SalaryService())->addAll($insertData);
+        if (!$res) {
+            return Show::error('插入失败');
+        }
+        return Show::success();
     }
 }
