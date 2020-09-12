@@ -14,7 +14,8 @@ class Repair extends AdminAuthBase
      */
     public function index()
     {
-        $list = (new RepairService())->getPaginateList(10);
+        $data = [];
+        $list = (new RepairService())->getPaginateList($data,10);
         
         return Show::success($list);
     }
