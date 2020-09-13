@@ -6,4 +6,9 @@
 
 return [
     'token_pre' => 'token_pre_',
+	
+	//延迟队列
+	'repair_status_key' => 'order_status',
+//	'order_expire' => 24*60*60,
+	'order_expire' => 1,
 ];

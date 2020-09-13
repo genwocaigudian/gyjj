@@ -6,6 +6,7 @@ use app\common\lib\Arr;
 use app\common\lib\Show;
 use app\common\services\Repair as RepairServices;
 use app\api\validate\Repair as RepairValidate;
+use think\facade\Cache;
 use think\facade\Log;
 use think\response\Json;
 
@@ -13,9 +14,7 @@ class Repair extends ApiBase
 {
     public function index()
     {
-        $list = (new RepairService())->getLists($data, 10);
-        
-        return Show::success($categorys);
+        return Show::success();
     }
 
     /**
@@ -106,5 +105,11 @@ class Repair extends ApiBase
         }
         
         return Show::success();
+    }
+	
+	public function test()
+	{
+		$orderId = 15;
+		Cache::zAdd(config('redis.repair_status_key'), time()+config('redis.order_expire'), $orderId);
     }
 }
