@@ -87,40 +87,40 @@ class RepairCate extends BaseServices
         }
         return $result;
     }
-	
-	/**
-	 * @param $id
-	 * @return array
-	 * @throws DataNotFoundException
-	 * @throws DbException
-	 * @throws ModelNotFoundException
-	 */
-	public function getNormalBannerById($id)
-	{
-		$res = $this->model->getById($id);
-		if (!$res || $res->status != config('status.mysql.table_normal')) {
-			return [];
-		}
-		return $res->toArray();
-	}
-	
-	/**
-	 * @param $id
-	 * @param $data
-	 * @return bool
-	 * @throws DataNotFoundException
-	 * @throws DbException
-	 * @throws Exception
-	 * @throws ModelNotFoundException
-	 */
-	public function update($id, $data)
-	{
-		$res = $this->model->getById($id);
-		if (!$res) {
-			throw new Exception("数据不存在");
-		}
-		return $this->model->updateById($id, $data);
-	}
+    
+    /**
+     * @param $id
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getNormalBannerById($id)
+    {
+        $res = $this->model->getById($id);
+        if (!$res || $res->status != config('status.mysql.table_normal')) {
+            return [];
+        }
+        return $res->toArray();
+    }
+    
+    /**
+     * @param $id
+     * @param $data
+     * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws Exception
+     * @throws ModelNotFoundException
+     */
+    public function update($id, $data)
+    {
+        $res = $this->model->getById($id);
+        if (!$res) {
+            throw new Exception("数据不存在");
+        }
+        return $this->model->updateById($id, $data);
+    }
 
     /**
      * @param $id

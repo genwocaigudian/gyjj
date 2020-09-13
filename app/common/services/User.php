@@ -20,25 +20,6 @@ class User extends BaseServices
 
     /**
      * @param $data
-     * @return int|mixed
-     */
-    public function add($data)
-    {
-//        $data['status'] = config("status.mysql.table_normal");
-        try {
-            $this->model->save($data);
-        } catch (\Exception $e) {
-            // 记录日志哦，便于后续问题的排查工作
-            Log::error('错误信息:' . $e->getMessage());
-            return 0;
-        }
-
-        // // 返回主键ID
-        return $this->model->id;
-    }
-
-    /**
-     * @param $data
      * @return array|bool
      * @throws Exception
      * @throws \think\db\exception\DataNotFoundException
@@ -99,6 +80,22 @@ class User extends BaseServices
         }
         return $user->toArray();
     }
+	
+	/**
+	 * @param $id
+	 * @return array
+	 * @throws \think\db\exception\DataNotFoundException
+	 * @throws \think\db\exception\DbException
+	 * @throws \think\db\exception\ModelNotFoundException
+	 */
+	public function getNormalUserByOpenId($openid)
+	{
+		$user = $this->model->getUserByOpenid($openid);
+		if (!$user || $user->status != config('status.mysql.table_normal')) {
+			return [];
+		}
+		return $user->toArray();
+	}
 
     /**
      * @param $username

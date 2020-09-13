@@ -28,7 +28,7 @@ class Banner extends BaseServices
      */
     public function insertData($data)
     {
-    	$data['is_show'] = $data['is_show']??1;
+        $data['is_show'] = $data['is_show']??1;
         try {
             $id = $this->add($data);
         } catch (\Exception $e) {
@@ -52,40 +52,40 @@ class Banner extends BaseServices
         $result = $list->toArray();
         return $result;
     }
-	
-	/**
-	 * @param $id
-	 * @return array
-	 * @throws DataNotFoundException
-	 * @throws DbException
-	 * @throws ModelNotFoundException
-	 */
-	public function getNormalBannerById($id)
-	{
-		$res = $this->model->getBannerById($id);
-		if (!$res || $res->status != config('status.mysql.table_normal')) {
-			return [];
-		}
-		return $res->toArray();
-	}
-	
-	/**
-	 * @param $id
-	 * @param $data
-	 * @return bool
-	 * @throws DataNotFoundException
-	 * @throws DbException
-	 * @throws Exception
-	 * @throws ModelNotFoundException
-	 */
-	public function update($id, $data)
-	{
-		$res = $this->getNormalBannerById($id);
-		if (!$res) {
-			throw new Exception("数据不存在");
-		}
-		return $this->model->updateById($id, $data);
-	}
+    
+    /**
+     * @param $id
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getNormalBannerById($id)
+    {
+        $res = $this->model->getBannerById($id);
+        if (!$res || $res->status != config('status.mysql.table_normal')) {
+            return [];
+        }
+        return $res->toArray();
+    }
+    
+    /**
+     * @param $id
+     * @param $data
+     * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws Exception
+     * @throws ModelNotFoundException
+     */
+    public function update($id, $data)
+    {
+        $res = $this->getNormalBannerById($id);
+        if (!$res) {
+            throw new Exception("数据不存在");
+        }
+        return $this->model->updateById($id, $data);
+    }
 
     /**
      * @param $id

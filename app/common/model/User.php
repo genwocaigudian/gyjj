@@ -81,7 +81,7 @@ class User extends BaseModel
         return $this->where($where)->find();
     }
     
-    public function updateById1($id, $data)
+    public function updateById($id, $data)
     {
         $id = intval($id);
         if (empty($id) || empty($data) || !is_array($data)) {
