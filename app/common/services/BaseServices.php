@@ -43,4 +43,22 @@ class BaseServices
 
         return true;
     }
+
+    /**
+     * 删除
+     * @param $id
+     * @return bool|int
+     */
+    public function del($id)
+    {
+        try {
+            $model = $this->model->find($id);
+            $res = $model->delete();
+        } catch (\Exception $e) {
+            Log::error('错误信息:' . $e->getMessage());
+            return 0;
+        }
+
+        return true;
+    }
 }
