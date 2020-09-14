@@ -2,11 +2,13 @@
 namespace app\api\controller;
 
 use app\BaseController;
+use app\common\lib\Show;
+use app\common\services\UserToken;
 use EasyWeChat\Factory;
 
 class Wechat extends BaseController
 {
-    public function profile()
+    public function code()
     {
         $config = [
             'app_id' => config('wechat.app_id'),
@@ -22,7 +24,7 @@ class Wechat extends BaseController
         return $oauth->redirect();
     }
 
-    public function callback()
+    public function token()
     {
         $config = [
             'app_id' => config('wechat.app_id'),
@@ -31,10 +33,12 @@ class Wechat extends BaseController
 
         $app = Factory::officialAccount($config);
         $oauth = $app->oauth;
+        
+        $token = UserToken::grantToken($oauth->user()->getOriginal());
 
         // 获取 OAuth 授权结果用户信息
 //        return show(config("status.success"), "ok", $oauth->user());
-
-        header('location:'. 'index');
+		return Show::success(['token' => $token]);
+//        header('location:'. 'index');
     }
 }

@@ -17,6 +17,6 @@ return [
          */
         'oauth' => [
             'scopes'   => array_map('trim', explode(',', 'snsapi_userinfo')),
-            'callback' => '/api/callback',
+            'callback' => '/api/wechat/token',
         ],
 ];
