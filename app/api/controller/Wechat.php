@@ -39,6 +39,6 @@ class Wechat extends BaseController
         // 获取 OAuth 授权结果用户信息
 //        return show(config("status.success"), "ok", $oauth->user());
 		return Show::success(['token' => $token]);
-//        header('location:'. 'index');
+//        header('location:'. 'api/wechat/code');
     }
 }

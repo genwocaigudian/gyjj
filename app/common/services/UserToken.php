@@ -56,7 +56,7 @@ class UserToken extends BaseServices
 	 * @throws \think\db\exception\DbException
 	 * @throws \think\db\exception\ModelNotFoundException
 	 */
-    public static function grantToken($wxResult)
+    public function grantToken($wxResult)
     {
         //拿到openid
         //数据库查看openid是否存在
@@ -71,8 +71,8 @@ class UserToken extends BaseServices
         } else {
         	$data = [
         		'openid' => $openid,
-        		'nickname' => $wxResult['nickname'],
-		        'headimgurl' => $wxResult['headimgurl'],
+//        		'nickname' => $wxResult['nickname'],
+//		        'headimgurl' => $wxResult['headimgurl'],
 	        ];
 	        $uid = $userService->add($data);
         }
@@ -83,7 +83,7 @@ class UserToken extends BaseServices
     }
 	
     //缓存微信数据
-	public static function cachedWxValue($wxResult, $uid)
+	public function cachedWxValue($wxResult, $uid)
 	{
 		$cachedValue = $wxResult;
 		$cachedValue['uid'] = $uid;
