@@ -79,29 +79,14 @@ class Lost extends BaseModel
     }
 
     /**
-     * name查询条件表达式
+     * title查询条件表达式
      * 调用withSearch方法时触发
      * @param $query
      * @param $value
      */
-    public function searchRepairDescAttr($query, $value)
+    public function searchTitleAttr($query, $value)
     {
-        $query->where('repair_desc', 'like', '%' . $value . '%');
-    }
-
-    public function searchCreateTimeAttr($query, $value)
-    {
-        $query->whereBetweenTime('create_time', $value[0], $value[1]);
-    }
-
-    public function searchCateIdAttr($query, $value)
-    {
-        $query->where('repair_cate_id', '=', $value);
-    }
-
-    public function searchIdAttr($query, $value)
-    {
-        $query->whereIn('id', $value);
+        $query->where('title', 'like', '%' . $value . '%');
     }
 
     /**
@@ -109,8 +94,10 @@ class Lost extends BaseModel
      * @param $data
      * @param string $field
      * @param int $num
-     * @return \think\Paginator
+     * @return Collection
+     * @throws DataNotFoundException
      * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getPaginateList($likeKeys, $data, $field = "*", $num = 10)
     {
