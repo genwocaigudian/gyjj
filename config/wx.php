@@ -36,5 +36,5 @@ return [
 	//随机秘钥
 	'token_salt' => 'WYMYyEx4FvWw5ioc',
 	//过期时间
-	'token_expire_in' => 7200,
+	'token_expire_in' => 24*60*60,
 ];
