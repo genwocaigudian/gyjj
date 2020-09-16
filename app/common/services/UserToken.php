@@ -10,30 +10,28 @@ use think\facade\Request;
 
 class UserToken extends BaseServices
 {
-    protected $code;
     protected $appId;
     protected $appSecret;
-    protected $loginUrl;
-    
-    public function __construct($code)
+
+    public function __construct()
     {
-        $this->code = $code;
         $this->appId = config('wx.app_id');
         $this->appSecret = config('wx.app_secret');
-        $this->loginUrl = sprintf(config('wx.token.get_token_url'), $this->appId, $this->appSecret, $this->code);
     }
-	
-	/**
-	 * @return string
-	 * @throws Exception
-	 * @throws \think\db\exception\DataNotFoundException
-	 * @throws \think\db\exception\DbException
-	 * @throws \think\db\exception\ModelNotFoundException
-	 */
-    public function getToken()
+
+    /**
+     * @param $code
+     * @return string
+     * @throws Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getToken($code)
     {
+        $url = sprintf(config('wx.get_token_url'), $this->appId, $this->appSecret, $code);
         $client = new Client();
-        $response = $client->get($this->loginUrl);
+        $response = $client->get($url);
         $wxResult = json_decode($response->getBody(), true);
         if (empty($wxResult)) {
             throw new \Exception('获取openid异常, 微信内部错误');
@@ -92,15 +90,13 @@ class UserToken extends BaseServices
 	
 	public static function saveToCache($cachedValue)
 	{
-		$key = Str::generateToken();
-//		$value = json_encode($cachedValue);
+		$str = Str::generateToken();
 		$expire = config('wx.token_expire_in');
-//		$request = cache($key, $value, $expire);
-		$request = cache($key, $cachedValue, $expire);
+		$request = cache(config('wx.api_token_pre') . $str, $cachedValue, $expire);
 		if (!$request) {
 			throw new Exception("数据不存在");
 		}
-		return $key;
+		return $str;
     }
 	
 	/**
@@ -129,5 +125,13 @@ class UserToken extends BaseServices
 	{
 		$uid = $this->getCurrentTokenVar('uid');
 		return $uid;
+    }
+
+    //检验token是否有效
+    public function checkToken($token)
+    {
+        $key = config('wx.api_token_pre') . $token;
+
+        return Cache::get($key) ? 1 : 0;
     }
 }

@@ -23,9 +23,9 @@ class AdminAuthBase extends AdminBase
         if (!$userInfo) {
             return false;
         }
-        if (!empty($userInfo['user_id']) && !empty($userInfo['username'])) {
+        if (!empty($userInfo['uid']) && !empty($userInfo['username'])) {
             $this->username = $userInfo['username'];
-            $this->userId = $userInfo['user_id'];
+            $this->userId = $userInfo['uid'];
             return true;
         }
         return false;

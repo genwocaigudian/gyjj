@@ -8,17 +8,14 @@ return [
     'app_secret' => 'a5d0b16afe09fe5a0842512de417a3c0',    // AppSecret
 	
 	//获取code
-    'code' => [
-        'get_code_url' => "https://open.weixin.qq.com/connect/oauth2/authorize?" .
+    'get_code_url' => "https://open.weixin.qq.com/connect/oauth2/authorize?" .
             "appid=%s&redirect_uri=%s&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect",
-        'redirect_uri' => '/api/token/code'
-    ],
+    'redirect_uri' => '/api/token/code',
 	//获取token
-    'token' => [
-        'get_token_url' => "https://api.weixin.qq.com/sns/oauth2/access_token?" .
+    'get_token_url' => "https://api.weixin.qq.com/sns/oauth2/access_token?" .
             "appid=%s&secret=%s&code=%s&grant_type=authorization_code",
-    ],
-	
+
+    'api_token_pre' => 'api_token_',
 	//随机秘钥
 	'token_salt' => 'WYMYyEx4FvWw5ioc',
 	//过期时间

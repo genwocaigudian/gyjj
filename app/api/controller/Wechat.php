@@ -33,7 +33,7 @@ class Wechat extends BaseController
 
         $app = Factory::officialAccount($config);
         $oauth = $app->oauth;
-        
+
         $token = UserToken::grantToken($oauth->user()->getOriginal());
 
         // 获取 OAuth 授权结果用户信息
