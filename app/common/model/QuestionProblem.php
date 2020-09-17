@@ -24,6 +24,11 @@ class QuestionProblem extends BaseModel
         'update_time',
         'delete_time'
     ];
+    
+    public function QuestionOption()
+    {
+        return $this->hasMany(QuestionOption::class, 'problem_id');
+    }
 
     /**
      * @param $id
@@ -65,24 +70,61 @@ class QuestionProblem extends BaseModel
     }
 
     /**
+     * @param integer $id
      * @param string $field
      * @return Collection
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getNormalList($field = "*")
+    public function getNormalList($id, $field = "*")
     {
+        $order = [
+            'sequence' => 'asc',
+            'id' => 'asc',
+        ];
         $where = [
+            "question_id" => $id,
             "status" => config("status.mysql.table_normal"),
         ];
 
         $query = $this->newQuery();
         $result = $query->where($where)
             ->field($field)
-//            ->order($order)
+            ->order($order)
             ->select();
         //echo $this->getLastSql();exit;
+        return $result;
+    }
+    
+    /**
+     * @param integer $id
+     * @param string $field
+     * @return Collection
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getNormalListWithOption($id, $field = "*")
+    {
+        $order = [
+            'sequence' => 'asc',
+            'id' => 'asc',
+        ];
+        $where = [
+            "question_id" => $id,
+            "status" => config("status.mysql.table_normal"),
+        ];
+        
+        $result = $this->where($where)
+            ->with(['questionOption' => function ($query) {
+                $query->field('id, problem_id, value');
+            }])
+            ->field($field)
+            ->order($order)
+            ->select();
+//        echo $this->getLastSql();
+//        exit;
         return $result;
     }
 

@@ -51,23 +51,23 @@ class Lost extends ApiBase
         
         return Show::success($result);
     }
-	
-	/**
-	 * 详情
-	 * @param $id
-	 * @return Json
-	 */
-	public function read($id)
-	{
-		try {
-			$result = (new LostServices())->getNormalById($id);
-		} catch (\Exception $e) {
-			Log::error('api/lost/read 错误:' . $e->getMessage());
-			return Show::error($e->getMessage(), $e->getCode());
-		}
-		
-		return Show::success($result);
-	}
+    
+    /**
+     * 详情
+     * @param $id
+     * @return Json
+     */
+    public function read($id)
+    {
+        try {
+            $result = (new LostServices())->getNormalById($id);
+        } catch (\Exception $e) {
+            Log::error('api/lost/read 错误:' . $e->getMessage());
+            return Show::error($e->getMessage(), $e->getCode());
+        }
+        
+        return Show::success($result);
+    }
     
     /**
      * 更新数据
@@ -78,8 +78,8 @@ class Lost extends ApiBase
         if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
-	
-	    $id = input("param.id", 0, "intval");
+    
+        $id = input("param.id", 0, "intval");
         $data = input('post.');
         
         $validate = new LostValidate();
@@ -104,8 +104,8 @@ class Lost extends ApiBase
         if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
-	
-	    $id = input("param.id");
+    
+        $id = input("param.id");
         
         try {
             $res = (new LostServices())->del($id);

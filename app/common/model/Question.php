@@ -135,7 +135,7 @@ class Question extends BaseModel
         } else {
             $res = $this;
         }
-        $result = $res->field($field)->select();
+        $result = $res->field($field)->paginate($num);
         //echo $this->getLastSql();exit;
         return $result;
     }

@@ -4,19 +4,19 @@
 namespace app\common\services;
 
 use app\common\lib\Arr;
-use app\common\model\QuestionProblem as QuestionProblemModel;
+use app\common\model\QuestionResult as QresultModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Exception;
 
-class QuestionProblem extends BaseServices
+class QuestionResult extends BaseServices
 {
     public $model = null;
 
     public function __construct()
     {
-        $this->model = new QuestionProblemModel();
+        $this->model = new QresultModel();
     }
 
     /**
@@ -44,33 +44,16 @@ class QuestionProblem extends BaseServices
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getNormalList($id)
+    public function getNormalList()
     {
-        $field = 'id, question_id, title, type, sequence';
-        $list = $this->model->getNormalList($id, $field);
+        $field = 'id, name';
+        $list = $this->model->getNormalList($field);
         if (!$list) {
             return [];
         }
         $result = $list->toArray();
         return $result;
     }
-	
-	/**
-	 * @return array
-	 * @throws DataNotFoundException
-	 * @throws DbException
-	 * @throws ModelNotFoundException
-	 */
-	public function getNormalListWithOption($id)
-	{
-		$field = 'id, question_id, title, type, sequence';
-		$list = $this->model->getNormalListWithOption($id, $field);
-		if (!$list) {
-			return [];
-		}
-		$result = $list->toArray();
-		return $result;
-	}
 
     /**
      * @param $id
@@ -105,23 +88,6 @@ class QuestionProblem extends BaseServices
     }
 
     /**
-     * 返回正常数据
-     * @param $title
-     * @return array
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     */
-    public function getNormalByTitle($title)
-    {
-        $res = $this->model->getNewsByTitle($title);
-        if (!$res || $res->status != config("status.mysql.table_normal")) {
-            return [];
-        }
-        return $res->toArray();
-    }
-
-    /**
      * 插入数据
      * @param $data
      * @return array
@@ -132,11 +98,6 @@ class QuestionProblem extends BaseServices
      */
     public function insertData($data)
     {
-        $res = $this->getNormalByTitle($data['title']);
-        if ($res) {
-            throw new Exception("标题不可重复");
-        }
-
         try {
             $id = $this->add($data);
         } catch (\Exception $e) {

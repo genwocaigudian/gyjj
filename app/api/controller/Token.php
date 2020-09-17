@@ -3,7 +3,6 @@
 
 namespace app\api\controller;
 
-
 use app\BaseController;
 use app\common\lib\Show;
 use app\common\services\UserCode;
@@ -16,16 +15,16 @@ class Token extends BaseController
      * 获取code
      * @return \think\response\Json|\think\response\Redirect
      */
-	public function code()
-	{
-		$code = input('code', '', 'trim');
-		if (!$code) {
-			$url = UserCode::getCode();
-			return redirect($url);
-		}
-		
-		return Show::success(['code' => $code]);
-	}
+    public function code()
+    {
+        $code = input('code', '', 'trim');
+        if (!$code) {
+            $url = UserCode::getCode();
+            return redirect($url);
+        }
+        
+        return Show::success(['code' => $code]);
+    }
 
     /**
      * 获取token
@@ -35,16 +34,16 @@ class Token extends BaseController
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-	public function get()
-	{
-		$code = input('code', '', 'trim');
-		if (!$code) {
-			return Show::error('code不可为空');
-		}
-		$ut = new UserToken();
-		$token = $ut->getToken($code);
-		return Show::success(['token' => $token]);
-	}
+    public function get()
+    {
+        $code = input('code', '', 'trim');
+        if (!$code) {
+            return Show::error('code不可为空');
+        }
+        $ut = new UserToken();
+        $token = $ut->getToken($code);
+        return Show::success(['token' => $token]);
+    }
 
     /**
      * 获取token

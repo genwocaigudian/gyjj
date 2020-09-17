@@ -23,8 +23,8 @@ class AuthBase extends ApiBase
         if (!$userInfo) {
             return false;
         }
-        if (!empty($userInfo['id'])) {
-            $this->userId = $userInfo['id'];
+        if (!empty($userInfo['uid'])) {
+            $this->userId = $userInfo['uid'];
             return true;
         }
         return false;

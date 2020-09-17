@@ -43,12 +43,12 @@ class AdminUser extends AdminBaseServices
             
         $token = Str::getLoginToken($user->id);
         $redisData = [
-            'user_id' => $user->id,
+            'uid' => $user->id,
             'username' => $user->username,
         ];
         $res = cache(config('admin.admin_token_pre').$token, $redisData, Time::userLoginExpiresTime(1));
         
-        return $res ? ['token' => $token, 'user_id' => $user->id] : false;
+        return $res ? ['token' => $token, 'uid' => $user->id] : false;
     }
 
     /**

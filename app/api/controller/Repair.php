@@ -41,23 +41,23 @@ class Repair extends ApiBase
         
         return Show::success($result);
     }
-	
-	/**
-	 * 详情
-	 * @param $id
-	 * @return Json
-	 */
-	public function read($id)
-	{
-		try {
-			$result = (new RepairServices())->getNormalCateById($id);
-		} catch (\Exception $e) {
-			Log::error('api/repair/read 错误:' . $e->getMessage());
-			return Show::error($e->getMessage(), $e->getCode());
-		}
-		
-		return Show::success($result);
-	}
+    
+    /**
+     * 详情
+     * @param $id
+     * @return Json
+     */
+    public function read($id)
+    {
+        try {
+            $result = (new RepairServices())->getNormalCateById($id);
+        } catch (\Exception $e) {
+            Log::error('api/repair/read 错误:' . $e->getMessage());
+            return Show::error($e->getMessage(), $e->getCode());
+        }
+        
+        return Show::success($result);
+    }
     
     /**
      * 更新数据
@@ -69,8 +69,8 @@ class Repair extends ApiBase
         if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
-	
-	    $id = input("param.id", 0, "intval");
+    
+        $id = input("param.id", 0, "intval");
         $data = input('post.');
         
         $validate = new CateValidate();
@@ -95,8 +95,8 @@ class Repair extends ApiBase
         if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
-	
-	    $id = input("param.id");
+    
+        $id = input("param.id");
         
         try {
             $res = (new CateService())->delete($id);
@@ -106,10 +106,10 @@ class Repair extends ApiBase
         
         return Show::success();
     }
-	
-	public function test()
-	{
-		$orderId = 15;
-		Cache::zAdd(config('redis.repair_status_key'), time()+config('redis.order_expire'), $orderId);
+    
+    public function test()
+    {
+        $orderId = 15;
+        Cache::zAdd(config('redis.repair_status_key'), time()+config('redis.order_expire'), $orderId);
     }
 }
