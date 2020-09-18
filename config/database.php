@@ -58,5 +58,27 @@ return [
         ],
 
         // 更多的数据库配置信息
+        'oracle' => [
+            // 数据库类型
+            'type'            => '\misuoka\think\Oracle',
+            // 服务器地址
+            'hostname'        => '172.16.9.20', // 填写数据库 IP 地址
+            // 数据库名
+            'database'        => '', // 数据库实例 SID 名称，如 ORCL
+            // 用户名
+            'username'        => 'jwzjk', // 用户名
+            // 密码
+            'password'        => 'Hfgyxx_pai', // 密码
+            // 端口
+            'hostport'        => '1521', // 端口号，如 1521
+            // 数据库连接参数
+            'params'          => [],
+            // 数据库编码默认采用utf8
+            'charset'         => 'utf8',
+            // 数据库表前缀
+            'prefix'          => '',
+            // 自增序列名前缀（新增的，针对 Oracle 特有的），除前缀外，名称与表名一致。如果不是，请在新增数据时使用 sequence 方法设置序列
+            'prefix_sequence' => '',
+        ],
     ],
 ];
