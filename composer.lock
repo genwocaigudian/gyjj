@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4de38663c36a5f6de530975d5dd1e46b",
+    "content-hash": "fcae5244a15ab16941125aa606626e2f",
     "packages": [
         {
             "name": "casbin/casbin",
@@ -3320,6 +3320,50 @@
             ],
             "description": "thinkphp6 multi app support",
             "time": "2020-07-12T13:50:37+00:00"
+        },
+        {
+            "name": "topthink/think-oracle",
+            "version": "v3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/top-think/think-oracle.git",
+                "reference": "088040f94e806fbab418cffe868f38980ae6ecb3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/top-think/think-oracle/zipball/088040f94e806fbab418cffe868f38980ae6ecb3",
+                "reference": "088040f94e806fbab418cffe868f38980ae6ecb3",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "topthink/framework": "^6.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "think\\db\\": "src"
+                },
+                "files": []
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "liu21st",
+                    "email": "liu21st@gmail.com"
+                }
+            ],
+            "description": "Oracle driver for thinkphp",
+            "abandoned": true,
+            "time": "2019-06-25T07:54:48+00:00"
         },
         {
             "name": "topthink/think-orm",
