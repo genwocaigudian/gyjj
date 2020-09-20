@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4de38663c36a5f6de530975d5dd1e46b",
+    "content-hash": "44830ba6b1ae5a125b6a2452581ca597",
     "packages": [
         {
             "name": "casbin/casbin",
@@ -890,6 +890,116 @@
                 "vector"
             ],
             "time": "2020-08-28T19:41:55+00:00"
+        },
+        {
+            "name": "misuoka/ocipdo",
+            "version": "v0.1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/misuoka/ocipdo.git",
+                "reference": "5ccfae8b44f79448909588585543602ff3c5ac74"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/misuoka/ocipdo/zipball/5ccfae8b44f79448909588585543602ff3c5ac74",
+                "reference": "5ccfae8b44f79448909588585543602ff3c5ac74",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ocipdo\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "misuoka",
+                    "email": "125158612@qq.com"
+                }
+            ],
+            "description": "基于 OCI API 封装的 Oracle PDO 数据库驱动",
+            "keywords": [
+                "oci",
+                "oracle",
+                "pdo",
+                "pdo_oci"
+            ],
+            "time": "2020-05-14T15:00:10+00:00"
+        },
+        {
+            "name": "misuoka/think-oracle",
+            "version": "v2.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/misuoka/think-oracle.git",
+                "reference": "5b2d10b7c8b131a0a35301ab438516ca720f6265"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/misuoka/think-oracle/zipball/5b2d10b7c8b131a0a35301ab438516ca720f6265",
+                "reference": "5b2d10b7c8b131a0a35301ab438516ca720f6265",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "misuoka/ocipdo": "~0.1.1",
+                "php": ">=7.1.0",
+                "topthink/think-orm": "~2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "misuoka\\think\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "misuoka",
+                    "email": "125158612@qq.com"
+                }
+            ],
+            "description": "用于 thinkphp6 框架上的基于 OCI 的 Oracle 数据库驱动。thinkphp5.1 请使用 1.0 版本",
+            "keywords": [
+                "oci",
+                "oracle",
+                "pdo",
+                "pdo_oci",
+                "thihnkphp5",
+                "think-oci",
+                "think-oracle",
+                "thinkphp",
+                "thinkphp6",
+                "topthink"
+            ],
+            "time": "2020-06-02T15:40:52+00:00"
         },
         {
             "name": "monolog/monolog",
