@@ -18,17 +18,18 @@ class Qresult extends AuthBase
         if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
-        $data = input('post.');
+        $data = input('param.');
         
-        $validate = new QresultValidate();
-        if (!$validate->scene('save')->check($data)) {
-            return Show::error($validate->getError());
-        }
+//        $validate = new QresultValidate();
+//        if (!$validate->scene('save')->check($data)) {
+//            return Show::error($validate->getError());
+//        }
+	    foreach ($data as &$datum) {
+	    	$datum['user_id'] = $this->userId;
+	    }
         
-        $data['user_id'] = $this->userId;
-
         try {
-            $result = (new QuestionResult())->insertData($data);
+            $result = (new QuestionResult())->insertAll($data);
         } catch (\Exception $e) {
             return Show::error($e->getMessage());
         }
