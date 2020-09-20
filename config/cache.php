@@ -26,9 +26,10 @@ return [
         ],
         // 更多的缓存连接
         'redis' => [
-            'host'       => '172.18.0.5',
-            'port'       => 6379,
-            'type'       => 'redis',
+            'host'       => env('redis.host', '127.0.0.1'),
+            'port'       => env('redis.port', '6379'),
+            'password'   => env('redis.password', ''),
+            'type'       => env('redis.type', 'redis'),
         ],
     ],
 ];

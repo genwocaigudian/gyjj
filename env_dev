@@ -1,1 +1,1 @@
-APP_DEBUG = false[APP]DEFAULT_TIMEZONE = Asia/Shanghai[DATABASE]TYPE = mysqlHOSTNAME = 172.18.0.4DATABASE = gyjjUSERNAME = rootPASSWORD = 111111HOSTPORT = 3306CHARSET = utf8DEBUG = truePREFIX = gyjj_[LANG]default_lang = zh-cn
+APP_DEBUG = false[APP]DEFAULT_TIMEZONE = Asia/Shanghai[DATABASE]TYPE = mysqlHOSTNAME = mysqlDATABASE = gyjjUSERNAME = rootPASSWORD = 123456HOSTPORT = 3306CHARSET = utf8DEBUG = truePREFIX=gyjj_[REDIS]HOST = redisPORT = 6379PASSWORD = 111111TYPE = redis[LANG]default_lang = zh-cn
