@@ -22,7 +22,7 @@ class Problem extends AdminAuthBase
             return Show::error($validate->getError());
         }
         $id = $data['question_id'];
-        $list = (new QuestionProblemService())->getPaginateList($id, 10);
+        $list = (new QuestionProblemService())->getPaginateListWithOption($id, 10);
         
         return Show::success($list);
     }

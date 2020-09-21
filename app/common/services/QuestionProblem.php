@@ -54,13 +54,14 @@ class QuestionProblem extends BaseServices
         $result = $list->toArray();
         return $result;
     }
-	
-	/**
-	 * @return array
-	 * @throws DataNotFoundException
-	 * @throws DbException
-	 * @throws ModelNotFoundException
-	 */
+
+    /**
+     * @param $id
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
 	public function getNormalListWithOption($id)
 	{
 		$field = 'id, question_id, title, type, sequence';
@@ -71,6 +72,25 @@ class QuestionProblem extends BaseServices
 		$result = $list->toArray();
 		return $result;
 	}
+
+    /**
+     * @param $id
+     * @param $num
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getPaginateListWithOption($id, $num)
+    {
+        $field = 'id, question_id, title, type, sequence';
+        $list = $this->model->getPaginateListWithOption($id, $field, $num);
+        if (!$list) {
+            return [];
+        }
+        $result = $list->toArray();
+        return $result;
+    }
 
     /**
      * @param $id

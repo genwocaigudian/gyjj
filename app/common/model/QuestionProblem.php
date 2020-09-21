@@ -129,6 +129,38 @@ class QuestionProblem extends BaseModel
     }
 
     /**
+     * @param integer $id
+     * @param string $field
+     * @param string $num
+     * @return Collection
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getPaginateListWithOption($id, $field = "*", $num)
+    {
+        $order = [
+            'sequence' => 'asc',
+            'id' => 'asc',
+        ];
+        $where = [
+            "question_id" => $id,
+            "status" => config("status.mysql.table_normal"),
+        ];
+
+        $result = $this->where($where)
+            ->with(['questionOption' => function ($query) {
+                $query->field('id, problem_id, value');
+            }])
+            ->field($field)
+            ->order($order)
+            ->paginate($num);
+//        echo $this->getLastSql();
+//        exit;
+        return $result;
+    }
+
+    /**
      * @param $likeKeys
      * @param $data
      * @param string $field
