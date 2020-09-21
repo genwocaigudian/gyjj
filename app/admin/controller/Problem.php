@@ -23,6 +23,9 @@ class Problem extends AdminAuthBase
         }
         $id = $data['question_id'];
         $list = (new QuestionProblemService())->getPaginateListWithOption($id, 10);
+        foreach ($list['data'] as &$value) {
+            $value['id'] = $value['question_id'] .'_'. $value['id'];
+        }
         
         return Show::success($list);
     }
