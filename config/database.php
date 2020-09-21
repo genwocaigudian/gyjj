@@ -64,7 +64,7 @@ return [
             // 服务器地址
             'hostname'        => env('oracle.hostname', '127.0.0.1'), // 填写数据库 IP 地址
             // 数据库名
-            'database'        => '', // 数据库实例 SID 名称，如 ORCL
+            'database'        => env('oracle.database', ''), // 数据库实例 SID 名称，如 ORCL
             // 用户名
             'username'        => env('oracle.username', ''), // 用户名
             // 密码
