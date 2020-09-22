@@ -13,6 +13,7 @@ class Selection extends BaseModel
 {
     use SoftDelete;
     protected $deleteTime = 'delete_time';
+    protected $dateFormat = 'Y-m-d';
 
     protected $type = [
         'start_time'  =>  'timestamp',

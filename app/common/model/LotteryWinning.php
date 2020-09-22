@@ -9,11 +9,10 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\model\concern\SoftDelete;
 
-class Question extends BaseModel
+class LotteryWinning extends BaseModel
 {
     use SoftDelete;
     protected $deleteTime = 'delete_time';
-    protected $dateFormat = 'Y-m-d';
 
     protected $type = [
         'start_time'  =>  'timestamp',
