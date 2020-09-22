@@ -12,6 +12,13 @@ class BaseModel extends Model
     public function updateById($id, $data)
     {
         $data['update_time'] = time();
+        if (isset($data['start_time'])) {
+            $data['start_time'] = strtotime($data['start_time'] . '00:00:00');
+        }
+
+        if (isset($data['end_time'])) {
+            $data['end_time'] = strtotime($data['end_time'] . '23:59:59');
+        }
         return $this->where(["id" => $id])->save($data);
     }
 

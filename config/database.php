@@ -80,29 +80,5 @@ return [
             // 自增序列名前缀（新增的，针对 Oracle 特有的），除前缀外，名称与表名一致。如果不是，请在新增数据时使用 sequence 方法设置序列
             'prefix_sequence' => '',
         ],
-
-        // 更多的数据库配置信息
-        'oracle1' => [
-            // 数据库类型
-            'type'            => 'Oracle',
-            // 服务器地址
-            'hostname'        => env('oracle1.hostname', '127.0.0.1'), // 填写数据库 IP 地址
-            // 数据库名
-            'database'        => env('oracle1.database', ''), // 数据库实例 SID 名称，如 ORCL
-            // 用户名
-            'username'        => env('oracle1.username', ''), // 用户名
-            // 密码
-            'password'        => env('oracle1.password', ''), // 密码
-            // 端口
-            'hostport'        => env('oracle1.hostport', ''), // 端口号，如 1521
-            // 数据库连接参数
-            'params'          => [],
-            // 数据库编码默认采用utf8
-            'charset'         => 'utf8',
-            // 数据库表前缀
-            'prefix'          => '',
-            // 自增序列名前缀（新增的，针对 Oracle 特有的），除前缀外，名称与表名一致。如果不是，请在新增数据时使用 sequence 方法设置序列
-            'prefix_sequence' => '',
-        ],
     ],
 ];
