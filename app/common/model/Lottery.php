@@ -136,7 +136,7 @@ class Lottery extends BaseModel
         } else {
             $res = $this;
         }
-        $result = $res->field($field)->paginate($num);
+        $result = $res->withoutField(['content'])->paginate($num);
         //echo $this->getLastSql();exit;
         return $result;
     }
