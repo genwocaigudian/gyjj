@@ -45,7 +45,6 @@ class Rules extends BaseServices
     
     /**
      * 获取权限列表
-     * @param $uid
      * @param $data
      * @param $field
      * @return array
@@ -53,10 +52,10 @@ class Rules extends BaseServices
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getAllRolesByUid($uid, $data, $field)
+    public function getAllRolesByUid($data, $field)
     {
         $list = $this->getList($data, $field);
-        $roles = Enforcer::getRolesForUser($uid);
+        $roles = Enforcer::getRolesForUser(1);
         foreach ($list as &$item) {
             $item['is_check'] = 0;
             if (in_array($item['v1'], $roles)) {

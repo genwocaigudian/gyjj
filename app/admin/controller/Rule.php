@@ -125,12 +125,12 @@ class Rule extends AdminAuthBase
 	{
 		$data = [
 			'type' => 'g',
-			'uid' => input('param.uid', 1, 'intval'),
+			'uid' => input('param.user_id', 1, 'intval'),
 		];
 		
 		$field = 'id, v1';
 		
-		$list = (new RuleService())->getAllRolesByUid($this->userId, $data, $field);
+		$list = (new RuleService())->getAllRolesByUid($data, $field);
 		
 		return Show::success($list);
 	}
