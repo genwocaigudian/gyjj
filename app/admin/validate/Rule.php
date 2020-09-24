@@ -4,7 +4,7 @@ namespace app\admin\validate;
 
 use think\Validate;
 
-class Role extends Validate
+class Rule extends Validate
 {
     protected $rule = [
         'id' => 'require',
@@ -17,7 +17,8 @@ class Role extends Validate
     ];
     
     protected $scene = [
-        'save' => ['id', 'name'],
+        'save' => ['name'],
+        'give' => ['id'],
         'update' => ['name'],
         'delete' => ['name'],
     ];

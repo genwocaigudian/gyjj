@@ -22,6 +22,20 @@ class BaseModel extends Model
         return $this->where(["id" => $id])->save($data);
     }
 
+    public function updateNoTimeById($id, $data)
+    {
+        return $this->where(["id" => $id])->save($data);
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function deleteById($id)
+    {
+        return $this->where('id', '=', $id)->delete();
+    }
+
     /**
      * 根据条件查询
      * @param array $condition
