@@ -148,34 +148,34 @@ class Lost extends BaseServices
         
         return $this->model->updateById($id, $data);
     }
-	
-	/**
-	 * @param $orderId
-	 * @param $time
-	 * @return bool
-	 */
-	public function testCommond() {
-		
-		$result = Cache::zRangeByScore('order_status', 0, time(), ['limit' => [0, 1]]);
-//		$result = Cache::store('redis')->zRangeByScore("order_status", 0, time(), ['limit' => [0, 1]]);
-		
-		if(empty($result) || empty($result[0])) {
-			return false;
-		}
-		
-		try {
-			$delRedis = Cache::zRem('order_status', $result[0]);
-//			$delRedis = Cache::store('redis')->zRem("order_status", $result[0]);
-		}catch (\Exception $e) {
-			// 记录日志
-			$delRedis = "";
-		}
-		if($delRedis) {
-			echo "订单id:{$result[0]}在规定时间内没有完成支付 我们判定为无效订单删除".PHP_EOL;
-		} else {
-			return false;
-		}
-		
-		return true;
-	}
+    
+    /**
+     * @param $orderId
+     * @param $time
+     * @return bool
+     */
+    public function testCommond()
+    {
+        $result = Cache::zRangeByScore('order_status', 0, time(), ['limit' => [0, 1]]);
+        //		$result = Cache::store('redis')->zRangeByScore("order_status", 0, time(), ['limit' => [0, 1]]);
+        
+        if (empty($result) || empty($result[0])) {
+            return false;
+        }
+        
+        try {
+            $delRedis = Cache::zRem('order_status', $result[0]);
+            //			$delRedis = Cache::store('redis')->zRem("order_status", $result[0]);
+        } catch (\Exception $e) {
+            // 记录日志
+            $delRedis = "";
+        }
+        if ($delRedis) {
+            echo "订单id:{$result[0]}在规定时间内没有完成支付 我们判定为无效订单删除".PHP_EOL;
+        } else {
+            return false;
+        }
+        
+        return true;
+    }
 }

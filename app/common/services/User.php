@@ -80,22 +80,22 @@ class User extends BaseServices
         }
         return $user->toArray();
     }
-	
-	/**
-	 * @param $id
-	 * @return array
-	 * @throws \think\db\exception\DataNotFoundException
-	 * @throws \think\db\exception\DbException
-	 * @throws \think\db\exception\ModelNotFoundException
-	 */
-	public function getNormalUserByOpenId($openid)
-	{
-		$user = $this->model->getUserByOpenid($openid);
-		if (!$user || $user->status != config('status.mysql.table_normal')) {
-			return [];
-		}
-		return $user->toArray();
-	}
+    
+    /**
+     * @param $id
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getNormalUserByOpenId($openid)
+    {
+        $user = $this->model->getUserByOpenid($openid);
+        if (!$user || $user->status != config('status.mysql.table_normal')) {
+            return [];
+        }
+        return $user->toArray();
+    }
 
     /**
      * @param $username

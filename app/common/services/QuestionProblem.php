@@ -62,16 +62,16 @@ class QuestionProblem extends BaseServices
      * @throws DbException
      * @throws ModelNotFoundException
      */
-	public function getNormalListWithOption($id)
-	{
-		$field = 'id, question_id, title, type, sequence';
-		$list = $this->model->getNormalListWithOption($id, $field);
-		if (!$list) {
-			return [];
-		}
-		$result = $list->toArray();
-		return $result;
-	}
+    public function getNormalListWithOption($id)
+    {
+        $field = 'id, question_id, title, type, sequence';
+        $list = $this->model->getNormalListWithOption($id, $field);
+        if (!$list) {
+            return [];
+        }
+        $result = $list->toArray();
+        return $result;
+    }
 
     /**
      * @param $id

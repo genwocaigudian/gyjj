@@ -7,6 +7,15 @@ use think\db\exception\DbException;
 
 class AdminUser extends BaseModel
 {
+	protected $type = [
+		'last_login_time' => 'timestamp',
+	];
+	protected $hidden = [
+		'password',
+		'operate_user',
+		'create_time',
+		'update_time',
+	];
     /**
      * 根据id获取用户信息
      * @param $id 用户id
@@ -74,41 +83,37 @@ class AdminUser extends BaseModel
      * @return \think\Paginator
      * @throws DbException
      */
-    public function getLists($where, $field = '*', $num = 10)
+    public function getLists($where, $num = 10)
     {
         $order = [
             "id" => "desc"
         ];
-        $result = $this->where("status", "<>", config("status.mysql.table_delete"))
-            ->where($where)
-            ->field($field)
-            ->order($order)
-            ->paginate($num);
-        //echo $this->getLastSql();exit;
+        $result = $this->where($where)->order($order)->paginate($num);
+//        echo $this->getLastSql();exit;
         return $result;
     }
 
-    /**
-     * 根据主键ID更新数据表中的数据
-     * @param $id
-     * @param $data
-     * @return bool
-     */
-    public function deleteById($id, $data)
-    {
-        if (empty($id) || empty($data) || !is_array($data)) {
-            return false;
-        }
-
-        $where = [];
-
-        if (is_array($id)) {
-            $where[] = ['id', 'in', $id];
-        } else {
-            $where[] = ['id', '=', intval($id)];
-        }
-
-        return $this->where($where)->save($data);
-//        echo $this->getLastSql();exit();
-    }
+//    /**
+//     * 根据主键ID更新数据表中的数据
+//     * @param $id
+//     * @param $data
+//     * @return bool
+//     */
+//    public function deleteById($id, $data)
+//    {
+//        if (empty($id) || empty($data) || !is_array($data)) {
+//            return false;
+//        }
+//
+//        $where = [];
+//
+//        if (is_array($id)) {
+//            $where[] = ['id', 'in', $id];
+//        } else {
+//            $where[] = ['id', '=', intval($id)];
+//        }
+//
+//        return $this->where($where)->save($data);
+////        echo $this->getLastSql();exit();
+//    }
 }

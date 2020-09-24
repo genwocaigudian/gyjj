@@ -22,7 +22,7 @@ class Login extends AdminBase
         try {
             $result = (new AdminUserServices())->login($data);
         } catch (\Exception $e) {
-            return Show::error($e->getMessage(), $e->getCode());
+            return Show::error($e->getMessage());
         }
         if ($result) {
             return Show::success($result, '登陆成功');
@@ -40,7 +40,7 @@ class Login extends AdminBase
     public function check()
     {
         if (!$this->request->isPost()) {
-            return show(config('status.error'), '请求方式错误');
+        	return Show::error('非法请求');
         }
         
         $username = $this->request->param('username', '', 'trim');
@@ -54,10 +54,10 @@ class Login extends AdminBase
         ];
         $validate = new AdminUserValidate();
         if (!$validate->check($data)) {
-            return show(config('status.error'), $validate->getError());
+	        return Show::error($validate->getError());
         }
         if (empty($username) || empty($password) || empty($captcha)) {
-            return show(config('status.error'), '参数不能为空');
+	        return Show::error('参数缺失');
         }
 
         //		if (!captcha_check($captcha)) {
@@ -68,11 +68,11 @@ class Login extends AdminBase
             $adminUserModel = new AdminUserModel();
             $adminUser = $adminUserModel->getAdminUserByUsername($username);
             if (empty($adminUser) || $adminUser->status != config('status.mysql.table_normal')) {
-                return show(config('status.error'), '用户不存在');
+	            return Show::error('用户不存在');
             }
             $adminUser = $adminUser->toArray();
             if ($adminUser['password'] != md5($password.'_gyjj')) {
-                return show(config('status.error'), '密码错误');
+	            return Show::error('密码错误');
             }
             
             $updateData = [
@@ -83,15 +83,14 @@ class Login extends AdminBase
             
             $res = $adminUserModel->updateById($adminUser['id'], $updateData);
             if (empty($res)) {
-                return show(config('status.error'), '登录失败');
+            	return Show::error('登录失败');
             }
         } catch (\Exception $e) {
-            // todo 记录日志 $e->getMessage();
-            return show(config('status.error'), '内部异常');
+	        return Show::error('内部异常');
         }
         
         session(config('admin.session_admin'), $adminUser);
-        
-        return show(config('status.success'), '登陆成功');
+	
+	    return Show::success('登录成功');
     }
 }

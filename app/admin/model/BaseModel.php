@@ -36,4 +36,13 @@ class BaseModel extends Model
         ///echo $this->getLastSql();exit;
         return $result;
     }
+	
+	/**
+	 * @param $id
+	 * @return bool
+	 */
+	public function deleteById($id)
+	{
+		return $this->where('id', '=', $id)->delete();
+	}
 }

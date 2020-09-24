@@ -6,6 +6,7 @@ namespace app\common\services;
 use app\admin\services\AdminUser;
 use app\common\lib\Arr;
 use app\common\model\Rules as RulesModel;
+use tauthz\facade\Enforcer;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -32,11 +33,6 @@ class Rules extends BaseServices
      */
     public function getList($data, $field)
     {
-        if ($data['uid']) {
-            $user = (new AdminUser())->getNormalUserById($data['uid']);
-            $data['name'] = $user['username']??'';
-        }
-
         try {
             $list = $this->model->getListByType($data, $field);
             $result = $list->toArray();
@@ -45,6 +41,29 @@ class Rules extends BaseServices
             $result = [];
         }
         return $result;
+    }
+    
+    /**
+     * 获取权限列表
+     * @param $uid
+     * @param $data
+     * @param $field
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getAllRolesByUid($uid, $data, $field)
+    {
+        $list = $this->getList($data, $field);
+        $roles = Enforcer::getRolesForUser($uid);
+        foreach ($list as &$item) {
+            $item['is_check'] = 0;
+            if (in_array($item['v1'], $roles)) {
+                $item['is_check'] = 1;
+            }
+        }
+        return $list;
     }
 
     /**

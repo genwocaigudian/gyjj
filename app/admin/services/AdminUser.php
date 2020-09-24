@@ -132,8 +132,7 @@ class AdminUser extends AdminBaseServices
      */
     public function getLists($data, $num)
     {
-        $field = 'id, username, status';
-        $list = $this->model->getLists($data, $field, $num);
+        $list = $this->model->getLists($data, $num);
         if (!$list) {
             return [];
         }
@@ -159,8 +158,6 @@ class AdminUser extends AdminBaseServices
         $insertData = [
             'username' => $data['username'],
             'password' => md5($data['password'].config('admin.password_suffix')),
-            'create_time' => time(),
-            'update_time' => time(),
             'last_login_time' => time(),
             'last_login_ip' => $data['last_login_ip'],
             'operate_user' => 'admin',
@@ -184,10 +181,6 @@ class AdminUser extends AdminBaseServices
      */
     public function delete($id)
     {
-        $data = [
-            'status' => config('status.mysql.table_delete')
-        ];
-
-        return $this->model->deleteById($id, $data);
+        return $this->model->deleteById($id);
     }
 }

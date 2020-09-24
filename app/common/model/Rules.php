@@ -43,13 +43,13 @@ class Rules extends BaseModel
         $where = [
             "ptype" => $data['type'],
         ];
-
-        if ($data['name']) {
-            $where['v0'] = $data['name'];
+        
+        if (isset($data['uid'])) {
+        	$where['v0'] = $data['uid'];
         }
 
         $result = $this->where($where)->field($field)->select();
-        //echo $this->getLastSql();exit;
+//        echo $this->getLastSql();exit;
         return $result;
     }
 

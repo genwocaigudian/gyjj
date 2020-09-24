@@ -44,16 +44,16 @@ class UserToken extends BaseServices
         
         return $this->grantToken($wxResult);
     }
-	
-	/**
-	 * 颁发令牌
-	 * @param $wxResult
-	 * @return string
-	 * @throws Exception
-	 * @throws \think\db\exception\DataNotFoundException
-	 * @throws \think\db\exception\DbException
-	 * @throws \think\db\exception\ModelNotFoundException
-	 */
+    
+    /**
+     * 颁发令牌
+     * @param $wxResult
+     * @return string
+     * @throws Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
     public function grantToken($wxResult)
     {
         //拿到openid
@@ -65,66 +65,66 @@ class UserToken extends BaseServices
         $userService = new User();
         $user = $userService->getNormalUserByOpenId($openid);
         if ($user) {
-        	$uid = $user['id'];
+            $uid = $user['id'];
         } else {
-        	$data = [
-        		'openid' => $openid,
+            $data = [
+                'openid' => $openid,
 //        		'nickname' => $wxResult['nickname'],
 //		        'headimgurl' => $wxResult['headimgurl'],
-	        ];
-	        $uid = $userService->add($data);
+            ];
+            $uid = $userService->add($data);
         }
         
         $cachedValue = self::cachedWxValue($wxResult, $uid);
         $token = self::saveToCache($cachedValue);
         return $token;
     }
-	
+    
     //缓存微信数据
-	public function cachedWxValue($wxResult, $uid)
-	{
-		$cachedValue = $wxResult;
-		$cachedValue['uid'] = $uid;
-		return $cachedValue;
+    public function cachedWxValue($wxResult, $uid)
+    {
+        $cachedValue = $wxResult;
+        $cachedValue['uid'] = $uid;
+        return $cachedValue;
     }
-	
-	public static function saveToCache($cachedValue)
-	{
-		$str = Str::generateToken();
-		$expire = config('wx.token_expire_in');
-		$request = cache(config('wx.api_token_pre') . $str, $cachedValue, $expire);
-		if (!$request) {
-			throw new Exception("数据不存在");
-		}
-		return $str;
+    
+    public static function saveToCache($cachedValue)
+    {
+        $str = Str::generateToken();
+        $expire = config('wx.token_expire_in');
+        $request = cache(config('wx.api_token_pre') . $str, $cachedValue, $expire);
+        if (!$request) {
+            throw new Exception("数据不存在");
+        }
+        return $str;
     }
-	
-	/**
-	 * @param $key
-	 * @return mixed
-	 * @throws Exception
-	 */
-	public function getCurrentTokenVar($key)
-	{
-		$token = Request::header('token');
-		$vars = Cache::get($token);
-		if (!$vars) {
-			throw new Exception('token已过期或无效');
-		}
-		if (!is_array($vars)) {
-			$vars = json_decode($vars, true);
-		}
-		if (!array_key_exists($key, $vars)) {
-			throw new Exception('尝试获取的token变量并不存在');
-		}
-		return $vars[$key];
+    
+    /**
+     * @param $key
+     * @return mixed
+     * @throws Exception
+     */
+    public function getCurrentTokenVar($key)
+    {
+        $token = Request::header('token');
+        $vars = Cache::get($token);
+        if (!$vars) {
+            throw new Exception('token已过期或无效');
+        }
+        if (!is_array($vars)) {
+            $vars = json_decode($vars, true);
+        }
+        if (!array_key_exists($key, $vars)) {
+            throw new Exception('尝试获取的token变量并不存在');
+        }
+        return $vars[$key];
     }
     
     //获取当前登录用户的uid
-	public function getCurrentUid()
-	{
-		$uid = $this->getCurrentTokenVar('uid');
-		return $uid;
+    public function getCurrentUid()
+    {
+        $uid = $this->getCurrentTokenVar('uid');
+        return $uid;
     }
 
     //检验token是否有效

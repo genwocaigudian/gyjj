@@ -50,7 +50,7 @@ class User extends AdminAuthBase
             $result = (new AdminUserService())->insertData($data);
         } catch (\Exception $e) {
             Log::error('admin/user/save 错误:' . $e->getMessage());
-            return Show::error($e->getMessage(), $e->getCode());
+            return Show::error($e->getMessage());
         }
         
         return Show::success($result);
@@ -62,15 +62,32 @@ class User extends AdminAuthBase
      */
     public function read()
     {
+	    $id = input('param.id', 0, 'intval');
         try {
-            $result = (new AdminUserService())->getNormalUserById($this->userId);
+            $result = (new AdminUserService())->getNormalUserById($id);
         } catch (\Exception $e) {
             Log::error('admin/user/read 错误:' . $e->getMessage());
-            return Show::error($e->getMessage(), $e->getCode());
+            return Show::error($e->getMessage());
         }
 
         return Show::success($result);
     }
+	
+	/**
+	 * 详情
+	 * @return Json
+	 */
+	public function info()
+	{
+		try {
+			$result = (new AdminUserService())->getNormalUserById($this->userId);
+		} catch (\Exception $e) {
+			Log::error('admin/user/read 错误:' . $e->getMessage());
+			return Show::error($e->getMessage());
+		}
+		
+		return Show::success($result);
+	}
 
     /**
      * 更新数据
@@ -105,6 +122,10 @@ class User extends AdminAuthBase
         }
         
         $id = input('param.id');
+	
+	    if (1 == $id) {
+		    return Show::error('该用户不可删除');
+	    }
 
         try {
             $res = (new AdminUserService())->delete($id);
