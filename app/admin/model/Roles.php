@@ -81,28 +81,4 @@ class Roles extends BaseModel
         //echo $this->getLastSql();exit;
         return $result;
     }
-
-    /**
-     * 根据主键ID更新数据表中的数据
-     * @param $id
-     * @param $data
-     * @return bool
-     */
-    public function deleteById($id, $data)
-    {
-        if (empty($id) || empty($data) || !is_array($data)) {
-            return false;
-        }
-
-        $where = [];
-
-        if (is_array($id)) {
-            $where[] = ['id', 'in', $id];
-        } else {
-            $where[] = ['id', '=', intval($id)];
-        }
-
-        return $this->where($where)->save($data);
-//        echo $this->getLastSql();exit();
-    }
 }

@@ -208,6 +208,6 @@ class News extends BaseServices
             'status' => config('status.mysql.table_delete')
         ];
 
-        return $this->model->deleteById($id, $data);
+        return $this->model->deleteById($id);
     }
 }
