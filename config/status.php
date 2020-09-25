@@ -8,6 +8,7 @@ return [
     'action_not_found' => -3,
     'method_not_found' => -4,
     'name_not_null' => -5,
+    'not_bind' => -6,
 
     // mysql相关的状态配置
     "mysql" => [
