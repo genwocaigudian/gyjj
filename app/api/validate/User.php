@@ -9,8 +9,8 @@ class User extends Validate
     protected $rule = [
         'username' => 'require',
         'phone_number' => 'require',
+        'number' => 'require',
         'code'  =>  'require|number|min:4',
-        //'type' => 'require|in:1,2',
         'type' => ["require", "in"=>"1,2"], // 两种不同的方式而已
         'sex' => ["require", "in"=>"0,1,2"],
     ];
@@ -18,6 +18,7 @@ class User extends Validate
     protected $message = [
         'username' => '用户名必须',
         'phone_number' => '电话号码必须',
+        'number' => 'number不可为空',
         'code.require' => '短信验证码必须',
         'code.number'  =>  '短信验证码必须为数字',
         'code.min'  =>  '短信验证码长度不得低于4',
@@ -29,6 +30,7 @@ class User extends Validate
     
     protected $scene = [
         'send_code' => ['phone_number'],
+        'bind' => ['type', 'number'],
         'login' => ['phone_number', 'code', 'type'],
         'update_user' => ['username', 'sex'],
     ];

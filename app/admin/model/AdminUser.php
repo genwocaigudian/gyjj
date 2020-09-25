@@ -3,6 +3,7 @@
 
 namespace app\admin\model;
 
+use app\common\model\BaseModel;
 use think\db\exception\DbException;
 
 class AdminUser extends BaseModel

@@ -125,11 +125,8 @@ class User extends BaseServices
         if (!$user) {
             throw new Exception('不存在该用户');
         }
-        $userResult = $this->getNormalUserByUsername($data['username']);
-        if ($userResult && $userResult['id'] != $id) {
-            throw new Exception('该用户已存在');
-        }
+
         //redis需要同步
-        return $this->model->updateById1($id, $data);
+        return $this->model->updateById($id, $data);
     }
 }

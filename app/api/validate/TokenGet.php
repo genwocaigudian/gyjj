@@ -4,7 +4,7 @@ namespace app\api\validate;
 
 use think\Validate;
 
-class News extends Validate
+class TokenGet extends Validate
 {
     protected $rule = [
         'code' => 'require',
