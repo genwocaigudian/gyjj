@@ -25,7 +25,7 @@ class User extends Validate
         'type.require' => '类型必须',
         'type.in' => '类型数值错误',
         'sex.require' => '性别必须',
-        'sex.in' => '性别数值错误'
+        'sex.in' => '性别数值错误',
     ];
     
     protected $scene = [

@@ -8,9 +8,6 @@ use think\Model;
 //教师信息表
 class Jsxxb extends Model
 {
-    protected $connection = 'oracle';
-    protected $table = 'zfxfzb.v_jsxxb';
-
     /**
      * @param $zgh
      * @return array|bool|Model|null

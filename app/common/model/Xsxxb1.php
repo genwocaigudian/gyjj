@@ -6,8 +6,10 @@ namespace app\common\model;
 use think\Model;
 
 //学生信息表
-class Xsxxb extends Model
+class Xsxxb1 extends Model
 {
+    protected $connection = 'oracle';
+    protected $table = 'zfxfzb.v_xsxxb';
 
     /**
      * @param $xh

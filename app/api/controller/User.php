@@ -4,8 +4,6 @@
 namespace app\api\controller;
 
 use app\common\lib\Show;
-use app\common\model\Jsxxb;
-use app\common\model\Xsxxb;
 use app\common\services\User as UserServices;
 use app\api\validate\User as UserValidate;
 
@@ -45,53 +43,6 @@ class User extends AuthBase
         
         if (!$user) {
             return Show::error('操作失败');
-        }
-        return Show::success();
-    }
-
-
-    /**
-     * 账号绑定
-     * @return \think\response\Json
-     * @throws \think\Exception
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     */
-    public function bind()
-    {
-        if (!$this->request->isPost()) {
-            return Show::error('非法请求');
-        }
-
-        $data = input('param.');
-
-        $validate = new UserValidate();
-        if (!$validate->scene('bind')->check($data)) {
-            return Show::error($validate->getError());
-        }
-
-        switch ($data['type']) {
-            case 1:
-                $info = (new Xsxxb())->getByXH($data['number']);
-                break;
-            case 2:
-                $info = (new Jsxxb())->getByZGH($data['number']);
-                break;
-            default:
-                $info = false;
-                break;
-        }
-        if (!$info) {
-            return Show::error('账号不存在');
-        }
-
-        $data['username'] = $info->XM;
-
-        $user = (new UserServices())->update($this->userId, $data);
-
-        if (!$user) {
-            return Show::error('绑定失败');
         }
         return Show::success();
     }
