@@ -5,6 +5,7 @@ use app\admin\services\AdminUser as AdminUserService;
 use app\admin\validate\AdminUser as AdminUserValidate;
 use app\common\lib\Arr;
 use app\common\lib\Show;
+use tauthz\facade\Enforcer;
 use think\facade\Log;
 use think\response\Json;
 
@@ -48,6 +49,11 @@ class User extends AdminAuthBase
         
         try {
             $result = (new AdminUserService())->insertData($data);
+            if ($data['rulename'] && is_array($data['rulename'])) {
+                foreach ($data['rulename'] as $name) {
+                    Enforcer::addRoleForUser($result['id'], $name);
+                }
+            }
         } catch (\Exception $e) {
             Log::error('admin/user/save 错误:' . $e->getMessage());
             return Show::error($e->getMessage());
