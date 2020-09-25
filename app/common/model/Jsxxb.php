@@ -5,25 +5,25 @@ namespace app\common\model;
 
 use think\Model;
 
-//学生信息表
-class Xsxxb extends Model
+//教师信息表
+class Jsxxb extends Model
 {
     protected $connection = 'oracle';
-    protected $table = 'zfxfzb.v_xsxxb';
+    protected $table = 'zfxfzb.v_jsxxb';
 
     /**
-     * @param $xh
+     * @param $zgh
      * @return array|bool|Model|null
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getByXH($xh)
+    public function getByZGH($zgh)
     {
-        if (!$xh) {
+        if (!$zgh) {
             return false;
         }
-        $res = $this->where(['XH' => $xh])->find();
+        $res = $this->where(['ZGH' => $zgh])->find();
         return $res;
     }
 }

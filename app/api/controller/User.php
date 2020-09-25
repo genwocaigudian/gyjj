@@ -4,6 +4,8 @@
 namespace app\api\controller;
 
 use app\common\lib\Show;
+use app\common\model\Jsxxb;
+use app\common\model\Xsxxb;
 use app\common\services\User as UserServices;
 use app\api\validate\User as UserValidate;
 
@@ -68,6 +70,23 @@ class User extends AuthBase
         if (!$validate->scene('bind')->check($data)) {
             return Show::error($validate->getError());
         }
+
+        switch ($data['type']) {
+            case 1:
+                $info = (new Xsxxb())->getByXH($data['number']);
+                break;
+            case 2:
+                $info = (new Jsxxb())->getByZGH($data['number']);
+                break;
+            default:
+                $info = false;
+                break;
+        }
+        if (!$info) {
+            return Show::error('账号不存在');
+        }
+
+        $data['username'] = $info->XM;
 
         $user = (new UserServices())->update($this->userId, $data);
 
