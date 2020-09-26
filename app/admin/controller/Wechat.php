@@ -35,61 +35,19 @@ class Wechat extends AdminAuthBase
             {
                 "button": [
                     {
-                        "name": "微1",
-                        "sub_button": [{
-                                "type": "view",
-                                "name": "微主页",
-                                "url": "https://gyjj.schoolpi.net/api/index/index"
-                            },
-                            {
-                                "type": "view",
-                                "name": "2",
-                                "url": "https://gyjj.schoolpi.net/api/index/index"
-                            },
-                            {
-                                "type": "view",
-                                "name": "3",
-                                "url": "https://gyjj.schoolpi.net/api/index/index"
-                            }
-                        ]
+                        "name": "微主页",
+                        "type": "view",
+                        "url": "https://ahgyjj.schoolpi.net/#/"
                     },
                     {
                         "name": "微生活",
-                        "sub_button": [{
-                                "type": "view",
-                                "name": "1",
-                                "url": "https://gyjj.schoolpi.net/api/index/index"
-                            },
-                            {
-                                "type": "view",
-                                "name": "2",
-                                "url": "https://gyjj.schoolpi.net/api/cate/index"
-                            },
-                            {
-                                "type": "view",
-                                "name": "3",
-                                "url": "https://gyjj.schoolpi.net/api/index/index"
-                            }
-                        ]
+                        "type": "view",
+                        "url": "https://ahgyjj.schoolpi.net/#/pages/wserve/index/index"
                     },
                     {
                         "name": "微服务",
-                        "sub_button": [{
-                                "type": "view",
-                                "name": "1",
-                                "url": "https://gyjj.schoolpi.net/api/index/index"
-                            },
-                            {
-                                "type": "view",
-                                "name": "2",
-                                "url": "https://gyjj.schoolpi.net/api/index/index"
-                            },
-                            {
-                                "type": "view",
-                                "name": "3",
-                                "url": "https://gyjj.schoolpi.net/api/cate/index"
-                            }
-                        ]
+                        "type": "view",
+                        "url": "https://ahgyjj.schoolpi.net/#/pages/wlife/index/index"
                     }
                 ]
             }
