@@ -66,7 +66,7 @@ class Token extends BaseController
 
     /**
      * 校验账号是否绑定
-     * @return bool
+     * @return \think\response\Json
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
