@@ -26,22 +26,7 @@ class Category extends AdminAuthBase
         
         return Show::success($categorys);
     }
-	
-	public function index1()
-	{
-		$pid = input("param.pid", 0, "intval");
-		$data = [
-			"pid" => $pid,
-		];
-		try {
-			$categorys = (new CateService())->getLists($data, 10);
-		} catch (\Exception $e) {
-			$categorys = Arr::getPaginateDefaultData(10);
-		}
-		
-		return Show::success($categorys);
-	}
-    
+
     /**
      * 新增
      * @return Json

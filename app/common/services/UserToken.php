@@ -134,4 +134,26 @@ class UserToken extends BaseServices
 
         return Cache::get($key) ? 1 : 0;
     }
+
+    /**
+     * 校验是否绑定
+     * @param $token
+     * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function isBind($token)
+    {
+        $redisInfo = Cache::get(config('wx.api_token_pre').$token);
+        if (!$redisInfo) {
+            return 0;
+        }
+        $uid = $redisInfo['uid'];
+        $user = (new \app\common\services\User())->getNormalUserById($uid);
+        if ($user['number']) {
+            return 1;
+        }
+        return 0;
+    }
 }

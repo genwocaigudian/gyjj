@@ -65,6 +65,25 @@ class Token extends BaseController
     }
 
     /**
+     * 校验账号是否绑定
+     * @return bool
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function isBind()
+    {
+        $token = Request::header('Authorization');
+        if (!$token) {
+            return Show::error('token不可为空');
+        }
+
+        $ut = new UserToken();
+        $res = $ut->isBind($token);
+        return Show::success(['res' => $res]);
+    }
+
+    /**
      * 账号绑定
      * @return \think\response\Json
      * @throws \think\Exception
