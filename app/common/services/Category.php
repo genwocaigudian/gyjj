@@ -149,12 +149,13 @@ class Category extends BaseServices
         }
         return $result;
     }
-    
+
     /**
-     * 获取列表数据
-     * @param $data
-     * @param $num
+     * @param array $ids
      * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
      */
     public function getCateByIds($ids = [])
     {
