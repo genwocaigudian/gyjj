@@ -15,7 +15,16 @@ class News extends AdminAuthBase
      */
     public function index()
     {
-        $data = input('param.');
+        $data = [];
+        $title = input("param.title", "", "trim");
+        $cateId = input("param.cate_id", "0", "intval");
+
+        if(!empty($title)) {
+            $data['title'] = $title;
+        }
+        if(!empty($cateId)) {
+            $data['cate_id'] = $cateId;
+        }
         try {
             $list = (new NewsService())->getPaginateList($data, 10);
         } catch (\Exception $e) {
