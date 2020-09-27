@@ -3,6 +3,7 @@
 
 namespace app\api\controller;
 
+use app\common\lib\Arr;
 use app\common\lib\Show;
 use app\common\services\News as NewsService;
 
@@ -10,11 +11,15 @@ class News extends ApiBase
 {
     public function index()
     {
-        $data = [];
+        $cateId = input('param.cate_id', '0', 'intval');
         try {
-            $list = (new NewsService())->getNormalAllNews($data, 10);
+            if ($cateId) {
+                $list = (new NewsService())->getPaginateList(['cate_id' => $cateId], 10);
+            } else {
+                $list = (new NewsService())->getNormalAllNews();
+            }
         } catch (\Exception $e) {
-            $list = [];
+            $list = Arr::getPaginateDefaultData(10);
         }
         return Show::success($list);
     }
