@@ -41,7 +41,7 @@ class News extends BaseServices
                 $cateIds = array_column($result['data'], 'cate_id');
                 $cateNames = (new Category())->getCateByIds($cateIds);
                 foreach ($result['data'] as &$data) {
-                    $data['cate_name'] = $cateNames[$data['cate_id']];
+                    $data['cate_name'] = $cateNames[$data['cate_id']]['name'];
                 }
             }
         } catch (\Exception $e) {
