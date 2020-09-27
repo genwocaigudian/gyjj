@@ -10,7 +10,7 @@ use think\facade\Cache;
 use think\facade\Log;
 use think\response\Json;
 
-class Repair extends ApiBase
+class Repair extends AuthBase
 {
     public function index()
     {

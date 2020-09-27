@@ -13,7 +13,7 @@ use app\common\services\UserCode;
 use app\common\services\UserToken;
 use think\facade\Request;
 
-class Token extends BaseController
+class Token extends ApiBase
 {
     /**
      * 获取code

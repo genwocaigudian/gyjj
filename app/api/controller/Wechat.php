@@ -6,7 +6,7 @@ use app\common\lib\Show;
 use app\common\services\UserToken;
 use EasyWeChat\Factory;
 
-class Wechat extends BaseController
+class Wechat extends ApiBase
 {
     public function code()
     {

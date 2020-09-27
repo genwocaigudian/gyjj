@@ -10,7 +10,7 @@ use think\facade\Cache;
 use think\facade\Log;
 use think\response\Json;
 
-class Lost extends ApiBase
+class Lost extends AuthBase
 {
     /**
      * @return Json
