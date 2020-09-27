@@ -17,6 +17,11 @@ class News extends BaseModel
         'is_hot',
     ];
 
+    protected $hidden = [
+        'update_time',
+        'delete_time'
+    ];
+
     /**
      * 获取列表数据
      * @param $where
@@ -49,12 +54,13 @@ class News extends BaseModel
 
     /**
      * @param string $field
+     * @param string $num
      * @return \think\Collection
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getNormalNews($field = "*")
+    public function getNormalNews($field = "*", $num)
     {
         $where = [
             "status" => config("status.mysql.table_normal"),
@@ -66,6 +72,7 @@ class News extends BaseModel
         $result = $this->where($where)
             ->field($field)
             ->order($order)
+            ->limit($num)
             ->select();
         
         return $result;

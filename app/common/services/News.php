@@ -19,16 +19,16 @@ class News extends BaseServices
     {
         $this->model = new NewsModel();
     }
-    
+
     /**
-     * 获取列表数据
      * @param $data
      * @param $num
      * @return array
+     * @throws DbException
      */
     public function getLists($data, $num)
     {
-        $field = 'id, title, is_top, is_hot, status';
+        $field = 'id, small_title, cate_id, title, is_top, is_hot, status, img_urls';
         $list = $this->model->getLists($data, $field, $num);
         if (!$list) {
             return [];
@@ -39,9 +39,9 @@ class News extends BaseServices
     
     public function getNormalAllNews()
     {
-        $field = "id, name, pid";
+        $field = "id, small_title, title, is_top, is_hot, status, img_urls, create_time";
         try {
-            $res = $this->model->getNormalNews($field);
+            $res = $this->model->getNormalNews($field, 10);
         } catch (\Exception $e) {
             Log::error('getNormalAllNews 错误:' . $e->getMessage());
             throw new Exception('数据库内部异常');
