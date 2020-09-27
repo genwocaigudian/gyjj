@@ -16,7 +16,7 @@ class Question extends AdminAuthBase
      */
     public function index()
     {
-        $data = [];
+        $data = input('param.');
         $list = (new QuestionService())->getPaginateList($data, 10);
         
         return Show::success($list);

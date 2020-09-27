@@ -4,6 +4,7 @@
 namespace app\common\services;
 
 use app\admin\services\AdminUser as AdminUserService;
+use app\common\lib\Arr;
 use app\common\model\News as NewsModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -26,14 +27,19 @@ class News extends BaseServices
      * @return array
      * @throws DbException
      */
-    public function getLists($data, $num)
+    public function getPaginateList($data, $num)
     {
         $field = 'id, small_title, cate_id, title, is_top, is_hot, status, img_urls';
-        $list = $this->model->getLists($data, $field, $num);
-        if (!$list) {
-            return [];
+        $likeKeys = [];
+        if (!empty($data)) {
+            $likeKeys = array_keys($data);
         }
-        $result = $list->toArray();
+        try {
+            $list = $this->model->getPaginateList($likeKeys, $data, $field = '*', $num);
+            $result = $list->toArray();
+        } catch (\Exception $e) {
+            $result = Arr::getPaginateDefaultData($num);
+        }
         return $result;
     }
     

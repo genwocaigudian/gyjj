@@ -23,28 +23,48 @@ class News extends BaseModel
     ];
 
     /**
-     * 获取列表数据
-     * @param $where
+     * @param $likeKeys
+     * @param $data
      * @param string $field
      * @param int $num
      * @return \think\Paginator
-     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\DbException\
      */
-    public function getLists($where, $field = '*', $num = 10)
+    public function getPaginateList($likeKeys, $data, $field = "*", $num = 10)
     {
-        if (!$where['cate_id']) {
-            unset($where['cate_id']);
-        }
         $order = [
             "id" => "desc"
         ];
-        $result = $this->where("status", "<>", config("status.mysql.table_delete"))
-            ->where($where)
-            ->field($field)
-            ->order($order)
-            ->paginate($num);
-        //echo $this->getLastSql();exit;
+        if (!empty($likeKeys)) {
+            $res = $this->withSearch($likeKeys, $data);
+        } else {
+            $res = $this;
+        }
+        $result = $res->field($field)->order($order)->paginate($num);
+//        echo $this->getLastSql();exit;
         return $result;
+    }
+
+    /**
+     * cate_id查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchCateIdAttr($query, $value)
+    {
+        $query->where('cate_id', '=', $value);
+    }
+
+    /**
+     * title查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchTitleAttr($query, $value)
+    {
+        $query->where('title', 'like', '%' . $value . '%');
     }
     
     public function NewsContent()

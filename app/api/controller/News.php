@@ -5,7 +5,6 @@ namespace app\api\controller;
 
 use app\common\lib\Show;
 use app\common\services\News as NewsService;
-use think\facade\Log;
 
 class News extends ApiBase
 {

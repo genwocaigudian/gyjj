@@ -15,12 +15,9 @@ class News extends AdminAuthBase
      */
     public function index()
     {
-        $status = input("param.status", 1, "intval");
-        $data = [
-            "status" => $status,
-        ];
+        $data = input('param.');
         try {
-            $list = (new NewsService())->getLists($data, 10);
+            $list = (new NewsService())->getPaginateList($data, 10);
         } catch (\Exception $e) {
             $list = Arr::getPaginateDefaultData(10);
         }
