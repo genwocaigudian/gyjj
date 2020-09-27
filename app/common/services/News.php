@@ -183,7 +183,8 @@ class News extends BaseServices
 
         $cates = (new Category())->getCateByIds(array($result['cate_id']));
         $users = (new AdminUserService())->getAdminUserByIds(array($result['user_id']));
-        $result['cate_name'] = $cates[$result['cate_id']]??'';
+        $result['cate_name'] = $cates[$result['cate_id']]['name']??'';
+        $result['cate_path'] = empty($cates[$result['cate_id']]['pid'])?$result['cate_id']:$cates[$result['cate_id']]['pid'].','.$result['cate_id'];
         $result['user_name'] = $users[$result['user_id']]??'';
         $result['content'] = $result['newsContent']['content']??'';
         unset($result['newsContent']);

@@ -70,10 +70,8 @@ class News extends AdminAuthBase
     public function read()
     {
         $id = input('param.id', 0, 'intval');
-        $catePath = input('param.cate_path', '', 'trim');
         try {
             $result = (new NewsService())->formatNews($id);
-            $result['cate_path'] = $catePath;
         } catch (\Exception $e) {
             return Show::error($e->getMessage(), $e->getCode());
         }

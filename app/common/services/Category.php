@@ -163,8 +163,14 @@ class Category extends BaseServices
             return [];
         }
         $result = $list->toArray();
-        $users = array_column($result, 'name', 'id');
-        return $users;
+        foreach ($result as $value) {
+            $res[$value['id']] = [
+                'pid' => $value['pid'],
+                'name' => $value['name'],
+            ];
+        }
+//        $users = array_column($result, 'name', 'id');
+        return $res;
     }
     
     /**
