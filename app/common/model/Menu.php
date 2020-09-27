@@ -77,7 +77,7 @@ class Menu extends BaseModel
     {
         $order = [
             'sequence' => 'desc',
-            'id' => 'desc'
+            'id' => 'asc'
         ];
         $query = $this->newQuery();
         $result = $query->where($where)->order($order)->select();

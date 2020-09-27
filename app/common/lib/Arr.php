@@ -7,6 +7,8 @@ class Arr
 {
     /**
      * 分类树， 支持无限极分类
+     * @param $data
+     * @return array
      */
     public static function getTree($data)
     {
@@ -17,8 +19,9 @@ class Arr
         $tree = [];
         foreach ($items as $id => $item) {
             if (isset($items[$item['pid']])) {
-                $items[$item['pid']]['list'][] = &$items[$id];
+                $items[$item['pid']]['child'][] = &$items[$id];
             } else {
+                $items[$id]['child'] = [];
                 $tree[] = &$items[$id];
             }
         }

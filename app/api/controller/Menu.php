@@ -3,7 +3,7 @@
 
 namespace app\api\controller;
 
-use app\common\services\menu as MenuService;
+use app\common\services\Menu as MenuService;
 
 use app\common\lib\Arr;
 use app\common\lib\Show;

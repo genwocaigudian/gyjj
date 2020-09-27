@@ -10,21 +10,21 @@ use think\response\Json;
 
 class Category extends AdminAuthBase
 {
+    /**
+     * @return Json
+     * @throws \think\Exception
+     */
     public function index()
     {
-    	$data = [];
-    	$name = input('param.name', '', 'trim');
-    	$time = input('param.time', '', 'trim');
-        if (!empty($name)) {
-        	$data['name'] = $name;
+        $categorys = (new CateService())->getNormalAllCategorys();
+
+        if(!$categorys) {
+            return Show::success();
         }
-        if (!empty($time)) {
-        	$data['create_time'] = explode("-", $time);
-        }
+
+        $result = Arr::getTree($categorys);
         
-        $categorys = (new CateService())->getLists($data, 10);
-        
-        return Show::success($categorys);
+        return Show::success($result);
     }
 
     /**

@@ -26,7 +26,7 @@ class Category extends BaseServices
      */
     public function getNormalAllCategorys()
     {
-        $field = "id, name";
+        $field = "id, pid, name";
         try {
             $categorys = $this->model->getNormalCategorys($field);
         } catch (\Exception $e) {
