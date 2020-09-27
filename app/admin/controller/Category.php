@@ -16,14 +16,26 @@ class Category extends AdminAuthBase
      */
     public function index()
     {
-        $categorys = (new CateService())->getNormalAllCategorys();
+        $data = [
+            'pid' => 0
+        ];
+        $categorys = (new CateService())->getTreeList($data, 10);
+        
+        return Show::success($categorys);
+    }
 
-        if(!$categorys) {
+    /**
+     * @return Json
+     * @throws \think\Exception
+     */
+    public function all()
+    {
+        $categorys = (new CateService())->getNormalAllCategorys();
+        if (!$categorys) {
             return Show::success();
         }
-
         $result = Arr::getTree($categorys);
-        
+
         return Show::success($result);
     }
 
@@ -40,7 +52,7 @@ class Category extends AdminAuthBase
         
         $validate = new CateValidate();
         if (!$validate->scene('save')->check($data)) {
-            return Show::error($validate->getError(), config('status.name_not_null'));
+            return Show::error($validate->getError());
         }
 
         $data['is_show'] = 1;
@@ -112,7 +124,7 @@ class Category extends AdminAuthBase
 	    $id = input("param.id");
         
         try {
-            $res = (new CateService())->delete($id);
+            $res = (new CateService())->del($id);
         } catch (\Exception $e) {
             return Show::error($e->getMessage());
         }

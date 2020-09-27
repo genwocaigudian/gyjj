@@ -8,9 +8,20 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Model;
+use think\model\concern\SoftDelete;
 
 class Category extends BaseModel
 {
+    use SoftDelete;
+    protected $deleteTime = 'delete_time';
+
+    protected $hidden = [
+        'create_time',
+        'update_time',
+        'delete_time',
+        'path'
+    ];
+
     /**
      * @param string $field
      * @return Collection
@@ -141,7 +152,7 @@ class Category extends BaseModel
      * @return \think\Paginator
      * @throws DbException
      */
-    public function getLists($where, $field = '*', $num = 10)
+    public function getPaginateList($where, $field = '*', $num = 10)
     {
         $order = [
             "sequence" => "desc",
@@ -154,6 +165,36 @@ class Category extends BaseModel
             ->paginate($num);
 //        echo $this->getLastSql();exit;
         return $result;
+    }
+
+    /**
+     * getChildCountInPids
+     * @param $condition
+     * @return mixed
+     */
+    public function getChildCountInPids($condition) {
+        $where[] = ["pid", "in", $condition['pid']];
+        $res = $this->where($where)
+            ->field(["pid", "count(*) as count"])
+            ->group("pid")
+            ->select();
+        //echo $this->getLastSql();exit;
+        return $res;
+    }
+
+    /**
+     * getChildListInPids
+     * @param $condition
+     * @return mixed
+     */
+    public function getChildListInPids($condition) {
+        $where[] = ["pid", "in", $condition['pid']];
+        $res = $this->where($where)
+            ->field(["id", "pid", "name"])
+//            ->group("pid")
+            ->select();
+//        echo $this->getLastSql();exit;
+        return $res;
     }
     
     /**

@@ -26,7 +26,7 @@ class Category extends BaseServices
      */
     public function getNormalAllCategorys()
     {
-        $field = "id, pid, name";
+        $field = "id, pid, is_show, name";
         try {
             $categorys = $this->model->getNormalCategorys($field);
         } catch (\Exception $e) {
@@ -111,9 +111,37 @@ class Category extends BaseServices
         try {
             $list = $this->model->getLists($data, $field, $num);
             $result = $list->toArray();
-            if ($result['data']) {
-                foreach ($result['data'] as &$datum) {
-                    $datum['url'] = '/api/news/index?cate_id=' . $datum['id'];
+        } catch (\Exception $e) {
+            $result = [];
+        }
+        return $result;
+    }
+
+    /**
+     * 获取列表数据
+     * @param $data
+     * @param $num
+     * @return array
+     */
+    public function getTreeList($data, $num)
+    {
+        $field = 'id, name, is_show, pid';
+        try {
+            $list = $this->model->getPaginateList($data, $field, $num);
+            $result = $list->toArray();
+            $pids = array_column($result['data'], "id");
+            if ($pids) {
+                $idCountResult = $this->model->getChildListInPids(['pid' => $pids]);
+                $idCountResult = $idCountResult->toArray();
+                $idCounts = [];
+                foreach($idCountResult as $countResult) {
+                    $idCounts[$countResult['pid']][] = $countResult;
+                }
+            }
+
+            if($result['data']) {
+                foreach($result['data'] as $k => $value) {
+                    $result['data'][$k]['child'] = $idCounts[$value['id']] ?? [];
                 }
             }
         } catch (\Exception $e) {
@@ -176,10 +204,6 @@ class Category extends BaseServices
      */
     public function delete($id)
     {
-        $data = [
-            'status' => config('status.mysql.table_delete')
-        ];
-        
         return $this->model->deleteById($id);
     }
 
