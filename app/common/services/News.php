@@ -32,14 +32,19 @@ class News extends BaseServices
         $field = 'id, small_title, cate_id, title, is_top, is_hot, status, img_urls';
         $likeKeys = [];
         if (!empty($data)) {
-//            unset($data['page']);
             $likeKeys = array_keys($data);
         }
         try {
             $list = $this->model->getPaginateList($likeKeys, $data, $field = '*', $num);
             $result = $list->toArray();
+            if ($result['data']) {
+                $cateIds = array_column($result['data'], 'cate_id');
+                $cateNames = (new Category())->getCateByIds($cateIds);
+                foreach ($result['data'] as &$data) {
+                    $data['cate_name'] = $cateNames[$data['cate_id']];
+                }
+            }
         } catch (\Exception $e) {
-            halt($e->getMessage());
             $result = Arr::getPaginateDefaultData($num);
         }
         return $result;
