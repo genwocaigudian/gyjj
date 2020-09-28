@@ -39,7 +39,8 @@ class Category extends BaseModel
             "sequence" => "desc",
             "id" => "asc"
         ];
-        $result = $this->where($where)
+        $result = $this->whereNotIn('cate_id', [7,13,14])
+            ->where($where)
             ->field($field)
             ->order($order)
             ->select();
