@@ -94,6 +94,8 @@ class News extends AdminAuthBase
 //        $data = input('post.');
         $data = $this->request->only(['is_hot', 'is_top', 'title', 'small_title', 'img_urls', 'content'], 'post');
 
+        $data['img_urls'] = json_encode($data['img_urls']);
+
         try {
             $res = (new NewsService())->update($id, $data);
         } catch (\Exception $e) {
