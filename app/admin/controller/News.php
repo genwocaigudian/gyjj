@@ -49,8 +49,9 @@ class News extends AdminAuthBase
         if (!$validate->scene('save')->check($data)) {
             return Show::error($validate->getError());
         }
-        
+
         $data['user_id'] = $this->userId;
+        $data['img_urls'] = json_encode($data['img_urls']);
         
         try {
             $result = (new NewsService())->insertData($data);

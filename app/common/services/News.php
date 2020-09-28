@@ -187,6 +187,7 @@ class News extends BaseServices
         $result['cate_path'] = empty($cates[$result['cate_id']]['pid'])?[$result['cate_id']]:[$cates[$result['cate_id']]['pid'], $result['cate_id']];
         $result['user_name'] = $users[$result['user_id']]??'';
         $result['content'] = $result['newsContent']['content']??'';
+        $result['img_urls'] = json_decode($result['img_urls']);
         unset($result['newsContent']);
         
         return $result;
