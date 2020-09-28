@@ -21,10 +21,11 @@ class Xskcb extends Model
      */
     public function getListByXH($xh)
     {
+        $field = 'xn,xq,bjmc,jsxm,skdd,,kcmc,xqj,djj';
         if (!$xh) {
             return false;
         }
-        $res = $this->where(['XH' => $xh])->find();
+        $res = $this->where(['xh' => $xh])->field($field)->group('xn');
         return $res;
     }
 }

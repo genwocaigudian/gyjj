@@ -17,11 +17,10 @@ class Jsxxb extends Model
      */
     public function getByZGH($zgh)
     {
-        $field = 'xn,xq,bjmc,jsxm,skdd,,kcmc,xqj,djj';
         if (!$zgh) {
             return false;
         }
-        $res = $this->where(['ZGH' => $zgh])->field($field)->group('xn');
+        $res = $this->where(['ZGH' => $zgh])->find();
         return $res;
     }
 }
