@@ -5,9 +5,12 @@ namespace app\common\model;
 
 use think\Model;
 
-//教师信息表
-class Jsxxb extends Model
+//老师课程表
+class Jskcb extends Model
 {
+    protected $connection = 'oracle';
+    protected $table = 'zfxfzb.v_jskb';
+
     /**
      * @param $zgh
      * @return array|bool|Model|null
@@ -15,13 +18,12 @@ class Jsxxb extends Model
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getByZGH($zgh)
+    public function getListByZGH($zgh)
     {
-        $field = 'xn,xq,bjmc,jsxm,skdd,,kcmc,xqj,djj';
         if (!$zgh) {
             return false;
         }
-        $res = $this->where(['ZGH' => $zgh])->field($field)->group('xn');
+        $res = $this->where(['ZGH' => $zgh])->find();
         return $res;
     }
 }
