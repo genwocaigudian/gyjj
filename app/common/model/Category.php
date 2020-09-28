@@ -40,6 +40,7 @@ class Category extends BaseModel
             "id" => "asc"
         ];
         $result = $this->whereNotIn('id', [7,13,14])
+            ->whereNotIn('pid', [7,13,14])
             ->where($where)
             ->field($field)
             ->order($order)

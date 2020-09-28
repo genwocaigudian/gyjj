@@ -52,6 +52,25 @@ class Banner extends BaseServices
         $result = $list->toArray();
         return $result;
     }
+
+    /**
+     * 获取列表数据
+     * @param $where
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getNormalList($where)
+    {
+        $field = 'id, img_url, sequence';
+        $list = $this->model->getNormalBanners($where, $field);
+        if (!$list) {
+            return [];
+        }
+        $result = $list->toArray();
+        return $result;
+    }
     
     /**
      * @param $id
