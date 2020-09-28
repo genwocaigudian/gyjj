@@ -38,7 +38,7 @@ class News extends BaseServices
             $list = $this->model->getPaginateList($likeKeys, $data, $field = '*', $num);
             $result = $list->toArray();
             if ($result['data']) {
-                $color = ['one', 'two', 'three', 'four'];
+                $color = ['#7cc623', '#5e8ac6', '#e73c2f', '#3eeac7'];
                 $cateIds = array_column($result['data'], 'cate_id');
                 $cateNames = (new Category())->getCateByIds($cateIds);
                 foreach ($result['data'] as $key => &$data) {
