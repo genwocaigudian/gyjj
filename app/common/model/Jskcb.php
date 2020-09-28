@@ -20,11 +20,11 @@ class Jskcb extends Model
      */
     public function getListByZGH($zgh)
     {
-        $field = 'xn,xq,bjmc,jsxm,skdd,,kcmc,xqj,djj';
+        $field = 'xn,xq,bjmc,kcmc,xqj,xm';
         if (!$zgh) {
             return false;
         }
-        $res = $this->where(['zgh' => $zgh])->field($field)->group('xn');
+        $res = $this->where(['jszgh' => $zgh])->field($field)->order('xn desc')->select();
         return $res;
     }
 }

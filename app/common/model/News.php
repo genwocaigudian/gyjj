@@ -89,7 +89,8 @@ class News extends BaseModel
         $order = [
             "id" => "desc"
         ];
-        $result = $this->where($where)
+        $result = $this->whereIn('cate_id', [1,2,3,4,5,6,8,910,11])
+            ->where($where)
             ->field($field)
             ->order($order)
             ->limit($num)
