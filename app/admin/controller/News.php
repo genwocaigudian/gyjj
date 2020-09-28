@@ -35,6 +35,30 @@ class News extends AdminAuthBase
     }
 
     /**
+     * @return Json
+     */
+    public function video()
+    {
+        $data = [];
+        $title = input("param.title", "", "trim");
+        $cateId = input("param.cate_id", "0", "intval");
+
+        if(!empty($title)) {
+            $data['title'] = $title;
+        }
+        if(!empty($cateId)) {
+            $data['cate_id'] = $cateId;
+        }
+        try {
+            $list = (new NewsService())->getVideoPaginateList($data, 10);
+        } catch (\Exception $e) {
+            $list = Arr::getPaginateDefaultData(10);
+        }
+
+        return Show::success($list);
+    }
+
+    /**
      * 新增
      * @return Json
      */
@@ -60,6 +84,35 @@ class News extends AdminAuthBase
             return Show::error($e->getMessage(), $e->getCode());
         }
         
+        return Show::success($result);
+    }
+
+    /**
+     * 新增(图片视频相关)
+     * @return Json
+     */
+    public function savev()
+    {
+        if (!$this->request->isPost()) {
+            return Show::error('非法请求');
+        }
+        $data = input('post.');
+
+        $validate = new NewsValidate();
+        if (!$validate->scene('savev')->check($data)) {
+            return Show::error($validate->getError());
+        }
+
+        $data['user_id'] = $this->userId;
+        $data['img_urls'] = json_encode($data['img_urls']);
+
+        try {
+            $result = (new NewsService())->insertData($data);
+        } catch (\Exception $e) {
+            Log::error('admin/news/savev 错误:' . $e->getMessage());
+            return Show::error($e->getMessage());
+        }
+
         return Show::success($result);
     }
 

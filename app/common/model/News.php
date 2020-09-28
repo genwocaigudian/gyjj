@@ -40,7 +40,34 @@ class News extends BaseModel
         } else {
             $res = $this;
         }
+
         $result = $res->field($field)->order($order)->paginate($num);
+//        echo $this->getLastSql();exit;
+        return $result;
+    }
+
+    /**
+     * @param $likeKeys
+     * @param $data
+     * @param string $field
+     * @param int $num
+     * @return \think\Paginator
+     * @throws \think\db\exception\DbException\
+     */
+    public function getVideoPaginateList($likeKeys, $data, $field = "*", $num = 10)
+    {
+        $order = [
+            "id" => "desc"
+        ];
+        if (!empty($likeKeys)) {
+            $res = $this->withSearch($likeKeys, $data);
+        } else {
+            $res = $this;
+        }
+
+        $result = $res->whereIn('id', [7,13,14])
+            ->whereIn('pid', [7,13,14])
+            ->field($field)->order($order)->paginate($num);
 //        echo $this->getLastSql();exit;
         return $result;
     }

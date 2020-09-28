@@ -23,6 +23,7 @@ class News extends Validate
     
     protected $scene = [
         'save' => ['title', 'cate_id', 'content'],
+        'savev' => ['cate_id'],
         'delete' => ['id'],
     ];
 }

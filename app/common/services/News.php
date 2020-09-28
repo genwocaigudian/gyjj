@@ -51,6 +51,37 @@ class News extends BaseServices
         }
         return $result;
     }
+
+    /**
+     * @param $data
+     * @param $num
+     * @return array
+     * @throws DbException
+     */
+    public function getVideoPaginateList($data, $num)
+    {
+        $field = 'id, small_title, cate_id, title, is_top, is_hot, status, img_urls';
+        $likeKeys = [];
+        if (!empty($data)) {
+            $likeKeys = array_keys($data);
+        }
+        try {
+            $list = $this->model->getVideoPaginateList($likeKeys, $data, $field = '*', $num);
+            $result = $list->toArray();
+            if ($result['data']) {
+                $color = ['#7cc623', '#5e8ac6', '#e73c2f', '#3eeac7'];
+                $cateIds = array_column($result['data'], 'cate_id');
+                $cateNames = (new Category())->getCateByIds($cateIds);
+                foreach ($result['data'] as $key => &$data) {
+                    $data['color'] = $color[$key % 4];
+                    $data['cate_name'] = $cateNames[$data['cate_id']]['name'];
+                }
+            }
+        } catch (\Exception $e) {
+            $result = Arr::getPaginateDefaultData($num);
+        }
+        return $result;
+    }
     
     public function getNormalAllNews()
     {
@@ -104,7 +135,9 @@ class News extends BaseServices
         
         try {
             $id = $this->add($data);
-            $this->model->NewsContent()->save(['content'=>$data['content']]);
+            if (isset($data['content'])) {
+                $this->model->NewsContent()->save(['content'=>$data['content']]);
+            }
         } catch (\Exception $e) {
             throw new Exception('数据库内部异常');
         }
