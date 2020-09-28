@@ -65,7 +65,7 @@ class News extends BaseModel
             $res = $this;
         }
 
-        $result = $res->whereIn('cate_id', [7,13,14])
+        $result = $res->whereIn('cate_id', [7,13,14,20,21])
             ->field($field)->order($order)->paginate($num);
 //        echo $this->getLastSql();exit;
         return $result;
