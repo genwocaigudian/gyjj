@@ -4,11 +4,9 @@ namespace app\api\controller;
 
 use app\common\lib\Arr;
 use app\common\lib\Show;
-use app\common\services\Selection as SelectionService;
 use app\common\services\Selection as SelectionServices;
-use app\api\validate\Sresult as SelectionValidate;
 use app\common\services\SelectionOption;
-use think\facade\Log;
+use app\common\services\SelectionResult;
 use think\response\Json;
 
 class Selection extends AuthBase
@@ -35,11 +33,15 @@ class Selection extends AuthBase
     public function read()
     {
         $id = input('param.id', 0, 'intval');
+        $isSubmit = 0;
         try {
             $result = (new SelectionOption())->getPaginateList($id);
+//            $submit = (new SelectionResult())->getNormalById()
         } catch (\Exception $e) {
             return Show::error($e->getMessage());
         }
+
+        $result['is_submit'] = $isSubmit;
 
         return Show::success($result);
     }

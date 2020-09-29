@@ -19,17 +19,24 @@ class Sresult extends AuthBase
             return Show::error('非法请求');
         }
         $data = input('param.');
-        
-//        $validate = new QresultValidate();
-//        if (!$validate->scene('save')->check($data)) {
-//            return Show::error($validate->getError());
-//        }
-	    foreach ($data as &$datum) {
-	    	$datum['user_id'] = $this->userId;
+
+        $validate = new SresultValidate();
+        if (!$validate->scene('save')->check($data)) {
+            return Show::error($validate->getError());
+        }
+
+        $insertData = [];
+	    foreach ($data['option_id'] as $key => $datum) {
+	        $temp = [
+	            'user_id' => $this->userId,
+	            'selection_id' => $data['selection_id'],
+	            'option_id' => $datum,
+            ];
+	        array_push($insertData, $temp);
 	    }
-        
+
         try {
-            $result = (new SelectionResult())->insertAll($data);
+            $result = (new SelectionResult())->insertAll($insertData);
         } catch (\Exception $e) {
             return Show::error($e->getMessage());
         }
