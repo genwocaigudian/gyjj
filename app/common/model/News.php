@@ -41,7 +41,7 @@ class News extends BaseModel
             $res = $this;
         }
 
-        $result = $res->field($field)->order($order)->paginate($num);
+        $result = $res->whereNotIn('cate_id', [7,13,14,20,21])->field($field)->order($order)->paginate($num);
 //        echo $this->getLastSql();exit;
         return $result;
     }

@@ -8,7 +8,7 @@ use think\Model;
 //教师信息表
 class Jsxxb1 extends Model
 {
-    protected $connection = 'oracle';
+    protected $connection = 'schedule';
     protected $table = 'zfxfzb.v_jsxxb';
 
     /**

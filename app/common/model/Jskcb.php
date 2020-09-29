@@ -8,7 +8,7 @@ use think\Model;
 //老师课程表
 class Jskcb extends Model
 {
-    protected $connection = 'oracle';
+    protected $connection = 'schedule';
     protected $table = 'zfxfzb.v_jskb';
 
     /**
