@@ -41,7 +41,7 @@ class News extends BaseModel
             $res = $this;
         }
 
-        if (!$data['cate_id']) {
+        if (!isset($data['cate_id']) || !$data['cate_id']) {
             $res = $res->whereNotIn('cate_id', [7,13,14,20,21]);
         }
 
@@ -69,8 +69,11 @@ class News extends BaseModel
             $res = $this;
         }
 
-        $result = $res->whereIn('cate_id', [7,13,14,20,21])
-            ->field($field)->order($order)->paginate($num);
+        if (!isset($data['cate_id']) || !$data['cate_id']) {
+            $res = $res->whereNotIn('cate_id', [7,20,21]);
+        }
+
+        $result = $res->field($field)->order($order)->paginate($num);
 //        echo $this->getLastSql();exit;
         return $result;
     }
