@@ -6,6 +6,7 @@ namespace app\api\controller;
 class AuthBase extends ApiBase
 {
     public $userId = 0;
+    public $type = 0;
     public $username = '';
     public $authorization = '';
 
@@ -51,6 +52,7 @@ class AuthBase extends ApiBase
     {
         $user = (new \app\common\services\User())->getNormalUserById($this->userId);
         if ($user['number']) {
+            $this->type = $user['type'];
             return true;
         }
         return false;

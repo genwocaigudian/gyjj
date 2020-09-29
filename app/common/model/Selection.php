@@ -120,6 +120,17 @@ class Selection extends BaseModel
     }
 
     /**
+     * target查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchTargetAttr($query, $value)
+    {
+        $query->where('target', 'in', [0, $value]);
+    }
+
+    /**
      * @param $likeKeys
      * @param $data
      * @param string $field
@@ -137,7 +148,7 @@ class Selection extends BaseModel
             $res = $this;
         }
         $result = $res->field($field)->paginate($num);
-        //echo $this->getLastSql();exit;
+//        echo $this->getLastSql();exit;
         return $result;
     }
 }
