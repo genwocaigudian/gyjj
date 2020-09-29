@@ -62,15 +62,15 @@ return [
             // 数据库类型
             'type'            => '\misuoka\think\Oracle',
             // 服务器地址
-            'hostname'        => env('oracle.hostname', '127.0.0.1'), // 填写数据库 IP 地址
+            'hostname'        => env('schedule.hostname', '127.0.0.1'), // 填写数据库 IP 地址
             // 数据库名
-            'database'        => env('oracle.database', ''), // 数据库实例 SID 名称，如 ORCL
+            'database'        => env('schedule.database', ''), // 数据库实例 SID 名称，如 ORCL
             // 用户名
-            'username'        => env('oracle.username', ''), // 用户名
+            'username'        => env('schedule.username', ''), // 用户名
             // 密码
-            'password'        => env('oracle.password', ''), // 密码
+            'password'        => env('schedule.password', ''), // 密码
             // 端口
-            'hostport'        => env('oracle.hostport', ''), // 端口号，如 1521
+            'hostport'        => env('schedule.hostport', ''), // 端口号，如 1521
             // 数据库连接参数
             'params'          => [],
             // 数据库编码默认采用utf8
@@ -86,15 +86,15 @@ return [
             // 数据库类型
             'type'            => '\misuoka\think\Oracle',
             // 服务器地址
-            'hostname'        => env('oracle.hostname', '127.0.0.1'), // 填写数据库 IP 地址
+            'hostname'        => env('book.hostname', '127.0.0.1'), // 填写数据库 IP 地址
             // 数据库名
-            'database'        => env('oracle.database', ''), // 数据库实例 SID 名称，如 ORCL
+            'database'        => env('book.database', ''), // 数据库实例 SID 名称，如 ORCL
             // 用户名
-            'username'        => env('oracle.username', ''), // 用户名
+            'username'        => env('book.username', ''), // 用户名
             // 密码
-            'password'        => env('oracle.password', ''), // 密码
+            'password'        => env('book.password', ''), // 密码
             // 端口
-            'hostport'        => env('oracle.hostport', ''), // 端口号，如 1521
+            'hostport'        => env('book.hostport', ''), // 端口号，如 1521
             // 数据库连接参数
             'params'          => [],
             // 数据库编码默认采用utf8
