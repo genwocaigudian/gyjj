@@ -70,7 +70,7 @@ class News extends BaseModel
         }
 
         if (!isset($data['cate_id']) || !$data['cate_id']) {
-            $res = $res->whereNotIn('cate_id', [7,20,21]);
+            $res = $res->whereIn('cate_id', [7,20,21]);
         }
 
         $result = $res->field($field)->order($order)->paginate($num);
