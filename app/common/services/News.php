@@ -99,6 +99,9 @@ class News extends BaseServices
             return $res;
         }
         $res = $res->toArray();
+        foreach ($res as &$re) {
+            $re['img_urls'] = json_decode($re['img_urls'], true);
+        }
         return $res;
     }
 
