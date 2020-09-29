@@ -88,6 +88,39 @@ class SelectionResult extends BaseServices
     }
 
     /**
+     * 判断用户是否提交过答案
+     * @param $sid
+     * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function isSubmit($sid)
+    {
+        $res = $this->model->getByCondition(['selection_id' => $sid]);
+        if (!$res) {
+            return 0;
+        }
+        return 1;
+    }
+
+    /**
+     * @param $id
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getNormalBySid($id)
+    {
+        $res = $this->model->getById($id);
+        if (!$res) {
+            return [];
+        }
+        return $res->toArray();
+    }
+
+    /**
      * 插入数据
      * @param $data
      * @return array
