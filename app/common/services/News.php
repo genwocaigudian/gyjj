@@ -43,6 +43,7 @@ class News extends BaseServices
                 $cateNames = (new Category())->getCateByIds($cateIds);
                 foreach ($result['data'] as $key => &$data) {
                     $data['color'] = $color[$key % 4];
+                    $data['img_urls'] = json_decode($data['img_urls'], true);
                     $data['cate_name'] = $cateNames[$data['cate_id']]['name'];
                 }
             }
@@ -74,6 +75,7 @@ class News extends BaseServices
                 $cateNames = (new Category())->getCateByIds($cateIds);
                 foreach ($result['data'] as $key => &$data) {
                     $data['color'] = $color[$key % 4];
+                    $data['img_urls'] = json_decode($data['img_urls'], true);
                     $data['cate_name'] = $cateNames[$data['cate_id']]['name'];
                 }
             }
