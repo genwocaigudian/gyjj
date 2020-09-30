@@ -2,9 +2,9 @@
 
 namespace app\api\controller;
 
-use app\api\validate\Qresult as QresultValidate;
 use app\common\lib\Show;
 use app\common\services\QuestionResult;
+use app\common\services\QuestionSuggest;
 use think\response\Json;
 
 class Qresult extends AuthBase
@@ -24,16 +24,24 @@ class Qresult extends AuthBase
 //        if (!$validate->scene('save')->check($data)) {
 //            return Show::error($validate->getError());
 //        }
-	    foreach ($data as &$datum) {
+	    foreach ($data['data'] as &$datum) {
 	    	$datum['user_id'] = $this->userId;
 	    }
-        
+
+	    $suggestData = [
+	        'question_id' => 1,
+	        'content' => $data['content'],
+        ];
+
+	    $qData = $data['data'];
+
         try {
-            $result = (new QuestionResult())->insertAll($data);
+            $res = (new QuestionResult())->insertAll($qData);
+            $resu = (new QuestionSuggest())->insertData($suggestData);
         } catch (\Exception $e) {
             return Show::error($e->getMessage());
         }
         
-        return Show::success($result);
+        return Show::success($res);
     }
 }
