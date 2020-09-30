@@ -9,6 +9,5 @@ return [
 	
 	//失物招领延迟队列
 	'lost_status_key' => 'lost_status',
-//	'order_expire' => 7*60*60,
-	'lost_expire' => 1,
+	'lost_expire' => 7*60*60,
 ];

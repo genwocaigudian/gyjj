@@ -90,6 +90,17 @@ class Lost extends BaseModel
     }
 
     /**
+     * status查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchStatusAttr($query, $value)
+    {
+        $query->where('status', '=', $value);
+    }
+
+    /**
      * @param $likeKeys
      * @param $data
      * @param string $field
@@ -101,12 +112,15 @@ class Lost extends BaseModel
      */
     public function getPaginateList($likeKeys, $data, $field = "*", $num = 10)
     {
+        $order = [
+            'id' => 'desc'
+        ];
         if (!empty($likeKeys)) {
             $res = $this->withSearch($likeKeys, $data);
         } else {
             $res = $this;
         }
-        $result = $res->field($field)->select();
+        $result = $res->field($field)->order($order)->paginate();
         //echo $this->getLastSql();exit;
         return $result;
     }

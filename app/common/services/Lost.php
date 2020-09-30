@@ -152,6 +152,10 @@ class Lost extends BaseServices
 
     /**
      * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws Exception
+     * @throws ModelNotFoundException
      */
     public function lostCommand()
     {
@@ -171,8 +175,8 @@ class Lost extends BaseServices
             $delRedis = "";
         }
         if ($delRedis) {
-
-            echo "失物招领id:{$result[0]}在规定时间内没有触发完成, 现更新为已完成".PHP_EOL;
+            $this->update($result[0], ['status' => 2]);
+            echo "失物招领id:{$result[0]}更新成功";
         } else {
             return false;
         }
