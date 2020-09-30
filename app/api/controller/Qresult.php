@@ -21,22 +21,29 @@ class Qresult extends AuthBase
         }
         $data = input('param.');
 
+        $questionId = $data['question_id']??0;
+
 //        $validate = new QresultValidate();
 //        if (!$validate->scene('save')->check($data)) {
 //            return Show::error($validate->getError());
 //        }
-	    foreach ($data['data'] as &$datum) {
-	    	$datum['user_id'] = $this->userId;
+        $qData = [];
+	    foreach ($data['option_res'] as $key => $datum) {
+	        foreach ($datum as $k => $v) {
+	            $temp = [
+	                'question_id' => $questionId,
+	                'problem_id' => $key,
+	                'option_id' => $v,
+                    'user_id' => $this->userId
+                ];
+	            array_push($qData, $temp);
+            }
 	    }
-
-        $questionId = current($data['data'])['question_id']??0;
 
         $suggestData = [
 	        'question_id' => $questionId,
 	        'content' => $data['content'],
         ];
-
-	    $qData = $data['data'];
 
         try {
             $res = (new QuestionResult())->insertAll($qData);
@@ -46,6 +53,6 @@ class Qresult extends AuthBase
             return Show::error($e->getMessage());
         }
         
-        return Show::success($res);
+        return Show::success();
     }
 }
