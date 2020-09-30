@@ -102,7 +102,10 @@ class QuestionOption extends BaseModel
      */
     public function getPaginateList($qid, $pid, $field = "*", $num = 10)
     {
-        $result = $this->where(['question_id' => $qid, 'problem_id' => $pid])->field($field)->paginate($num);
+        $order = [
+            'id' => 'desc'
+        ];
+        $result = $this->where(['question_id' => $qid, 'problem_id' => $pid])->field($field)->order($order)->paginate($num);
         //echo $this->getLastSql();exit;
         return $result;
     }

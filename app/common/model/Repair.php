@@ -107,11 +107,14 @@ class Repair extends BaseModel
      */
     public function getPaginateList($likeKeys, $data, $field = "*", $num = 10)
     {
+        $order = [
+            'id' => 'desc'
+        ];
         $res = $this->newQuery();
         if (!empty($likeKeys)) {
             $res = $res->withSearch($likeKeys, $data);
         }
-        $result = $res->field($field)->paginate($num);
+        $result = $res->field($field)->order($order)->paginate($num);
         //echo $this->getLastSql();exit;
         return $result;
     }
