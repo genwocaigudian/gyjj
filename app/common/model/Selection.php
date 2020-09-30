@@ -154,4 +154,10 @@ class Selection extends BaseModel
 //        echo $this->getLastSql();exit;
         return $result;
     }
+
+    public function incCount($id, $num) {
+        return $this->where("id", "=", $id)
+            ->inc("attend_count", $num)
+            ->update();
+    }
 }

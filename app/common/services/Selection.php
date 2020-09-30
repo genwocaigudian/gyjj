@@ -184,4 +184,15 @@ class Selection extends BaseServices
     {
         return $res = $this->model->saveAll($data);
     }
+
+    /**
+     * 更新参与人数
+     * @param $id
+     * @return bool
+     */
+    public function updateAttendCount($id)
+    {
+        $this->model->incCount($id, 1);
+        return true;
+    }
 }

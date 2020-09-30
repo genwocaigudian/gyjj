@@ -3,6 +3,7 @@
 namespace app\api\controller;
 
 use app\common\lib\Show;
+use app\common\services\Question;
 use app\common\services\QuestionResult;
 use app\common\services\QuestionSuggest;
 use think\response\Json;
@@ -19,7 +20,7 @@ class Qresult extends AuthBase
             return Show::error('非法请求');
         }
         $data = input('param.');
-        
+
 //        $validate = new QresultValidate();
 //        if (!$validate->scene('save')->check($data)) {
 //            return Show::error($validate->getError());
@@ -28,8 +29,10 @@ class Qresult extends AuthBase
 	    	$datum['user_id'] = $this->userId;
 	    }
 
-	    $suggestData = [
-	        'question_id' => 1,
+        $questionId = current($data['data'])['question_id']??0;
+
+        $suggestData = [
+	        'question_id' => $questionId,
 	        'content' => $data['content'],
         ];
 
@@ -37,7 +40,8 @@ class Qresult extends AuthBase
 
         try {
             $res = (new QuestionResult())->insertAll($qData);
-            $resu = (new QuestionSuggest())->insertData($suggestData);
+            (new QuestionSuggest())->insertData($suggestData);
+            (new Question())->updateAttendCount($questionId);
         } catch (\Exception $e) {
             return Show::error($e->getMessage());
         }

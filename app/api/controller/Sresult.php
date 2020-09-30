@@ -4,6 +4,7 @@ namespace app\api\controller;
 
 use app\api\validate\Sresult as SresultValidate;
 use app\common\lib\Show;
+use app\common\services\Selection;
 use app\common\services\SelectionResult;
 use think\response\Json;
 
@@ -37,6 +38,7 @@ class Sresult extends AuthBase
 
         try {
             $result = (new SelectionResult())->insertAll($insertData);
+            (new Selection())->updateAttendCount($data['selection_id']);
         } catch (\Exception $e) {
             return Show::error($e->getMessage());
         }
