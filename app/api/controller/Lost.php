@@ -25,6 +25,12 @@ class Lost extends AuthBase
             $list = Arr::getPaginateDefaultData(10);
         }
 
+        if ($list['data']) {
+            foreach ($list['data'] as &$datum) {
+                halt($datum);
+            }
+        }
+
         return Show::success($list);
     }
 
@@ -43,6 +49,8 @@ class Lost extends AuthBase
         if (!$validate->scene('save')->check($data)) {
             return Show::error($validate->getError());
         }
+
+        $data['user_id'] = $this->userId;
 
         try {
             $result = (new LostServices())->insertData($data);
