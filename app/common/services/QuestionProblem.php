@@ -70,6 +70,7 @@ class QuestionProblem extends BaseServices
             return [];
         }
         $result = $list->toArray();
+
         return $result;
     }
 

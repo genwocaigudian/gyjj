@@ -158,4 +158,21 @@ class QuestionResult extends BaseServices
     {
         return $res = $this->model->saveAll($data);
     }
+
+    /**
+     * 判断用户是否提交过答案
+     * @param $id
+     * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function isSubmit($id)
+    {
+        $res = $this->model->getByCondition(['question_id' => $id]);
+        if (!$res) {
+            return 0;
+        }
+        return 1;
+    }
 }

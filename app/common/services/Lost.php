@@ -167,7 +167,7 @@ class Lost extends BaseServices
             //			$delRedis = Cache::store('redis')->zRem("order_status", $result[0]);
         } catch (\Exception $e) {
             // 记录日志
-            Log::error("失物招领id:{$result[0]}在规定时间内没有触发完成, 现更新为已完成");
+            Log::error("失物招领id:{$result[0]}-" . $e->getMessage());
             $delRedis = "";
         }
         if ($delRedis) {
