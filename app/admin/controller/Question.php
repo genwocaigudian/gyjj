@@ -16,7 +16,16 @@ class Question extends AdminAuthBase
      */
     public function index()
     {
-        $data = input('param.');
+        $data = [];
+        $title = input("param.title", "", "trim");
+        $status = input("param.status", "0", "intval");
+
+        if(!empty($title)) {
+            $data['title'] = $title;
+        }
+        if(!empty($status)) {
+            $data['status'] = $status;
+        }
         $list = (new QuestionService())->getPaginateList($data, 10);
         
         return Show::success($list);
