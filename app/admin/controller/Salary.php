@@ -126,4 +126,11 @@ class Salary extends AdminAuthBase
         }
         return Show::success();
     }
+	
+	public function test()
+	{
+		$excel = new ExcelLib();
+		$data = $excel->barSheet();
+		halt($data);
+    }
 }

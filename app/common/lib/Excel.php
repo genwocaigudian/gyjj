@@ -2,6 +2,18 @@
 
 namespace app\common\lib;
 
+use PhpOffice\PhpSpreadsheet\Chart\Axis;
+use PhpOffice\PhpSpreadsheet\Chart\Chart;
+use PhpOffice\PhpSpreadsheet\Chart\DataSeries;
+use PhpOffice\PhpSpreadsheet\Chart\DataSeriesValues;
+use PhpOffice\PhpSpreadsheet\Chart\GridLines;
+use PhpOffice\PhpSpreadsheet\Chart\Layout;
+use PhpOffice\PhpSpreadsheet\Chart\Legend;
+use PhpOffice\PhpSpreadsheet\Chart\PlotArea;
+use PhpOffice\PhpSpreadsheet\Chart\Title;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -295,4 +307,399 @@ class Excel
     {
         return ['code' => $code, 'msg' => $msg, 'data' => $data];
     }
+	
+	/**
+	 * 柱状图
+	 * @param array $data
+	 * @param string $fileName
+	 * @param string $startCall
+	 * @param string $topTitle
+	 * @param string $cartTitle
+	 * @param string $sheet
+	 * @param string $chart
+	 * @param int $row
+	 * @param string $topLeftPosition
+	 * @param string $bottomRightPosition
+	 * @throws \PhpOffice\PhpSpreadsheet\Exception
+	 */
+	public function barSheet($data=[],$fileName='bar',$startCall='B15',$topTitle='测试标题',$cartTitle='Test bar Chart',$sheet='Worksheet',$chart='chart1', $row=1,$topLeftPosition='A3',$bottomRightPosition='H14')
+	{
+		if(empty($data)){
+			$data= [
+				['', '2010'],
+				['Q1', 12],
+				['Q2', 56],
+				['Q3', 52],
+				['Q4', 30],
+			];
+			$row = 2;
+			$sheet='Q1';
+		}
+		$spreadsheet = new Spreadsheet();
+		$worksheet = $spreadsheet->getActiveSheet()->mergeCells('A1:H1');
+		$worksheet->getRowDimension('1')->setRowHeight(20);
+		$styleArray = [
+			'font' => [
+				'bold' => true,
+			],
+			'alignment' => [
+				'horizontal' => Alignment::HORIZONTAL_CENTER,
+				'vertical' => Alignment::VERTICAL_CENTER,
+			],
+			
+			'fill' => [
+				'fillType' => Fill::FILL_GRADIENT_LINEAR,
+				'rotation' => 90,
+				'startColor' => [
+					'argb' => 'D3D5F5',
+				],
+				'endColor' => [
+					'argb' => '8389E0',
+				],
+			],
+		];
+		$worksheet->getStyle('A1')->applyFromArray($styleArray);
+		$worksheet ->setCellValue('A1',$topTitle);
+		
+		$worksheet ->setTitle($sheet);
+//        $worksheet1 = $spreadsheet->createSheet();
+//        $worksheet1->setTitle('Another sheet');
+//        如果您有一个简单的1-d数组，并希望将其写为一列，则以下内容会将其转换为结构正确的2-d数组
+//        $columnArray = array_chunk($data2, 1);
+		$worksheet->fromArray($data,null,$startCall) ;
+		//->fromArray( $columnArray, NULL, 'A4' );
+		
+		
+		$j = substr($startCall,1);
+		
+		$topLabel = ['A','B','C','D','E','F','G','H','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+		
+		$pointCount = count($data)-1;
+		
+		$styleArray = [
+			'borders' => [
+				'allBorders' => [
+					'borderStyle' => Border::BORDER_THICK,
+					'color' => ['argb' => '808080'],
+				],
+			],
+		];
+		
+		$worksheet->getStyle("B15:C19")->applyFromArray($styleArray);
+		
+		// Set the Labels for each data series we want to plot
+		$dataSeriesLabels1 = [
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, $sheet.'!$'.$topLabel[$row-1].'$' .($j), null, 1),
+		];
+		
+		// Set the X-Axis Labels
+		$xAxisTickValues1 = [
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, $sheet.'!$'.$topLabel[$row].'$'.($j+1).':$'.$topLabel[$row-1].'$' .($pointCount+$j), null, $pointCount),
+			// Q1 to Q4
+		];
+		
+		// Set the Data values for each data series we want to plot
+		$dataSeriesValues1 = [
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, $sheet.'!$'.$topLabel[$row].'$'.($j+1).':$' .$topLabel[$row].'$'.($pointCount+$j), null, $pointCount),
+		];
+		
+		// Build the dataseries
+		$series1 =
+			new DataSeries(
+				DataSeries::TYPE_BARCHART,  // plotType
+				DataSeries::GROUPING_STACKED,                   // plotGrouping (Pie charts don't have any grouping)
+				range(0, count($dataSeriesValues1) - 1), // plotOrder
+				$dataSeriesLabels1, // plotLabel
+				$xAxisTickValues1, // plotCategory
+				$dataSeriesValues1 // plotValues
+			);
+		// Set additional dataseries parameters
+		//     Make it a horizontal bar rather than a vertical column graph
+		$series1->setPlotDirection(DataSeries::DIRECTION_BAR);
+		
+		
+		// Set the series in the plot area
+		$plotArea1 = new PlotArea(null, [$series1]);
+		
+		// Set the chart legend
+		$legend1 = new Legend(Legend::POSITION_RIGHT, null, false);
+		
+		$title1 = new Title($cartTitle);
+		
+		$yAxisLabel = new Title('Value ($k)');
+		
+		// Create the chart
+		$chart1 = new Chart(
+			$chart, // name
+			$title1, // title
+			null,
+//            $legend1, // legend
+			$plotArea1, // plotArea
+			true, // plotVisibleOnly
+			'gap', // displayBlanksAs
+			null, // xAxisLabel
+			null   // yAxisLabel - Pie charts don't have a Y-Axis
+//            $yAxisLabel
+		);
+		
+		// Set the position where the chart should appear in the worksheet
+		$chart1->setTopLeftPosition($topLeftPosition);
+		$chart1->setBottomRightPosition($bottomRightPosition);
+		
+		// Add the chart to the worksheet
+		$worksheet->addChart($chart1);
+		
+		// Save Excel 2007 file
+//		self::export($spreadsheet,$fileName,true);
+//		$spreadsheet->disconnectWorksheets();
+//		unset($spreadsheet);
+//		exit;
+		
+		//文件名
+		$filename =  $fileName.date( 'YmdHis' );
+		$filename='bar_';
+		$fileType='Xlsx';
+		$writer = IOFactory::createWriter($spreadsheet, $fileType);
+		$writer->setIncludeCharts(true);
+		
+		if($fileType == 'Excel2007' || $fileType == 'Xlsx') {
+			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+			header('Cache-Control: max-age=0');
+		} else { //Excel5
+			header('Content-Type: application/vnd.ms-excel');
+			header('Content-Disposition: attachment;filename="'.$filename.'.xls"');
+			header('Cache-Control: max-age=0');
+		}
+		//清空缓存区
+		ob_end_clean();
+		//输出到表格
+		$writer->save('php://output');
+		
+		$spreadsheet->disconnectWorksheets();
+		unset($spreadsheet);
+		exit;
+	}
+	
+	public function line()
+	{
+		// Create new Spreadsheet object
+		$spreadsheet = new Spreadsheet();
+		$worksheet = $spreadsheet->getActiveSheet();
+		$data=[
+			['', '2010', '2011', '2012'],
+			['Q1', 12, 15, 21],
+			['Q2', 56, 73, 86],
+			['Q3', 52, 61, 69],
+			['Q4', 30, 32, 60],
+		];
+// fetch data into array and put at A1
+		$worksheet->fromArray($data, null, "A1", true);
+
+// set the type of data to numeric
+		$worksheet->getStyle("A1:D".sizeof(array_keys($data)))->getNumberFormat()->setFormatCode('0');
+
+// set data series label
+		$dataSeriesLabels = [
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, 'Worksheet!$B$1', null, 1),
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, 'Worksheet!$C$1', null, 1),
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, 'Worksheet!$D$1', null, 1),
+		];
+
+// set x axis tick values
+		$xAxisTickValues = [
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, 'Worksheet!$A$2:$A$5', null, 4),
+		];
+
+// set data series values
+		$dataSeriesValues = [
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, 'Worksheet!$B$2:$B$5', null, 4),
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, 'Worksheet!$C$2:$C$5', null, 4),
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, 'Worksheet!$D$2:$D$5', null, 4),
+		];
+
+// set the series
+		$series = new DataSeries(
+//            DataSeries::TYPE_LINECHART, // plotType   line
+			DataSeries::TYPE_PIECHART, // plotType
+			null,   //pie is null
+//            DataSeries::GROUPING_STANDARD, // plotGrouping
+			range(0, count($dataSeriesValues) - 1), // plotOrder
+			$dataSeriesLabels, // plotLabel
+			$xAxisTickValues, // plotCategory
+			$dataSeriesValues        // plotValues
+		);
+
+// Set the series in the plot area
+		$layout1 = new Layout();
+		$layout1->setShowVal(true);
+		$layout1->setShowPercent(true);
+		$plotArea = new PlotArea($layout1, [$series]);
+
+// Set the chart legend
+		$legend = new Legend(Legend::POSITION_BOTTOM, null, false);
+		
+		$title = new Title('Trend Line Chart');
+		$yaxis = new Axis();
+		$xaxis = new Axis();
+		$yaxis->setAxisOptionsProperties('none', null, null, null, null, null, null, null);
+		$xaxis->setAxisOptionsProperties('low', null, null, null, null, null, 0, 0, null, null);
+		$grid = new GridLines();
+		$grid->setLineColorProperties("white");
+
+// Create the chart
+		$chart = new Chart(
+			'chart1', // name
+			$title, // title
+			$legend, // legend
+			$plotArea, // plotArea
+			true, // plotVisibleOnly
+			'gap', // displayBlanksAs
+			null, // xAxisLabel
+			null, // yAxisLabel
+			$yaxis,
+			$xaxis,
+			$grid
+		);
+
+// Set the position where the chart should appear in the worksheet
+		$chart->setTopLeftPosition('B12');
+		$chart->setBottomRightPosition('N30');
+
+// Add the chart to the worksheet
+		$spreadsheet->getActiveSheet()->addChart($chart);
+		$filename='line_';
+		$fileType='Xlsx';
+		$writer = IOFactory::createWriter($spreadsheet, $fileType);
+
+//        $writer = new Xlsx($spreadsheet);
+		$writer->setIncludeCharts(true);
+		
+		//文件名
+		$filename =  $filename.date( 'YmdHis' );
+		if($fileType == 'Excel2007' || $fileType == 'Xlsx') {
+			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+			header('Cache-Control: max-age=0');
+		} else { //Excel5
+			header('Content-Type: application/vnd.ms-excel');
+			header('Content-Disposition: attachment;filename="'.$filename.'.xls"');
+			header('Cache-Control: max-age=0');
+		}
+		//清空缓存区
+		ob_end_clean();
+		//输出到表格
+		$writer->save('php://output');
+		
+		$spreadsheet->disconnectWorksheets();
+		unset($spreadsheet);
+		exit;
+	}
+	
+	
+	public function pie()
+	{
+		$spreadsheet = new Spreadsheet();
+		$worksheet = $spreadsheet->getActiveSheet();
+		$worksheet->fromArray(
+			[
+				['', '2010', '2011', '2012'],
+				['Q1', 12, 15, 21],
+				['Q2', 56, 73, 86],
+				['Q3', 52, 61, 69],
+				['Q4', 30, 32, 60],
+			]
+		);
+		
+		// Set the Labels for each data series we want to plot
+		$dataSeriesLabels1 = [
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, 'Worksheet!$B$1', null, 1), // 2011
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, 'Worksheet!$C$1', null, 1), // 2012
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, 'Worksheet!$D$1', null, 1), // 2013
+		];
+		
+		// Set the X-Axis Labels
+		$xAxisTickValues1 = [
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_STRING, 'Worksheet!$A$2:$A$5', null, 4), // Q1 to Q4
+		];
+		
+		// Set the Data values for each data series we want to plot
+		$dataSeriesValues1 = [
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, 'Worksheet!$B$2:$B$5', null, 4),
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, 'Worksheet!$C$2:$C$5', null, 4),
+			new DataSeriesValues(DataSeriesValues::DATASERIES_TYPE_NUMBER, 'Worksheet!$D$2:$D$5', null, 4),
+		];
+		
+		// Build the dataseries
+		$series1 = [
+			new DataSeries(
+				DataSeries::TYPE_PIECHART, // plotType
+				null, // plotGrouping (Pie charts don't have any grouping)
+				range(0, count($dataSeriesValues1) - 1), // plotOrder
+				$dataSeriesLabels1, // plotLabel
+				$xAxisTickValues1, // plotCategory
+				$dataSeriesValues1 // plotValues
+			)
+		];
+		
+		// Set up a layout object for the Pie chart
+		$layout1 = new Layout();
+		$layout1->setShowVal(true);
+		$layout1->setShowPercent(true);
+		
+		// Set the series in the plot area
+		$plotArea1 = new PlotArea($layout1, $series1);
+		
+		// Set the chart legend
+		$legend1 = new Legend(Legend::POSITION_RIGHT, null, false);
+		
+		$title1 = new Title('Test Pie Chart');
+		
+		$yAxisLabel = new Title('Value ($k)');
+		// Create the chart
+		$chart1 = new Chart(
+			'chart1', // name
+			$title1, // title
+			$legend1, // legend
+			$plotArea1, // plotArea
+			true, // plotVisibleOnly
+			'gap', // displayBlanksAs
+			null, // xAxisLabel
+//            null   // yAxisLabel - Pie charts don't have a Y-Axis
+			$yAxisLabel
+		);
+		
+		// Set the position where the chart should appear in the worksheet
+		$chart1->setTopLeftPosition('A7');
+		$chart1->setBottomRightPosition('H20');
+		
+		// Add the chart to the worksheet
+		$worksheet->addChart($chart1);
+		
+		// Save Excel 2007 file
+		$filename='pie_';
+		$fileType='Xlsx';
+		$writer = IOFactory::createWriter($spreadsheet, $fileType);
+		$writer->setIncludeCharts(true);
+		
+		//文件名
+		$filename =  $filename.date( 'YmdHis' );
+		if($fileType == 'Excel2007' || $fileType == 'Xlsx') {
+			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+			header('Cache-Control: max-age=0');
+		} else { //Excel5
+			header('Content-Type: application/vnd.ms-excel');
+			header('Content-Disposition: attachment;filename="'.$filename.'.xls"');
+			header('Cache-Control: max-age=0');
+		}
+		//清空缓存区
+		ob_end_clean();
+		//输出到表格
+		$writer->save('php://output');
+		
+		$spreadsheet->disconnectWorksheets();
+		unset($spreadsheet);
+		exit;
+	}
 }
