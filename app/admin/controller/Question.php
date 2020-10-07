@@ -5,6 +5,7 @@ use app\admin\validate\Question as QuestionValidate;
 use app\common\lib\Excel as ExcelLib;
 use app\common\lib\Show;
 use app\common\services\Question as QuestionService;
+use app\common\services\QuestionResult as QresultService;
 use think\facade\Log;
 use think\response\Json;
 
@@ -228,4 +229,36 @@ class Question extends AdminAuthBase
         }
         return Show::success();
     }
+	
+	/**
+	 * 图表导出
+	 * @return Json
+	 */
+	public function estats()
+	{
+		$data = input('post.');
+		
+		$validate = new QuestionValidate();
+		if (!$validate->scene('export')->check($data)) {
+			return Show::error($validate->getError());
+		}
+		
+		$qid = $data['question_id'];
+		
+		// 查询要导出的数据
+		$result = (new QresultService())->getGroupOptionCount($qid);
+		
+		if (!$result) {
+			return Show::error('没有数据可导出');
+		}
+		
+		$excel = new ExcelLib();
+		$download_url = $excel->barSheet($result);
+		
+		if($download_url){
+			return Show::success(['url' => $download_url]);
+		}
+		
+		return Show::error();
+	}
 }
