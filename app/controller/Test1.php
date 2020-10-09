@@ -15,17 +15,17 @@ class Test1 extends BaseController
     public function index()
     {
         $res = [];
-        $xh = '0304150226';
-        $res = (new Xskcb())->getListByXH($xh);
-
-        $zgh = '01032';
-        $res = (new Jskcb())->getListByZGH($zgh);
-
-        $xh = '0304150226';
-        $res = (new Xsxxb())->getByXH($xh);
-
-        $zgh = '01032';
-        $res = (new Jsxxb())->getByZGH($zgh);
+//        $xh = '0304150226';
+//        $res = (new Xskcb())->getListByXH($xh);
+//
+//        $zgh = '01032';
+//        $res = (new Jskcb())->getListByZGH($zgh);
+//
+//        $xh = '0304150226';
+//        $res = (new Xsxxb())->getByXH($xh);
+//
+//        $zgh = '01032';
+//        $res = (new Jsxxb())->getByZGH($zgh);
         return Show::success($res);
     }
 }
