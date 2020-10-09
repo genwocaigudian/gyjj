@@ -20,7 +20,7 @@ class Jskcb extends Model
      */
     public function getListByZGH($zgh)
     {
-        $field = 'xn,xq,bjmc,kcmc,xqj,xm';
+        $field = 'xn,xq,bjmc,kcmc,xqj,jsxm';
         if (!$zgh) {
             return false;
         }

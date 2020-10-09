@@ -13,6 +13,7 @@ use think\response\Json;
 class Lost extends AuthBase
 {
     /**
+     * 首页列表
      * @return Json
      */
     public function index()
@@ -29,6 +30,7 @@ class Lost extends AuthBase
     }
 
     /**
+     * 我的列表
      * @return Json
      * @throws \think\db\exception\DbException
      */
