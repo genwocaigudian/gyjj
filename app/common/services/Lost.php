@@ -97,6 +97,7 @@ class Lost extends BaseServices
                 }
                 foreach ($result['data'] as &$datum) {
                     $datum['user_name'] = $userNames[$datum['user_id']]??'';
+                    $datum['img_url'] = json_decode($datum['img_url'], true);
                 }
             }
         } catch (\Exception $e) {
