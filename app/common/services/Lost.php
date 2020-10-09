@@ -88,6 +88,17 @@ class Lost extends BaseServices
         try {
             $list = $this->model->getPaginateList($likeKeys, $data, $field = '*', $num);
             $result = $list->toArray();
+
+            if ($result['data']) {
+                $uids = array_unique(array_column($result['data'], 'user_id'));
+                if ($uids) {
+                    $users = (new User())->getUserByIds($uids);
+                    $userNames = array_column($users, 'username', 'id');
+                }
+                foreach ($result['data'] as &$datum) {
+                    $datum['user_name'] = $userNames[$datum['user_id']]??'';
+                }
+            }
         } catch (\Exception $e) {
             $result = Arr::getPaginateDefaultData($num);
         }

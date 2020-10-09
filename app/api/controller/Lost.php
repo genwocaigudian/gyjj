@@ -25,11 +25,18 @@ class Lost extends AuthBase
             $list = Arr::getPaginateDefaultData(10);
         }
 
-        if ($list['data']) {
-            foreach ($list['data'] as &$datum) {
-                halt($datum);
-            }
-        }
+        return Show::success($list);
+    }
+
+    /**
+     * @return Json
+     * @throws \think\db\exception\DbException
+     */
+    public function mindex()
+    {
+        $data = [];
+        $data['uid'] = $this->userId;
+        $list = (new LostServices())->getPaginateList($data,10);
 
         return Show::success($list);
     }

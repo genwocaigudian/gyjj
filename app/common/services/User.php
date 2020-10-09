@@ -82,7 +82,7 @@ class User extends BaseServices
     }
     
     /**
-     * @param $id
+     * @param $openid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -128,5 +128,22 @@ class User extends BaseServices
 
         //redis需要同步
         return $this->model->updateById($id, $data);
+    }
+
+    /**
+     * 根据用户ids获取用户列表
+     * @param $id
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getUserByIds($id)
+    {
+        $user = $this->model->getUserByIds($id);
+        if (!$user) {
+            return [];
+        }
+        return $user->toArray();
     }
 }

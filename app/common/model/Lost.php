@@ -101,6 +101,17 @@ class Lost extends BaseModel
     }
 
     /**
+     * status查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchUidAttr($query, $value)
+    {
+        $query->where('user_id', '=', $value);
+    }
+
+    /**
      * @param $likeKeys
      * @param $data
      * @param string $field
@@ -121,7 +132,7 @@ class Lost extends BaseModel
             $res = $this;
         }
         $result = $res->field($field)->order($order)->paginate();
-        //echo $this->getLastSql();exit;
+//        echo $this->getLastSql();exit;
         return $result;
     }
 }
