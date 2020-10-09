@@ -60,6 +60,7 @@ class Lost extends AuthBase
         }
 
         $data['user_id'] = $this->userId;
+        $data['img_url'] = json_encode($data['img_url']);
 
         try {
             $result = (new LostServices())->insertData($data);

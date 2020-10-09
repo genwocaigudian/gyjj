@@ -4,7 +4,6 @@
 namespace app\api\controller;
 
 use app\api\validate\User as UserValidate;
-use app\BaseController;
 use app\common\lib\Show;
 use app\common\model\Jsxxb;
 use app\common\model\Xsxxb;

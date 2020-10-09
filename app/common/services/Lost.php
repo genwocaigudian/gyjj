@@ -118,7 +118,9 @@ class Lost extends BaseServices
         if (!$res) {
             return [];
         }
-        return $res->toArray();
+        $info = $res->toArray();
+        $info['img_url'] = json_decode($res['img_url']);
+        return $info;
     }
     
     /**
