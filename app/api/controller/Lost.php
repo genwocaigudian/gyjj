@@ -102,8 +102,10 @@ class Lost extends AuthBase
         $id = input("param.id", 0, "intval");
         $data = input('post.');
 
-        $data['img_url'] = json_encode($data['img_url']);
-        
+        if (isset($data['img_url'])) {
+            $data['img_url'] = json_encode($data['img_url']);
+        }
+
         $validate = new LostValidate();
         if (!$validate->check($data)) {
             return Show::error($validate->getError());
