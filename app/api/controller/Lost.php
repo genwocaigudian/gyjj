@@ -105,11 +105,7 @@ class Lost extends AuthBase
         if (isset($data['img_url'])) {
             $data['img_url'] = json_encode($data['img_url']);
         }
-
-        $validate = new LostValidate();
-        if (!$validate->check($data)) {
-            return Show::error($validate->getError());
-        }
+        
         try {
             $res = (new LostServices())->update($id, $data);
         } catch (\Exception $e) {
