@@ -17,6 +17,12 @@ class News extends BaseModel
         'is_hot',
     ];
 
+    protected $dateFormat = 'Y-m-d';
+
+    protected $type = [
+        'start_time'  =>  'timestamp',
+    ];
+
     protected $hidden = [
         'update_time',
         'delete_time'
