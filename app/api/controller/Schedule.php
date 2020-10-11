@@ -25,7 +25,8 @@ class Schedule extends AuthBase
                 break;
         }
         try {
-            $list = $model->getGroup();
+            $user = (new \app\common\services\User())->getNormalUserById($this->userId);
+            $list = $model->getGroup($user['number']);
         } catch (\Exception $e) {
             $list = [];
         }
