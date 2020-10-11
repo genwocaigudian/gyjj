@@ -6,10 +6,8 @@ namespace app\common\model;
 use think\Model;
 
 //老师课程表
-class Jskcb extends Model
+class ScheduleGroup extends Model
 {
-    protected $table = 'gyjj_schedule';
-
     /**
      * @param $number
      * @param $xn
@@ -21,7 +19,7 @@ class Jskcb extends Model
      */
     public function getList($number, $xn = '', $xq = 1)
     {
-        $field = 'XN,XQ,BJMC,KCMC,XQJ,XM';
+        $field = 'xn,xq,bjmc,kcmc,xqj,xm';
         if (!$number) {
             return false;
         }
@@ -48,7 +46,12 @@ class Jskcb extends Model
      */
     public function getGroup($zgh)
     {
-        $res = (new ScheduleGroup())->getGroup($zgh);
+        if (!$zgh) {
+            return false;
+        }
+        $res = $this->field('XN')->order('XN desc')->group('XN')->select();
+//        echo $this->getLastSql();exit();
+//        $res = $this->where(['jszgh' => $zgh])->field('xn,xq')->group('xn,xq')->order('xn desc')->select();
         return $res;
     }
 }

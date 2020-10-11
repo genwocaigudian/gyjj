@@ -42,6 +42,7 @@ class Schedule extends AuthBase
             $list = [];
         }
 
+        $list = Arr::groupArr($list->toArray(), 'XQJ');
         return Show::success($list);
     }
 
