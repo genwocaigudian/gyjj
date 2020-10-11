@@ -28,4 +28,24 @@ class Xskcb extends Model
         $res = $this->where(['xh' => $xh])->field($field)->order('xn desc')->select();
         return $res;
     }
+
+    /**
+     * @param $zgh
+     * @return array|bool|Model|null
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getGroup($zgh)
+    {
+        if (!$zgh) {
+            return false;
+        }
+        $res = $this->where(['jszgh' => $zgh])
+            ->field('xn", "xq')
+            ->order('xn desc')
+            ->group('xn, xq')
+            ->select();
+        return $res;
+    }
 }

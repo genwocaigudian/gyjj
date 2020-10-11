@@ -24,7 +24,10 @@ class Jskcb extends Model
         if (!$zgh) {
             return false;
         }
-        $res = $this->where(['jszgh' => $zgh])->field($field)->order('xn desc')->select();
+        $res = $this->where(['jszgh' => $zgh])
+            ->field($field)
+            ->order('xn desc')
+            ->select();
         return $res;
     }
 
@@ -41,7 +44,11 @@ class Jskcb extends Model
         if (!$zgh) {
             return false;
         }
-        $res = $this->where(['jszgh' => $zgh])->field($field)->order('xn desc')->select();
+        $res = $this->where(['jszgh' => $zgh])
+            ->field($field)
+            ->order('xn desc')
+            ->group('xn, xq')
+            ->select();
         return $res;
     }
 }
