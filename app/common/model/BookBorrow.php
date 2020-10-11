@@ -4,35 +4,25 @@ namespace app\common\model;
 
 use think\Model;
 
-//图书借阅信息 校方接口
+//我的 未还借阅记录
 class BookBorrow extends Model
 {
     protected $connection = 'book';
-    protected $table = 'zfxfzb.vlend_all';
+    protected $table = 'zfxfzb.v_lend_lst';
 
     /**
-     * 获取书目信息
-     * @return \think\Collection
-     * @throws \think\db\exception\DataNotFoundException
+     * @param $id
+     * @return array
      * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
      */
-    public function get()
+    public function getPaginateListById($id)
     {
-        $res = $this->limit(10)->select();
-        return $res;
-    }
-
-    /**
-     * 未归还记录
-     * @return \think\Collection
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     */
-    public function noReturned()
-    {
-        $res = $this->limit(10)->select();
+        $where = [
+            'cert_id' => $id
+        ];
+        $field = 'M_TITLE, LEND_DATE, NORM_RET_DATE';
+        $res = $this->where($where)->field($field)->paginate();
+        $res = $res->toArray();
         return $res;
     }
 }
