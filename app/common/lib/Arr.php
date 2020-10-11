@@ -68,7 +68,7 @@ class Arr
      * @param $key
      * @return array
      */
-    public static function array_group_by($arr, $key)
+    public static function groupArr($arr, $key)
     {
         $grouped = [];
         foreach ($arr as $value) {
