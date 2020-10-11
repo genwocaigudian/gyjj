@@ -6,11 +6,6 @@ use app\common\lib\Arr;
 use app\common\lib\Show;
 use app\common\model\BookBorrow;
 use app\common\model\BookList;
-use app\common\model\Jsxxb;
-use app\common\services\Lost as LostServices;
-use app\api\validate\Lost as LostValidate;
-use think\facade\Cache;
-use think\facade\Log;
 use think\response\Json;
 
 class Books extends AuthBase

@@ -5,8 +5,11 @@ namespace app\common\model;
 use think\Model;
 
 //我的 未还借阅记录
-class BookBorrow extends Model
+class BookBorrow1 extends Model
 {
+    protected $connection = 'book';
+    protected $table = 'vlend_all';
+
     /**
      * @param $id
      * @return array
