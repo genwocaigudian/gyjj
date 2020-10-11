@@ -49,7 +49,7 @@ class Jskcb1 extends Model
      */
     public function getGroup($zgh)
     {
-        $field = 'xn,xq,bjmc,kcmc,xqj,xm';
+        $field = 'XN,XQ,BJMC,KCMC,XQJ,XM';
         if (!$zgh) {
             return false;
         }

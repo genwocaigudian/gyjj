@@ -23,11 +23,21 @@ class Xskcb extends Model
      */
     public function getList($number, $xn = '' , $xq = 1)
     {
-        $field = 'xn,xq,bjmc,kcmc,xqj,xm';
+        $field = 'xn,xq,bjmc,kcmc,xqj,jsxm';
         if (!$number) {
             return false;
         }
-        $res = $this->where(['xh' => $number])->field($field)->order('xn desc')->select();
+        $where = [
+            'xq' => $xq,
+            'xn' => $xn,
+            'xh' => $number
+        ];
+        $res = $this->where($where)->field($field)->order('xqj asc')->select();
+//        $res = $this->where($where)
+//            ->field($field)
+//            ->group('xqj')
+//            ->order('xqj asc')
+//            ->select();
         return $res;
     }
 
@@ -44,7 +54,7 @@ class Xskcb extends Model
         if (!$xh) {
             return false;
         }
-        $res = $this->where(['jszgh' => $xh])->field('xn')->group('xn')->order('xn desc')->select();
+        $res = $this->where(['xh' => $xh])->field('xn')->group('xn')->order('xn desc')->select();
 //        $res = $this->where(['jszgh' => $zgh])->field('xn,xq')->group('xn,xq')->order('xn desc')->select();
         return $res;
     }
