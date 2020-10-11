@@ -9,7 +9,7 @@ use think\Model;
 class BookList extends Model
 {
     protected $connection = 'book';
-    protected $table = 'zfxfzb.v_marc';
+    protected $table = 'v_marc';
 
     /**
      * @param $data

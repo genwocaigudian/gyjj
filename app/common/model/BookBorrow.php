@@ -8,7 +8,7 @@ use think\Model;
 class BookBorrow extends Model
 {
     protected $connection = 'book';
-    protected $table = 'zfxfzb.v_lend_lst';
+    protected $table = 'v_lend_lst';
 
     /**
      * @param $id
