@@ -19,11 +19,12 @@ class BookList extends Model
     public function getPaginateList($data)
     {
         $where = [];
-        $field = 'M_TITLE, M_AUTHOR, M_PUB_YEAR, M_PUBLISHER';
-        if ($data) {
-            $where = ['M_TITLE', 'like', "%{$data['title']}%"];
+        $field = 'm_title, m_author, m_pub_year, m_publisher';
+        if (isset($data['title']) && !empty($data['title'])) {
+            $where[] = ['m_title', 'like', "%{$data['title']}%"];
         }
         $res = $this->where($where)->field($field)->paginate();
+        //echo $this->getLastSql();exit();
         $res = $res->toArray();
         return $res;
     }

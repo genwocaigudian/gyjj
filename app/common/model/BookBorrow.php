@@ -8,7 +8,7 @@ use think\Model;
 class BookBorrow extends Model
 {
     protected $connection = 'book';
-    protected $table = 'v_lend_lst';
+    protected $table = 'vlend_all';
 
     /**
      * @param $id
@@ -18,9 +18,9 @@ class BookBorrow extends Model
     public function getPaginateListById($id)
     {
         $where = [
-            'cert_id' => $id
+            'cert_id_f' => $id
         ];
-        $field = 'M_TITLE, LEND_DATE, NORM_RET_DATE';
+        $field = 'm_title, lend_date, norm_ret_date';
         $res = $this->where($where)->field($field)->paginate();
         $res = $res->toArray();
         return $res;
