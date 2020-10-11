@@ -8,11 +8,9 @@ use think\Model;
 //学生课程表
 class Xskcb extends Model
 {
-    protected $connection = 'schedule';
-    protected $table = 'zfxfzb.v_xskcb';
+    protected $table = 'gyjj_schedule';
 
     /**
-     * 根据学号获取学生课表
      * @param $number
      * @param $xn
      * @param $xq
@@ -21,16 +19,16 @@ class Xskcb extends Model
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getList($number, $xn = '' , $xq = 1)
+    public function getList($number, $xn = '', $xq = 1)
     {
-        $field = 'xn,xq,bjmc,kcmc,xqj,jsxm';
+        $field = 'XN,XQ,BJMC,KCMC,XQJ,XM';
         if (!$number) {
             return false;
         }
         $where = [
             'xq' => $xq,
             'xn' => $xn,
-            'xh' => $number
+            'jszgh' => $number
         ];
         $res = $this->where($where)->field($field)->order('xqj asc')->select();
 //        $res = $this->where($where)
@@ -42,20 +40,15 @@ class Xskcb extends Model
     }
 
     /**
-     * @param $xh
+     * @param $zgh
      * @return array|bool|Model|null
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getGroup($xh)
+    public function getGroup($zgh)
     {
-        $field = 'xn,xq,bjmc,kcmc,xqj,xm';
-        if (!$xh) {
-            return false;
-        }
-        $res = $this->where(['xh' => $xh])->field('xn')->group('xn')->order('xn desc')->select();
-//        $res = $this->where(['jszgh' => $zgh])->field('xn,xq')->group('xn,xq')->order('xn desc')->select();
+        $res = (new ScheduleGroup())->getGroup($zgh);
         return $res;
     }
 }
