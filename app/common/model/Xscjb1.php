@@ -6,9 +6,10 @@ namespace app\common\model;
 use think\Model;
 
 //学生成绩表
-class Xscjb extends Model
+class Xscjb1 extends Model
 {
-    protected $table = 'gyjj_scores';
+    protected $connection = 'schedule';
+    protected $table = 'zfxfzb.cjbview';
 
     /**
      * 根据学号获取学生课表
@@ -49,7 +50,10 @@ class Xscjb extends Model
      */
     public function getGroup($xh)
     {
-        $res = (new ScheduleGroup())->getGroup($xh);
+        if (!$xh) {
+            return false;
+        }
+        $res = $this->where(['xh' => $xh])->field('xn')->group('xn')->order('xn desc')->select();
         return $res;
     }
 }

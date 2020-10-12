@@ -5,13 +5,10 @@ namespace app\common\model;
 
 use think\Model;
 
-//学生成绩表
-class Xscjb extends Model
+//老师课程表
+class Scores extends Model
 {
-    protected $table = 'gyjj_scores';
-
     /**
-     * 根据学号获取学生课表
      * @param $number
      * @param $xn
      * @param $xq
@@ -22,16 +19,16 @@ class Xscjb extends Model
      */
     public function getList($number, $xn = '', $xq = 1)
     {
-        $field = 'XN,XQ,XM,KCMC,CJ,KCXZ';
+        $field = 'xn,xq,bjmc,kcmc,xqj,xm';
         if (!$number) {
             return false;
         }
         $where = [
             'xq' => $xq,
             'xn' => $xn,
-            'xh' => $number
+            'jszgh' => $number
         ];
-        $res = $this->where($where)->field($field)->select();
+        $res = $this->where($where)->field($field)->order('xqj asc')->select();
 //        $res = $this->where($where)
 //            ->field($field)
 //            ->group('xqj')
@@ -41,15 +38,20 @@ class Xscjb extends Model
     }
 
     /**
-     * @param $xh
+     * @param $zgh
      * @return array|bool|Model|null
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getGroup($xh)
+    public function getGroup($zgh)
     {
-        $res = (new ScheduleGroup())->getGroup($xh);
+        if (!$zgh) {
+            return false;
+        }
+        $res = $this->field('XN')->order('XN desc')->group('XN')->select();
+//        echo $this->getLastSql();exit();
+//        $res = $this->where(['jszgh' => $zgh])->field('xn,xq')->group('xn,xq')->order('xn desc')->select();
         return $res;
     }
 }
