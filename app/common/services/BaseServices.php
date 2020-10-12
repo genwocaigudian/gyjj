@@ -3,9 +3,7 @@
 
 namespace app\common\services;
 
-use app\common\lib\Str;
 use think\facade\Log;
-use think\facade\Request;
 
 class BaseServices
 {
