@@ -66,6 +66,30 @@ class Proctor extends BaseModel
     }
 
     /**
+     * @param array $data
+     * @return Collection
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getDateGroup($data = [])
+    {
+        $field = 'date';
+        $order = [
+            'date' => 'asc'
+        ];
+
+        $result = $this->whereTime('create_time', '<=', $data['time'])
+            ->where('number', '=', $data['number'])
+            ->field($field)
+            ->order($order)
+            ->group($field)
+            ->select();
+//        echo $this->getLastSql();exit;
+        return $result;
+    }
+
+    /**
      * number查询条件表达式
      * 调用withSearch方法时触发
      * @param $query

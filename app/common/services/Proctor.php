@@ -38,6 +38,36 @@ class Proctor extends BaseServices
 
     /**
      * @param $data
+     * @return bool|\think\Collection
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getListByData($data)
+    {
+        $list = $this->model->getByCondition($data);
+        return $list;
+    }
+
+    /**
+     * @param $data
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getDateGroup($data)
+    {
+        $list = $this->model->getDateGroup($data);
+        if (!$list) {
+            return [];
+        }
+        $result = $list->toArray();
+        return $result;
+    }
+
+    /**
+     * @param $data
      * @param int $num
      * @return array
      */
