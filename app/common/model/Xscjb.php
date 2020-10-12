@@ -5,11 +5,11 @@ namespace app\common\model;
 
 use think\Model;
 
-//学生课程表
-class Xskcb1 extends Model
+//学生成绩表
+class Xscjb extends Model
 {
     protected $connection = 'schedule';
-    protected $table = 'zfxfzb.v_xskcb';
+    protected $table = 'zfxfzb.cjbview';
 
     /**
      * 根据学号获取学生课表
@@ -23,7 +23,7 @@ class Xskcb1 extends Model
      */
     public function getList($number, $xn = '', $xq = 1)
     {
-        $field = 'xn,xq,bjmc,kcmc,xqj,jsxm as xm';
+        $field = 'XN,XQ,XM,KCMC,CJ,KCXZ';
         if (!$number) {
             return false;
         }
@@ -32,7 +32,7 @@ class Xskcb1 extends Model
             'xn' => $xn,
             'xh' => $number
         ];
-        $res = $this->where($where)->field($field)->order('xqj asc')->select();
+        $res = $this->where($where)->field($field)->select();
 //        $res = $this->where($where)
 //            ->field($field)
 //            ->group('xqj')
@@ -50,12 +50,10 @@ class Xskcb1 extends Model
      */
     public function getGroup($xh)
     {
-        $field = 'xn,xq,bjmc,kcmc,xqj,xm';
         if (!$xh) {
             return false;
         }
         $res = $this->where(['xh' => $xh])->field('xn')->group('xn')->order('xn desc')->select();
-//        $res = $this->where(['jszgh' => $zgh])->field('xn,xq')->group('xn,xq')->order('xn desc')->select();
         return $res;
     }
 }

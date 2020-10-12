@@ -2,17 +2,17 @@
 
 namespace app\api\controller;
 
-use app\api\validate\Schedule as ScheduleValidate;
+use app\api\validate\Scores as ScoresValidate;
 use app\common\lib\Arr;
 use app\common\lib\Show;
 use app\common\model\Jskcb;
+use app\common\model\Xscjb;
 use app\common\model\Xskcb;
 use think\response\Json;
 
-//课程表
-class Schedule extends AuthBase
+//学生成绩表
+class Scores extends AuthBase
 {
-
     /**
      * @return Json
      */
@@ -21,7 +21,7 @@ class Schedule extends AuthBase
         $data = input('param.');
         $list = [];
 
-        $validate = new ScheduleValidate();
+        $validate = new ScoresValidate();
         if (!$validate->scene('index')->check($data)) {
             return Show::error($validate->getError());
         }
@@ -30,10 +30,10 @@ class Schedule extends AuthBase
         $xn = $data['xn'];
         switch ($this->type) {
             case 2:
-                $model = new Xskcb();
+                $model = new Xscjb();
                 break;
             default:
-                $model = new Jskcb();
+                return Show::success($list);
                 break;
         }
         try {
@@ -43,8 +43,7 @@ class Schedule extends AuthBase
             return Show::success($list);
         }
 
-        $list = Arr::groupArr($list->toArray(), 'XQJ');
-        return Show::success($list);
+        return Show::success($list->toArray());
     }
 
     /**
@@ -52,19 +51,20 @@ class Schedule extends AuthBase
      */
     public function group()
     {
+        $list = [];
         switch ($this->type) {
             case 2:
-                $model = new Xskcb();
+                $model = new Xscjb();
                 break;
             default:
-                $model = new Jskcb();
+                return Show::success($list);
                 break;
         }
         try {
             $user = (new \app\common\services\User())->getNormalUserById($this->userId);
             $list = $model->getGroup($user['number']);
         } catch (\Exception $e) {
-            $list = [];
+            return Show::success($list);
         }
 
         return Show::success($list);
