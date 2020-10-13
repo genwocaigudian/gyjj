@@ -54,15 +54,21 @@ class Rules extends BaseServices
      */
     public function getAllRolesByUid($data, $field)
     {
+        $adminData = [
+            'type' => 'g',
+            'uid' => 1,
+        ];
         $list = $this->getList($data, $field);
-        $roles = Enforcer::getRolesForUser(1);
-        foreach ($list as &$item) {
+        $options = array_column($list, 'v1');
+        $rules = $this->getList($adminData, $field);
+//        $roles = Enforcer::getRolesForUser(1);
+        foreach ($rules as &$item) {
             $item['is_check'] = 0;
-            if (in_array($item['v1'], $roles)) {
+            if (in_array($item['v1'], $options)) {
                 $item['is_check'] = 1;
             }
         }
-        return $list;
+        return $rules;
     }
 
     /**

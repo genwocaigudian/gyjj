@@ -5,6 +5,7 @@ use app\admin\services\AdminUser as AdminUserService;
 use app\admin\validate\AdminUser as AdminUserValidate;
 use app\common\lib\Arr;
 use app\common\lib\Show;
+use app\common\services\Rules as RuleService;
 use tauthz\facade\Enforcer;
 use think\facade\Log;
 use think\response\Json;
@@ -70,7 +71,7 @@ class User extends AdminAuthBase
     {
 	    $id = input('param.id', 0, 'intval');
         try {
-            $result = (new AdminUserService())->getNormalUserById($id);
+            $result = (new AdminUserService())->getUserRuleById($id);
         } catch (\Exception $e) {
             Log::error('admin/user/read 错误:' . $e->getMessage());
             return Show::error($e->getMessage());
@@ -107,6 +108,28 @@ class User extends AdminAuthBase
 
         $id = input('param.id', 0, 'intval');
         $data = input('post.');
+
+        //更新用户权限
+        if (isset($data['rulename'])) {
+            if (is_array($data['rulename']) && !empty($data['rulename'])) {
+                $ruleData = [
+                    'type' => 'g',
+                    'uid' => $id,
+                ];
+                $field = 'id, v1';
+                $rule = (new RuleService())->getList($ruleData, $field);
+                $rule = array_column($rule, 'v1');
+                $diff = array_diff($data['rulename'], $rule);
+                if ($diff || count($data['rulename']) != count($rule)) {
+                    Enforcer::deleteRolesForUser($id);
+                    foreach ($data['rulename'] as $name) {
+                        Enforcer::addRoleForUser($id, $name);
+                    }
+                }
+            }
+
+            unset($data['rulename']);
+        }
 
         try {
             $res = (new AdminUserService())->update($id, $data);

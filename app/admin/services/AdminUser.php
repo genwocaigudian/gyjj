@@ -5,6 +5,7 @@ namespace app\admin\services;
 use app\common\lib\Str;
 use app\common\lib\Time;
 use app\admin\model\AdminUser as AdminUserModel;
+use app\common\services\Rules as RuleService;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
@@ -65,6 +66,33 @@ class AdminUser extends AdminBaseServices
             return [];
         }
         return $user->toArray();
+    }
+
+    /**
+     * @param $id
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getUserRuleById($id)
+    {
+        $user = $this->getNormalUserById($id);
+        if (!$user) {
+            return [];
+        }
+        //获取用户的所有角色
+        $data = [
+            'type' => 'g',
+            'uid' => $id,
+        ];
+
+        $field = 'id, v1';
+
+        $rules = (new RuleService())->getAllRolesByUid($data, $field);
+
+        $user['rules'] = $rules;
+        return $user;
     }
 
     /**
