@@ -60,7 +60,7 @@ class User extends BaseServices
             'id' => $userId,
             'username' => $username,
         ];
-        $res = cache(config('redis.token_pre').$token, $redisData, Time::userLoginExpiresTime(2));
+        $res = cache(config('rediskey.token_pre').$token, $redisData, Time::userLoginExpiresTime(2));
         
         return $res ? ['token' => $token, 'username' => $username] : false;
     }

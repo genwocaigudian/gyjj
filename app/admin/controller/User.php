@@ -131,6 +131,10 @@ class User extends AdminAuthBase
             unset($data['rulename']);
         }
 
+        if (isset($data['password'])) {
+            $data['password'] = md5($data['password'].config('admin.password_suffix'));
+        }
+
         try {
             $res = (new AdminUserService())->update($id, $data);
         } catch (\Exception $e) {

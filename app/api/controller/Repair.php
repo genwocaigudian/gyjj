@@ -110,6 +110,6 @@ class Repair extends AuthBase
     public function test()
     {
         $orderId = 15;
-        Cache::zAdd(config('redis.repair_status_key'), time()+config('redis.order_expire'), $orderId);
+        Cache::zAdd(config('rediskey.repair_status_key'), time()+config('rediskey.order_expire'), $orderId);
     }
 }

@@ -64,7 +64,7 @@ class Lost extends AuthBase
 
         try {
             $result = (new LostServices())->insertData($data);
-            Cache::zAdd(config("redis.lost_status_key"), time() + config("redis.lost_expire"), $result['id']);
+            Cache::zAdd(config("rediskey.lost_status_key"), time() + config("rediskey.lost_expire"), $result['id']);
         } catch (\Exception $e) {
             return Show::error($e->getMessage());
         }

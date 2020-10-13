@@ -4,11 +4,13 @@
 namespace app\common\services;
 
 use app\common\lib\Arr;
+use app\common\lib\Key;
 use app\common\model\LotteryWinning as LotteryWinningModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Exception;
+use think\facade\Cache;
 
 class LotteryWinning extends BaseServices
 {
@@ -119,10 +121,21 @@ class LotteryWinning extends BaseServices
      */
     public function insertData($data)
     {
-        $res = $this->getNormalByTitle($data['title']);
-        if ($res) {
-            throw new Exception("标题不可重复");
+        $res = Cache::hGetAll(Key::LotteryKey($data['id']));
+        if (empty($res)) {
+            throw new \Exception('没有足够的人数参与此次抽奖!');
         }
+        $randNum = array_rand(array_flip($res), 1);
+        $data['lottery_id'] = $data['id'];
+        $data['status'] = 1;
+        foreach ($res as $key => $value) {
+            if ($randNum == $value) {
+                $data['number'] = $value;
+                $data['user_id'] = $key;
+                Cache::hDel(Key::LotteryKey($data['id']), $key);
+            }
+        }
+        unset($data['id']);
 
         try {
             $id = $this->add($data);
@@ -183,5 +196,10 @@ class LotteryWinning extends BaseServices
     public function insertAll($data)
     {
         return $res = $this->model->saveAll($data);
+    }
+
+    public function getCountById($id)
+    {
+        return $this->model->getCountByLotteryId($id);
     }
 }

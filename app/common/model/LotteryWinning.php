@@ -43,28 +43,6 @@ class LotteryWinning extends BaseModel
     }
 
     /**
-     * 根据title查询数据
-     * @param $title
-     * @return array|bool|\think\Model|null
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     */
-    public function getNewsByTitle($title)
-    {
-        if (empty($title)) {
-            return false;
-        }
-
-        $where = [
-            'title' => $title,
-            'status' => config('status.mysql.table_normal'),
-        ];
-
-        return $this->where($where)->find();
-    }
-
-    /**
      * @param string $field
      * @return Collection
      * @throws DataNotFoundException
@@ -138,5 +116,20 @@ class LotteryWinning extends BaseModel
         $result = $res->field($field)->paginate($num);
         //echo $this->getLastSql();exit;
         return $result;
+    }
+
+    /**
+     * @param $id
+     * @return int
+     */
+    public function getCountByLotteryId($id)
+    {
+        $where = [
+            'lottery_id' => $id,
+        ];
+
+        $count = $this->where($where)->count();
+//        echo $this->getLastSql();exit;
+        return $count;
     }
 }

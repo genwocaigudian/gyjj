@@ -20,7 +20,7 @@ class Index extends BaseController
     public function redis()
     {
         $code = Num::getCode(6);
-        cache(config('redis.code_pre').'18855479876', $code, config('redis.code_expire'));
+        cache(config('rediskey.code_pre').'18855479876', $code, config('rediskey.code_expire'));
         echo 'redis';
     }
 }
