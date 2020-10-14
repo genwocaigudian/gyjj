@@ -5,6 +5,7 @@ namespace app\common\services;
 
 use app\common\lib\Arr;
 use app\common\lib\Key;
+use app\common\lib\Num;
 use app\common\model\LotteryWinning as LotteryWinningModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -143,7 +144,8 @@ class LotteryWinning extends BaseServices
             throw new Exception('数据库内部异常');
         }
         $result = [
-            'id' => $id
+            'id' => $id,
+            'number' => Num::fixFourNum($data['number']),
         ];
         return $result;
     }
