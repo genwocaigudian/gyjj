@@ -77,8 +77,6 @@ class Lottery extends AdminAuthBase
             return Show::error($e->getMessage(), $e->getCode());
         }
 
-        $result['is_allow'] = $this->userId == $result['user_id'] ? 1 : 0;
-
         return Show::success($result);
     }
 
