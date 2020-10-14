@@ -22,13 +22,29 @@ class User extends AdminAuthBase
             "status" => $status,
         ];
         try {
-            $list = (new AdminUserService())->getLists($data, 10);
+            $list = (new AdminUserService())->getPaginateLists($data, 10);
         } catch (\Exception $e) {
             $list = Arr::getPaginateDefaultData(10);
         }
         
         return Show::success($list);
     }
+
+    /**
+     * @return Json
+     */
+    public function list()
+    {
+        $data = input('param.');
+        try {
+            $list = (new AdminUserService())->getList($data);
+        } catch (\Exception $e) {
+            $list = [];
+        }
+
+        return Show::success($list);
+    }
+
 
     /**
      * 新增

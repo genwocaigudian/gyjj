@@ -77,19 +77,33 @@ class AdminUser extends BaseModel
 	}
 
     /**
-     * 获取列表数据
      * @param $where
-     * @param string $field
      * @param int $num
      * @return \think\Paginator
      * @throws DbException
      */
-    public function getLists($where, $num = 10)
+    public function getPaginateLists($where, $num = 10)
     {
         $order = [
             "id" => "desc"
         ];
         $result = $this->where($where)->order($order)->paginate($num);
+//        echo $this->getLastSql();exit;
+        return $result;
+    }
+
+    /**
+     * @param $where
+     * @param int $num
+     * @return \think\Paginator
+     * @throws DbException
+     */
+    public function getList($where)
+    {
+        $order = [
+            "id" => "desc"
+        ];
+        $result = $this->getByCondition($where, $order);
 //        echo $this->getLastSql();exit;
         return $result;
     }

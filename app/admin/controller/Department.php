@@ -1,42 +1,43 @@
 <?php
 namespace app\admin\controller;
 
-use app\admin\services\AdminUser;
-use app\admin\validate\Lottery as LotteryValidate;
+use app\admin\validate\Department as DepartmentValidate;
 use app\common\lib\Show;
-use app\common\services\Lottery as LotteryService;
-use think\facade\Cache;
+use app\common\services\Department as DepartmentService;
 use think\facade\Log;
 use think\response\Json;
 
-class Lottery extends AdminAuthBase
+class Department extends AdminAuthBase
 {
     /**
      * @return Json
-     * @throws \think\db\exception\DbException
      */
     public function index()
     {
         $data = [];
-        $title = input('param.title', '', 'trim');
-        $status = input('param.status', '', 'trim');
-        if (!empty($title)) {
-            $data['title'] = $title;
-        }
-        if (!empty($status)) {
-            $data['status'] = $status;
-        }
 
-        $list = (new LotteryService())->getPaginateList($data, 10);
+        $list = (new DepartmentService())->getPaginateList($data, 10);
         
         return Show::success($list);
     }
 
     /**
+     * 无分页列表
      * @return Json
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function list()
+    {
+        $list = (new DepartmentService())->getNormalList();
+
+        return Show::success($list);
+    }
+
+    /**
+     * 新增
+     * @return Json
      */
     public function save()
     {
@@ -45,22 +46,15 @@ class Lottery extends AdminAuthBase
         }
         $data = input('post.');
 
-        $validate = new LotteryValidate();
+        $validate = new DepartmentValidate();
         if (!$validate->scene('save')->check($data)) {
             return Show::error($validate->getError());
         }
 
-        $adminUserInfo = (new AdminUser())->getNormalUserById($data['user_id']);
-        $userInfo = (new \app\common\services\User())->getNormalUserByNumber($adminUserInfo['number']);
-        $data['user_id'] = $userInfo['id'];
-        $data['start_time'] = $data['start_time'] . '00:00:00';
-        $data['end_time'] = $data['end_time'] . '23:59:59';
-
         try {
-            $result = (new LotteryService())->insertData($data);
-            Cache::zAdd(config("rediskey.lottery_status_key"), strtotime($data['end_time']), $result['id']);
+            $result = (new DepartmentService())->insertData($data);
         } catch (\Exception $e) {
-            Log::error('admin/lottery/save 错误:' . $e->getMessage());
+            Log::error('admin/department/save 错误:' . $e->getMessage());
             return Show::error($e->getMessage());
         }
 
@@ -75,9 +69,9 @@ class Lottery extends AdminAuthBase
     {
         $id = input('param.id', 0, 'intval');
         try {
-            $result = (new LotteryService())->getNormalById($id);
+            $result = (new DepartmentService())->getNormalById($id);
         } catch (\Exception $e) {
-            Log::error('admin/lottery/read 错误:' . $e->getMessage());
+            Log::error('admin/department/read 错误:' . $e->getMessage());
             return Show::error($e->getMessage(), $e->getCode());
         }
 
@@ -96,10 +90,9 @@ class Lottery extends AdminAuthBase
 
         $id = input('param.id', 0, 'intval');
         $data = input('post.');
-//        $data = $this->request->only(['is_hot', 'is_top', 'title', 'content'], 'post');
 
         try {
-            $res = (new LotteryService())->update($id, $data);
+            $res = (new DepartmentService())->update($id, $data);
         } catch (\Exception $e) {
             return Show::error($e->getMessage());
         }
@@ -120,7 +113,7 @@ class Lottery extends AdminAuthBase
         $id = input("param.id");
 
         try {
-            $res = (new LotteryService())->del($id);
+            $res = (new DepartmentService())->del($id);
         } catch (\Exception $e) {
             return Show::error($e->getMessage());
         }

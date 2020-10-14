@@ -108,6 +108,19 @@ class User extends BaseModel
         return $this->where($where)->find();
     }
 
+    public function getUserByNumber($number)
+    {
+        if (empty($number)) {
+            return false;
+        }
+
+        $where = [
+            'number' => $number
+        ];
+
+        return $this->where($where)->find();
+    }
+
     public function updateById($id, $data)
     {
         $id = intval($id);

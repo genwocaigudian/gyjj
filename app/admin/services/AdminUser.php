@@ -5,6 +5,7 @@ namespace app\admin\services;
 use app\common\lib\Str;
 use app\common\lib\Time;
 use app\admin\model\AdminUser as AdminUserModel;
+use app\common\services\Department;
 use app\common\services\Rules as RuleService;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -81,6 +82,9 @@ class AdminUser extends AdminBaseServices
         if (!$user) {
             return [];
         }
+
+        $depart = (new Department())->getNormalById($user['department_id']);
+        $user['depart_name'] = $depart['name']??'';
         //获取用户的所有角色
         $data = [
             'type' => 'g',
@@ -158,6 +162,37 @@ class AdminUser extends AdminBaseServices
      * @return array
      * @throws \think\db\exception\DbException
      */
+    public function getPaginateLists($data, $num)
+    {
+        $list = $this->model->getPaginateLists($data, $num);
+        if (!$list) {
+            return [];
+        }
+        $result = $list->toArray();
+        return $result;
+    }
+
+    /**
+     * @param $data
+     * @return array
+     * @throws DbException
+     */
+    public function getList($data)
+    {
+        $list = $this->model->getList($data);
+        if (!$list) {
+            return [];
+        }
+        return $list;
+    }
+
+    /**
+     * 获取列表数据
+     * @param $data
+     * @param $num
+     * @return array
+     * @throws \think\db\exception\DbException
+     */
     public function getLists($data, $num)
     {
         $list = $this->model->getLists($data, $num);
@@ -185,6 +220,9 @@ class AdminUser extends AdminBaseServices
 
         $insertData = [
             'username' => $data['username'],
+            'number' => $data['number'],
+            'is_leader' => $data['is_leader'],
+            'department_id' => $data['department_id'],
             'password' => md5($data['password'].config('admin.password_suffix')),
             'last_login_time' => time(),
             'last_login_ip' => $data['last_login_ip'],

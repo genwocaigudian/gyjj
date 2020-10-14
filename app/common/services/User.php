@@ -111,6 +111,19 @@ class User extends BaseServices
     }
 
     /**
+     * @param $number
+     * @return array
+     */
+    public function getNormalUserByNumber($number)
+    {
+        $user = $this->model->getUserByNumber($number);
+        if (!$user || $user->status != config('status.mysql.table_normal')) {
+            return [];
+        }
+        return $user->toArray();
+    }
+
+    /**
      * @param $id
      * @param $data
      * @return bool
