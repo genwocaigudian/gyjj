@@ -120,6 +120,28 @@ class Lottery extends BaseModel
     }
 
     /**
+     * target查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchTargetAttr($query, $value)
+    {
+        $query->where('target', 'in', [0, $value]);
+    }
+
+    /**
+     * status查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchStatusAttr($query, $value)
+    {
+        $query->where('status', '=', $value);
+    }
+
+    /**
      * @param $likeKeys
      * @param $data
      * @param string $field

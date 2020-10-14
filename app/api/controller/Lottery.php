@@ -21,7 +21,9 @@ class Lottery extends AuthBase
      */
     public function index()
     {
-        $data = [];
+        $data = input('param.');
+        $data['target'] = $this->type;
+        $data['status'] = config('status.mysql.table_normal');
         try {
             $list = (new LotteryServices())->getPaginateList($data, 10);
         } catch (\Exception $e) {
