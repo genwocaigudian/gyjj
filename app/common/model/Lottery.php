@@ -131,13 +131,16 @@ class Lottery extends BaseModel
      */
     public function getPaginateList($likeKeys, $data, $field = "*", $num = 10)
     {
+        $order = [
+            'id' => 'desc'
+        ];
         if (!empty($likeKeys)) {
             $res = $this->withSearch($likeKeys, $data);
         } else {
             $res = $this;
         }
-        $result = $res->withoutField(['content'])->paginate($num);
-        //echo $this->getLastSql();exit;
+        $result = $res->withoutField(['content'])->order($order)->paginate($num);
+//        echo $this->getLastSql();exit;
         return $result;
     }
 }

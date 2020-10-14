@@ -4,11 +4,14 @@
 namespace app\common\services;
 
 use app\common\lib\Arr;
+use app\common\lib\Key;
 use app\common\model\Lottery as LotteryModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Exception;
+use think\facade\Cache;
+use think\facade\Log;
 
 class Lottery extends BaseServices
 {
@@ -183,5 +186,58 @@ class Lottery extends BaseServices
     public function insertAll($data)
     {
         return $res = $this->model->saveAll($data);
+    }
+
+    /**
+     * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws Exception
+     * @throws ModelNotFoundException
+     */
+    public function lotteryCommand()
+    {
+        $result = Cache::zRangeByScore('lottery_status', 0, time(), ['limit' => [0, 1]]);
+        //		$result = Cache::store('redis')->zRangeByScore("order_status", 0, time(), ['limit' => [0, 1]]);
+
+        if (empty($result) || empty($result[0])) {
+            return false;
+        }
+
+        try {
+            $delRedis = Cache::zRem('lottery_status', $result[0]);
+            Cache::del(Key::LotteryNumIncrKey($result[0]));
+            $this->deleteRedis($result[0]);
+            //$delRedis = Cache::store('redis')->zRem("order_status", $result[0]);
+        } catch (\Exception $e) {
+            // 记录日志
+            Log::error("抽奖活动id:{$result[0]}-" . $e->getMessage());
+            $delRedis = "";
+        }
+        if ($delRedis) {
+            $this->update($result[0], ['status' => 2]);
+            echo "抽奖活动id:{$result[0]}更新成功";
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 删除抽奖rediskey
+     * @param $lotteryId
+     * @return bool
+     */
+    public function deleteRedis($lotteryId) {
+        $keys = Cache::hGetAll(Key::LotteryKey($lotteryId));
+        $ids = array_keys($keys);
+        try {
+            // ... 是PHP提供一个特性 可变参数
+            $res = Cache::hDel(Key::LotteryKey($lotteryId), ...$ids);
+        }catch (\Exception $e) {
+            return FALSE;
+        }
+        return $res;
     }
 }

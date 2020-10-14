@@ -5,6 +5,7 @@ use app\admin\validate\Lottery as LotteryValidate;
 use app\common\lib\Excel as ExcelLib;
 use app\common\lib\Show;
 use app\common\services\Lottery as LotteryService;
+use think\facade\Cache;
 use think\facade\Log;
 use think\response\Json;
 
@@ -17,6 +18,15 @@ class Lottery extends AdminAuthBase
     public function index()
     {
         $data = [];
+        $title = input('param.title', '', 'trim');
+        $status = input('param.status', '', 'trim');
+        if (!empty($title)) {
+            $data['title'] = $title;
+        }
+        if (!empty($status)) {
+            $data['status'] = $status;
+        }
+
         $list = (new LotteryService())->getPaginateList($data, 10);
         
         return Show::success($list);
@@ -44,9 +54,10 @@ class Lottery extends AdminAuthBase
 
         try {
             $result = (new LotteryService())->insertData($data);
+            Cache::zAdd(config("rediskey.lottery_status_key"), strtotime($data['end_time']), $result['id']);
         } catch (\Exception $e) {
             Log::error('admin/lottery/save 错误:' . $e->getMessage());
-            return Show::error($e->getMessage(), $e->getCode());
+            return Show::error($e->getMessage());
         }
 
         return Show::success($result);
@@ -65,6 +76,8 @@ class Lottery extends AdminAuthBase
             Log::error('admin/lottery/read 错误:' . $e->getMessage());
             return Show::error($e->getMessage(), $e->getCode());
         }
+
+        $result['is_allow'] = $this->userId == $result['user_id'] ? 1 : 0;
 
         return Show::success($result);
     }
