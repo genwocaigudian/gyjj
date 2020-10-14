@@ -9,6 +9,7 @@ use app\common\services\QuestionResult as QresultService;
 use think\facade\Log;
 use think\response\Json;
 
+//问卷调查
 class Question extends AdminAuthBase
 {
     /**
@@ -19,7 +20,7 @@ class Question extends AdminAuthBase
     {
         $data = [];
         $title = input("param.title", "", "trim");
-        $status = input("param.status", "0", "intval");
+        $status = input("param.status", "", "trim");
 
         if(!empty($title)) {
             $data['title'] = $title;
