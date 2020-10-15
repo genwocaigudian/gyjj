@@ -84,8 +84,6 @@ class Duser extends AdminAuthBase
         $id = input('param.id', 0, 'intval');
         try {
             $result = (new DepartmentUserService())->getNormalById($id);
-            $depart = (new \app\common\services\Department())->getNormalById($result['department_id']);
-            $result['departname'] = $depart['name']??'';
         } catch (\Exception $e) {
             Log::error('admin/duser/read 错误:' . $e->getMessage());
             return Show::error($e->getMessage(), $e->getCode());
