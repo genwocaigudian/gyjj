@@ -176,6 +176,22 @@ class Department extends BaseServices
     }
 
     /**
+     * @param $ids
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getListByIds($ids)
+    {
+        $res = $this->model->getListByIds($ids);
+        if (!$res) {
+            return [];
+        }
+        return $res;
+    }
+
+    /**
      * 新增数据
      * @param $data
      * @return array

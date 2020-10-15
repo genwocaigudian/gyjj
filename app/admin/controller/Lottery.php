@@ -5,6 +5,7 @@ use app\admin\services\AdminUser;
 use app\admin\validate\Lottery as LotteryValidate;
 use app\common\lib\Excel as ExcelLib;
 use app\common\lib\Show;
+use app\common\services\DepartmentUser;
 use app\common\services\Lottery as LotteryService;
 use app\common\services\LotteryWinning as WinnerService;
 use think\facade\Cache;
@@ -52,8 +53,8 @@ class Lottery extends AdminAuthBase
             return Show::error($validate->getError());
         }
 
-        $adminUserInfo = (new AdminUser())->getNormalUserById($data['user_id']);
-        $userInfo = (new \app\common\services\User())->getNormalUserByNumber($adminUserInfo['number']);
+        $departUserInfo = (new DepartmentUser())->getNormalById($data['user_id']);
+        $userInfo = (new \app\common\services\User())->getNormalUserByNumber($departUserInfo['number']);
         $data['user_id'] = $userInfo['id'];
         $data['start_time'] = $data['start_time'] . '00:00:00';
         $data['end_time'] = $data['end_time'] . '23:59:59';

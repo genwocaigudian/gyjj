@@ -9,11 +9,9 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\model\concern\SoftDelete;
 
-//组织架构表
-class Department extends BaseModel
+//架构人员表
+class DepartmentUser extends BaseModel
 {
-    use SoftDelete;
-    protected $deleteTime = 'delete_time';
     protected $dateFormat = 'Y-m-d';
 
     protected $type = [
@@ -41,19 +39,6 @@ class Department extends BaseModel
             return false;
         }
         $res = $this->find($id);
-        return $res;
-    }
-
-    /**
-     * @param $ids
-     * @return array|bool|\think\Model|null
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     */
-    public function getListByIds($ids)
-    {
-        $res = $this->whereIn('id', $ids)->select()->toArray();
         return $res;
     }
 
@@ -103,39 +88,6 @@ class Department extends BaseModel
     }
 
     /**
-     * title查询条件表达式
-     * 调用withSearch方法时触发
-     * @param $query
-     * @param $value
-     */
-    public function searchTitleAttr($query, $value)
-    {
-        $query->where('title', 'like', '%' . $value . '%');
-    }
-
-    /**
-     * title查询条件表达式
-     * 调用withSearch方法时触发
-     * @param $query
-     * @param $value
-     */
-    public function searchPidAttr($query, $value)
-    {
-        $query->where('pid', '=', $value);
-    }
-
-    /**
-     * target查询条件表达式
-     * 调用withSearch方法时触发
-     * @param $query
-     * @param $value
-     */
-    public function searchTargetAttr($query, $value)
-    {
-        $query->where('target', 'in', [0, $value]);
-    }
-
-    /**
      * status查询条件表达式
      * 调用withSearch方法时触发
      * @param $query
@@ -169,20 +121,5 @@ class Department extends BaseModel
         $result = $res->order($order)->paginate($num);
 //        echo $this->getLastSql();exit;
         return $result;
-    }
-
-    /**
-     * getChildListInPids
-     * @param $condition
-     * @return mixed
-     */
-    public function getChildListInPids($condition) {
-        $where[] = ["pid", "in", $condition['pid']];
-        $res = $this->where($where)
-            ->field(["id", "pid", "name"])
-//            ->group("pid")
-            ->select();
-//        echo $this->getLastSql();exit;
-        return $res;
     }
 }
