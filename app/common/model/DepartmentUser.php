@@ -43,6 +43,19 @@ class DepartmentUser extends BaseModel
     }
 
     /**
+     * @param $number
+     * @return array|bool|\think\Model|null
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getByNumber($number)
+    {
+        $res = $this->where(['number' => $number])->find();
+        return $res;
+    }
+
+    /**
      * @param string $field
      * @return Collection
      * @throws DataNotFoundException

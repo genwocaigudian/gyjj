@@ -86,6 +86,22 @@ class DepartmentUser extends BaseServices
     }
 
     /**
+     * @param $number
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getByNumber($number)
+    {
+        $res = $this->model->getByNumber($number);
+        if (!$res) {
+            return [];
+        }
+        return $res->toArray();
+    }
+
+    /**
      * 新增数据
      * @param $data
      * @return array

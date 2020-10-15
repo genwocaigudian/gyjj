@@ -79,6 +79,10 @@ class Lottery extends AdminAuthBase
         $id = input('param.id', 0, 'intval');
         try {
             $result = (new LotteryService())->getNormalById($id);
+            $user = (new \app\common\services\User())->getNormalUserById($result['user_id']);
+            $departUser = (new DepartmentUser())->getByNumber($user['number']);
+            $result['department_id'] = $departUser['department_id'];
+            $result['user_id'] = $departUser['id'];
         } catch (\Exception $e) {
             Log::error('admin/lottery/read 错误:' . $e->getMessage());
             return Show::error($e->getMessage(), $e->getCode());
