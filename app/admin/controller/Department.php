@@ -15,9 +15,10 @@ class Department extends AdminAuthBase
     public function index()
     {
         $data = [];
-
+//        $data['pid'] = input('param.pid', 0, 'intval');
+//        $list = (new DepartmentService())->getPaginateTreeList($data, 10);
         $list = (new DepartmentService())->getPaginateList($data, 10);
-        
+
         return Show::success($list);
     }
 
@@ -31,6 +32,22 @@ class Department extends AdminAuthBase
     public function list()
     {
         $list = (new DepartmentService())->getNormalList();
+
+        return Show::success($list);
+    }
+
+    /**
+     * 有层级分页列表
+     * @return Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function plist()
+    {
+        $data = [];
+        $data['pid'] = input('param.pid', 0, 'intval');
+        $list = (new DepartmentService())->getTreeList($data);
 
         return Show::success($list);
     }

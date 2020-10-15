@@ -37,6 +37,79 @@ class Department extends BaseServices
     }
 
     /**
+     * 获取列表数据
+     * @param $data
+     * @param $num
+     * @return array
+     */
+    public function getPaginateTreeList($data, $num)
+    {
+        $field = 'id, name, pid';
+        $likeKeys = [];
+        if (!empty($data)) {
+            $likeKeys = array_keys($data);
+        }
+        try {
+            $list = $this->model->getPaginateList($likeKeys, $data, $field, $num);
+            $result = $list->toArray();
+            $pids = array_column($result['data'], "id");
+            if ($pids) {
+                $idCountResult = $this->model->getChildListInPids(['pid' => $pids]);
+                $idCountResult = $idCountResult->toArray();
+                $idCounts = [];
+                foreach($idCountResult as $countResult) {
+                    $idCounts[$countResult['pid']][] = $countResult;
+                }
+            }
+
+            if($result['data']) {
+                foreach($result['data'] as $k => $value) {
+                    $result['data'][$k]['child'] = $idCounts[$value['id']] ?? [];
+                }
+            }
+        } catch (\Exception $e) {
+            $result = Arr::getPaginateDefaultData($num);
+        }
+        return $result;
+    }
+
+    /**
+     * 获取列表数据
+     * @param $data
+     * @return array
+     */
+    public function getTreeList($data)
+    {
+        $field = 'id, name, pid';
+        $likeKeys = [];
+        if (!empty($data)) {
+            $likeKeys = array_keys($data);
+        }
+        try {
+            $list = $this->model->getList($likeKeys, $data, $field);
+            $result = $list->toArray();
+            $pids = array_column($result, "id");
+            if ($pids) {
+                $idCountResult = $this->model->getChildListInPids(['pid' => $pids]);
+                $idCountResult = $idCountResult->toArray();
+                $idCounts = [];
+                foreach($idCountResult as $countResult) {
+                    $idCounts[$countResult['pid']][] = $countResult;
+                }
+            }
+
+            if($result) {
+                foreach($result as $k => $value) {
+                    $result[$k]['child'] = $idCounts[$value['id']] ?? [];
+                }
+            }
+        } catch (\Exception $e) {
+            $result = [];
+        }
+        return $result;
+    }
+
+    /**
      * @param $data
      * @return bool|\think\Collection
      * @throws DataNotFoundException

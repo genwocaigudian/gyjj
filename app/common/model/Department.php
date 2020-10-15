@@ -76,12 +76,15 @@ class Department extends BaseModel
      */
     public function getList($likeKeys, $data, $field = "*")
     {
-        $res = $this->newQuery();
+        $order = [
+            'id' => 'desc'
+        ];
         if (!empty($likeKeys)) {
-            $res = $res->withSearch($likeKeys, $data);
+            $res = $this->withSearch($likeKeys, $data);
+        } else {
+            $res = $this;
         }
-
-        $result = $res->field($field)->select();
+        $result = $res->order($order)->select();
 //        echo $res->getLastSql();exit;
         return $result;
     }
@@ -95,6 +98,17 @@ class Department extends BaseModel
     public function searchTitleAttr($query, $value)
     {
         $query->where('title', 'like', '%' . $value . '%');
+    }
+
+    /**
+     * title查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchPidAttr($query, $value)
+    {
+        $query->where('pid', '=', $value);
     }
 
     /**
@@ -139,8 +153,23 @@ class Department extends BaseModel
         } else {
             $res = $this;
         }
-        $result = $res->withoutField(['content'])->order($order)->paginate($num);
+        $result = $res->order($order)->paginate($num);
 //        echo $this->getLastSql();exit;
         return $result;
+    }
+
+    /**
+     * getChildListInPids
+     * @param $condition
+     * @return mixed
+     */
+    public function getChildListInPids($condition) {
+        $where[] = ["pid", "in", $condition['pid']];
+        $res = $this->where($where)
+            ->field(["id", "pid", "name"])
+//            ->group("pid")
+            ->select();
+//        echo $this->getLastSql();exit;
+        return $res;
     }
 }
