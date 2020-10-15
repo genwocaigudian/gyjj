@@ -53,6 +53,7 @@ class AuthBase extends ApiBase
         $user = (new \app\common\services\User())->getNormalUserById($this->userId);
         if ($user['number']) {
             $this->type = $user['type'];
+            $this->number = $user['number'];
             return true;
         }
         return false;

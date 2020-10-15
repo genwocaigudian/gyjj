@@ -70,6 +70,23 @@ class Salary extends BaseServices
         $result = $list->toArray();
         return $result;
     }
+	
+	/**
+	 * @param $data
+	 * @return array
+	 * @throws DataNotFoundException
+	 * @throws DbException
+	 * @throws ModelNotFoundException
+	 */
+	public function getByWhere($data)
+	{
+		$list = $this->model->getByCondition($data);
+		if (!$list) {
+			return [];
+		}
+		$list = current($list);
+		return $list;
+	}
 
     /**
      * @param $data
@@ -156,4 +173,21 @@ class Salary extends BaseServices
     {
         return $res = $this->model->saveAll($data);
     }
+	
+	/**
+	 * @param $data
+	 * @return array
+	 * @throws DataNotFoundException
+	 * @throws DbException
+	 * @throws ModelNotFoundException
+	 */
+	public function getDateGroup($data)
+	{
+		$list = $this->model->getDateGroup($data);
+		if (!$list) {
+			return [];
+		}
+		$result = $list->toArray();
+		return $result;
+	}
 }
