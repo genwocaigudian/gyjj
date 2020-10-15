@@ -68,9 +68,10 @@ class Lost extends BaseModel
      */
     public function getList($likeKeys, $data, $field = "*")
     {
-        $res = $this->newQuery();
         if (!empty($likeKeys)) {
-            $res = $res->withSearch($likeKeys, $data);
+            $res = $this->withSearch($likeKeys, $data);
+        } else {
+            $res = $this;
         }
 
         $result = $res->field($field)->select();
@@ -109,6 +110,10 @@ class Lost extends BaseModel
     public function searchUidAttr($query, $value)
     {
         $query->where('user_id', '=', $value);
+    }
+
+    public function searchCreateTimeAttr($query, $value) {
+        $query->whereBetweenTime('create_time', $value[0], $value[1]);
     }
 
     /**

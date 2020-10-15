@@ -18,8 +18,13 @@ class Lost extends AdminAuthBase
     {
         $data = [];
         $title = input('param.title', '', 'trim');
+        $time = input('param.time', '', 'trim');
         if (!empty($title)) {
             $data['title'] = $title;
+        }
+
+        if(!empty($time)) {
+            $data['create_time'] = explode(" - ", $time);
         }
         $list = (new LostService())->getPaginateList($data,10);
         

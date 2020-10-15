@@ -75,14 +75,26 @@ class LotteryWinning extends BaseModel
      */
     public function getList($likeKeys, $data, $field = "*")
     {
-        $res = $this->newQuery();
         if (!empty($likeKeys)) {
-            $res = $res->withSearch($likeKeys, $data);
+            $res = $this->withSearch($likeKeys, $data);
+        } else {
+            $res = $this;
         }
 
         $result = $res->field($field)->select();
 //        echo $res->getLastSql();exit;
         return $result;
+    }
+
+    /**
+     * lottery_id查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchLotteryIdAttr($query, $value)
+    {
+        $query->where('lottery_id', '=', $value);
     }
 
     /**

@@ -7,10 +7,12 @@ use think\Validate;
 class Lottery extends Validate
 {
     protected $rule = [
+        'id' => 'require',
         'title' => 'require',
     ];
     
     protected $message = [
+        'id' => 'id不可为空',
         'title' => 'title不可为空',
     ];
     
@@ -18,5 +20,6 @@ class Lottery extends Validate
         'save' => ['title'],
         'update' => ['title'],
         'delete' => ['title'],
+        'export' => ['id'],
     ];
 }
