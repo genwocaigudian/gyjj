@@ -6,15 +6,46 @@ use app\common\lib\Arr;
 use app\common\lib\Show;
 use app\common\services\Repair as RepairServices;
 use app\api\validate\Repair as RepairValidate;
+use think\console\output\question\Choice;
 use think\facade\Cache;
 use think\facade\Log;
 use think\response\Json;
 
+//报修
 class Repair extends AuthBase
 {
+    /**
+     * @return Json
+     * @throws \think\db\exception\DbException
+     */
     public function index()
     {
-        return Show::success();
+        $data = [];
+        $status = input('param.status', '', 'trim');
+        switch ($status) {
+            case 'commit' ://已提交
+                $data['progress_bar'] = [1];
+                break;
+            case 'Processing' : //处理中
+                $data['progress_bar'] = [2,3];
+                break;
+            case 'processed' : //已处理
+                $data['progress_bar'] = [4];
+                break;
+            case 'approve' : //审批中
+                $data['progress_bar'] = [2];
+                break;
+            default:
+                $data['progress_bar'] = [0,1,2,3,4];
+                break;
+        }
+        try {
+            $list = (new RepairServices())->getPaginateList($data, 10);
+        } catch (\Exception $e) {
+            $list = Arr::getPaginateDefaultData(10);
+        }
+
+        return Show::success($list);
     }
 
     /**
@@ -26,8 +57,8 @@ class Repair extends AuthBase
         if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
-        $data = input('post.');
-        
+        $data = input('param.');
+
         $validate = new RepairValidate();
         if (!$validate->scene('save')->check($data)) {
             return Show::error($validate->getError());

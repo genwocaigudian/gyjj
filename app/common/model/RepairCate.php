@@ -29,28 +29,6 @@ class RepairCate extends BaseModel
     }
 
     /**
-     * @param string $field
-     * @return Collection
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     */
-    public function getNormalList($field = "*")
-    {
-        $where = [
-            "status" => config("status.mysql.table_normal"),
-        ];
-
-        $query = $this->newQuery();
-        $result = $query->where($where)
-            ->field($field)
-//            ->order($order)
-            ->select();
-        //echo $this->getLastSql();exit;
-        return $result;
-    }
-
-    /**
      * @param $where
      * @param string $field
      * @return Collection
@@ -60,26 +38,26 @@ class RepairCate extends BaseModel
      */
     public function getList($where, $field = "*")
     {
-        $query = $this->newQuery();
-        if ($where) {
-            $query->where($where);
-        }
-
-        $result = $query->field($field)->select();
-        //echo $this->getLastSql();exit;
+        $order = [
+            'id' => 'desc'
+        ];
+        $result = $this->where($where)->field($field)->order($order)->select();
+//        echo $res->getLastSql();exit;
         return $result;
     }
 
     /**
-     * @param string $field
-     * @param int $num
-     * @return \think\Paginator
-     * @throws DbException
+     * getChildListInPids
+     * @param $condition
+     * @return mixed
      */
-    public function getPaginateList($field = "*", $num = 10)
-    {
-        $result = $this->newQuery()->field($field)->paginate($num);
-        //echo $this->getLastSql();exit;
-        return $result;
+    public function getChildListInPids($condition) {
+        $where[] = ["pid", "in", $condition['pid']];
+        $res = $this->where($where)
+            ->field(["id", "pid", "name"])
+//            ->group("pid")
+            ->select();
+//        echo $this->getLastSql();exit;
+        return $res;
     }
 }

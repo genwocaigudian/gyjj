@@ -71,30 +71,9 @@ class Repair extends BaseModel
         return $result;
     }
 
-    /**
-     * name查询条件表达式
-     * 调用withSearch方法时触发
-     * @param $query
-     * @param $value
-     */
-    public function searchRepairDescAttr($query, $value)
+    public function searchProgressBarAttr($query, $value)
     {
-        $query->where('repair_desc', 'like', '%' . $value . '%');
-    }
-
-    public function searchCreateTimeAttr($query, $value)
-    {
-        $query->whereBetweenTime('create_time', $value[0], $value[1]);
-    }
-
-    public function searchCateIdAttr($query, $value)
-    {
-        $query->where('repair_cate_id', '=', $value);
-    }
-
-    public function searchIdAttr($query, $value)
-    {
-        $query->whereIn('id', $value);
+        $query->whereIn('progress_bar', $value);
     }
 
     /**
@@ -110,9 +89,10 @@ class Repair extends BaseModel
         $order = [
             'id' => 'desc'
         ];
-        $res = $this->newQuery();
-        if (!empty($likeKeys)) {
-            $res = $res->withSearch($likeKeys, $data);
+        if ($likeKeys) {
+            $res = $this->withSearch($likeKeys, $data);
+        } else {
+            $res = $this;
         }
         $result = $res->field($field)->order($order)->paginate($num);
         //echo $this->getLastSql();exit;
