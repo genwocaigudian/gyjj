@@ -4,6 +4,7 @@ namespace app\admin\controller;
 use app\common\lib\Excel as ExcelLib;
 use app\common\lib\Show;
 use app\common\services\Salary as SalaryService;
+use app\common\services\Selection as SelectionService;
 use think\response\Json;
 
 class Salary extends AdminAuthBase
@@ -25,7 +26,9 @@ class Salary extends AdminAuthBase
             $data['number'] = $number;
         }
         if(!empty($time)) {
-            $data['month'] = explode(" - ", $time);
+            $time = explode(" - ", $time);
+            $data['start_month'] = $time[0];
+            $data['end_month'] = $time[1];
         }
         $list = (new SalaryService())->getPaginateList($data, 10);
         
@@ -106,6 +109,27 @@ class Salary extends AdminAuthBase
         if (!$res) {
             return Show::error('插入失败');
         }
+        return Show::success();
+    }
+
+    /**
+     * 删除数据
+     * @return Json
+     */
+    public function delete()
+    {
+        if (!$this->request->isPost()) {
+            return Show::error('非法请求');
+        }
+
+        $id = input("param.id");
+
+        try {
+            $res = (new SalaryService())->del($id);
+        } catch (\Exception $e) {
+            return Show::error($e->getMessage());
+        }
+
         return Show::success();
     }
 }

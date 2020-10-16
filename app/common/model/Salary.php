@@ -96,8 +96,12 @@ class Salary extends BaseModel
         $query->where('username', 'like', '%' . $value . '%');
     }
 
-    public function searchMonthAttr($query, $value) {
-        $query->whereBetweenTime('month', $value[0], $value[1]);
+    public function searchStartMonthAttr($query, $value) {
+        $query->where('month', '>=', $value);
+    }
+
+    public function searchEndMonthAttr($query, $value) {
+        $query->where('month', '<=', $value);
     }
 
     public function searchNumberAttr($query, $value)
@@ -120,7 +124,7 @@ class Salary extends BaseModel
             $res = $res->withSearch($likeKeys, $data);
         }
         $result = $res->field($field)->paginate($num);
-        //echo $this->getLastSql();exit;
+//        echo $this->getLastSql();exit;
         return $result;
     }
 	
