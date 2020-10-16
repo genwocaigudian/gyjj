@@ -96,19 +96,13 @@ class Salary extends BaseModel
         $query->where('username', 'like', '%' . $value . '%');
     }
 
-    public function searchMonthAttr($query, $value)
-    {
-        $query->where('month', '=', $value);
+    public function searchMonthAttr($query, $value) {
+        $query->whereBetweenTime('month', $value[0], $value[1]);
     }
 
-    public function searchCardNumberAttr($query, $value)
+    public function searchNumberAttr($query, $value)
     {
-        $query->where('card_number', '=', $value);
-    }
-
-    public function searchIdAttr($query, $value)
-    {
-        $query->whereIn('id', $value);
+        $query->where('number', '=', $value);
     }
 
     /**

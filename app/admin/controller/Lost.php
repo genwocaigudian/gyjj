@@ -22,7 +22,6 @@ class Lost extends AdminAuthBase
         if (!empty($title)) {
             $data['title'] = $title;
         }
-
         if(!empty($time)) {
             $data['create_time'] = explode(" - ", $time);
         }
