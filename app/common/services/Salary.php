@@ -143,28 +143,6 @@ class Salary extends BaseServices
     }
 
     /**
-     * @param $id
-     * @return bool
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws Exception
-     * @throws ModelNotFoundException
-     */
-    public function delete($id)
-    {
-        $cate = $this->getNormalBannerById($id);
-        if (!$cate) {
-            throw new Exception("数据不存在");
-        }
-        
-        $data = [
-            'status' => config('status.mysql.table_delete')
-        ];
-        
-        return $this->model->updateById($id, $data);
-    }
-
-    /**
      * @param $data
      * @return \think\Collection
      * @throws \Exception
