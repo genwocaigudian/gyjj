@@ -12,6 +12,7 @@ use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 use think\Exception;
 use think\facade\Log;
+use think\facade\Request;
 
 class AdminUser extends AdminBaseServices
 {
@@ -33,6 +34,12 @@ class AdminUser extends AdminBaseServices
         $password = $data['password'];
         try {
             $user = $this->model->getAdminUserByUserName($username);
+            $updateData = [
+                'last_login_time' => time(),
+                'last_login_ip' => Request::ip(),
+                'update_time' => time(),
+            ];
+            $this->model->updateById($user->id, $updateData);
         } catch (\Exception $e) {
             Log::error('admin/service/login 错误:' . $e->getMessage());
             throw new Exception('数据库内部异常');
@@ -42,7 +49,7 @@ class AdminUser extends AdminBaseServices
             || $user->status != config('status.mysql.table_normal')) {
             throw new Exception('用户名或密码错误');
         }
-            
+
         $token = Str::getLoginToken($user->id);
         $redisData = [
             'uid' => $user->id,

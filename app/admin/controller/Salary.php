@@ -26,18 +26,14 @@ class Salary extends AdminAuthBase
     public function export()
     {
         $data = [];
-        $name = input('param.name', '', 'trim');
+        $name = input('param.username', '', 'trim');
         $number = input('param.number', '', 'trim');
         $month = input('param.month', '', 'trim');
-        $id = input('param.id');
         if (!empty($name)) {
             $data['username'] = $name;
         }
         if (!empty($number)) {
-            $data['card_number'] = $number;
-        }
-        if (!empty($id)) {
-            $data['id'] = $id;
+            $data['number'] = $number;
         }
         if (!empty($month)) {
             $data['month'] = $month;
