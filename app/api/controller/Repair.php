@@ -6,7 +6,6 @@ use app\common\lib\Arr;
 use app\common\lib\Show;
 use app\common\services\Repair as RepairServices;
 use app\api\validate\Repair as RepairValidate;
-use think\console\output\question\Choice;
 use think\facade\Cache;
 use think\facade\Log;
 use think\response\Json;
@@ -26,7 +25,7 @@ class Repair extends AuthBase
             case 'commit' ://已提交
                 $data['progress_bar'] = [1];
                 break;
-            case 'Processing' : //处理中
+            case 'processing' : //处理中
                 $data['progress_bar'] = [2,3];
                 break;
             case 'processed' : //已处理
