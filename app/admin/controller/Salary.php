@@ -4,7 +4,6 @@ namespace app\admin\controller;
 use app\common\lib\Excel as ExcelLib;
 use app\common\lib\Show;
 use app\common\services\Salary as SalaryService;
-use app\common\services\Selection as SelectionService;
 use think\response\Json;
 
 class Salary extends AdminAuthBase
