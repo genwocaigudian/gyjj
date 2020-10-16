@@ -13,5 +13,5 @@ use think\facade\Route;
 //Route::rule('smscode', 'sms/code', 'POST');
 //Route::rule('profile', 'wechat/profile', 'GET');
 //Route::rule('callback', 'wechat/callback', 'GET');
-Route::resource('user', 'User');
-Route::resource('category', 'Category');
+//Route::resource('user', 'User');
+//Route::resource('category', 'Category');

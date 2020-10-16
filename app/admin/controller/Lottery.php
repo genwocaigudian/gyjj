@@ -55,7 +55,7 @@ class Lottery extends AdminAuthBase
 
         $departUserInfo = (new DepartmentUser())->getNormalById($data['user_id']);
         $userInfo = (new \app\common\services\User())->getNormalUserByNumber($departUserInfo['number']);
-        $data['user_id'] = $userInfo['id'];
+        $data['user_id'] = $userInfo['id']??0;
         $data['start_time'] = $data['start_time'] . '00:00:00';
         $data['end_time'] = $data['end_time'] . '23:59:59';
 
