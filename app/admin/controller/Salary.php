@@ -100,6 +100,9 @@ class Salary extends AdminAuthBase
                 'ylf' => $datum['AW'],
                 'hsbz' => $datum['AX'],
                 'wwf' => $datum['AY'],
+                'other1' => $datum['AZ'],
+                'other2' => $datum['BA'],
+                'jbfyzj' => $datum['BB'],
             ];
             array_push($insertData, $temp);
         }
