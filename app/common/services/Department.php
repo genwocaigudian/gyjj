@@ -57,13 +57,13 @@ class Department extends BaseServices
                 $idCountResult = $this->model->getChildListInPids(['pid' => $pids]);
                 $idCountResult = $idCountResult->toArray();
                 $idCounts = [];
-                foreach($idCountResult as $countResult) {
+                foreach ($idCountResult as $countResult) {
                     $idCounts[$countResult['pid']][] = $countResult;
                 }
             }
 
-            if($result['data']) {
-                foreach($result['data'] as $k => $value) {
+            if ($result['data']) {
+                foreach ($result['data'] as $k => $value) {
                     $result['data'][$k]['child'] = $idCounts[$value['id']] ?? [];
                 }
             }
@@ -93,13 +93,13 @@ class Department extends BaseServices
                 $idCountResult = $this->model->getChildListInPids(['pid' => $pids]);
                 $idCountResult = $idCountResult->toArray();
                 $idCounts = [];
-                foreach($idCountResult as $countResult) {
+                foreach ($idCountResult as $countResult) {
                     $idCounts[$countResult['pid']][] = $countResult;
                 }
             }
 
-            if($result) {
-                foreach($result as $k => $value) {
+            if ($result) {
+                foreach ($result as $k => $value) {
                     $result[$k]['child'] = $idCounts[$value['id']] ?? [];
                 }
             }

@@ -103,12 +103,12 @@ class Repair extends AuthBase
         $id = input("param.id", 0, "intval");
         $data = input('post.');
         
-        $validate = new CateValidate();
+        $validate = new RepairValidate();
         if (!$validate->scene('update')->check($data)) {
-            return Show::error($validate->getError(), config('status.name_not_null'));
+            return Show::error($validate->getError());
         }
         try {
-            $res = (new CateService())->update($id, $data);
+            $res = (new RepairServices())->update($id, $data);
         } catch (\Exception $e) {
             return Show::error($e->getMessage());
         }

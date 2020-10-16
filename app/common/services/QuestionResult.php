@@ -175,28 +175,28 @@ class QuestionResult extends BaseServices
         }
         return 1;
     }
-	
-	/**
-	 * 用户提交答案统计
-	 * @param $qid
-	 * @return bool
-	 * @throws DataNotFoundException
-	 * @throws DbException
-	 * @throws ModelNotFoundException
-	 */
-	public function getGroupOptionCount($qid)
-	{
-		$data = $this->model->getGroupOptionCount($qid);
-		if (!$data) {
-			return [];
-		}
-		$result =  $data->toArray();
-		$res = [];
-		foreach ($result as $item) {
-			$temp = ["Q{$item['option_id']}", $item['count']];
-			array_push($res, $temp);
-		}
-		array_unshift($res, ["", "投票数"]);
-		return $res;
-	}
+    
+    /**
+     * 用户提交答案统计
+     * @param $qid
+     * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getGroupOptionCount($qid)
+    {
+        $data = $this->model->getGroupOptionCount($qid);
+        if (!$data) {
+            return [];
+        }
+        $result =  $data->toArray();
+        $res = [];
+        foreach ($result as $item) {
+            $temp = ["Q{$item['option_id']}", $item['count']];
+            array_push($res, $temp);
+        }
+        array_unshift($res, ["", "投票数"]);
+        return $res;
+    }
 }

@@ -18,12 +18,14 @@ class User extends AuthBase
     {
         $user = (new UserServices())->getNormalUserById($this->userId);
         $res = [];
+        $isPermission = 0;
         if ($user) {
             $res = [
                 'id' => $user['id'],
                 'type' => $user['type'],
                 'number' => $user['number'],
                 'username' => $user['username'],
+	            'is_permission' => $isPermission
             ];
         }
         return Show::success($res);

@@ -120,12 +120,28 @@ class Repair extends BaseServices
      */
     public function update($id, $data)
     {
-        $res = $this->getNormalBannerById($id);
+        $res = $this->getNormalById($id);
         if (!$res) {
             throw new Exception("数据不存在");
         }
         return $this->model->updateById($id, $data);
     }
+	
+	/**
+	 * @param $id
+	 * @return array
+	 * @throws DataNotFoundException
+	 * @throws DbException
+	 * @throws ModelNotFoundException
+	 */
+	public function getNormalById($id)
+	{
+		$res = $this->model->getById($id);
+		if (!$res) {
+			return [];
+		}
+		return $res;
+	}
 
     /**
      * @param $id

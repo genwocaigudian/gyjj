@@ -229,14 +229,15 @@ class Lottery extends BaseServices
      * @param $lotteryId
      * @return bool
      */
-    public function deleteRedis($lotteryId) {
+    public function deleteRedis($lotteryId)
+    {
         $keys = Cache::hGetAll(Key::LotteryKey($lotteryId));
         $ids = array_keys($keys);
         try {
             // ... 是PHP提供一个特性 可变参数
             $res = Cache::hDel(Key::LotteryKey($lotteryId), ...$ids);
-        }catch (\Exception $e) {
-            return FALSE;
+        } catch (\Exception $e) {
+            return false;
         }
         return $res;
     }
