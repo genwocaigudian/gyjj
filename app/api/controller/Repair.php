@@ -28,6 +28,9 @@ class Repair extends AuthBase
             case 'processing' : //处理中
                 $data['progress_bar'] = [1,2,3];
                 break;
+            case 'repairing' : //维修中
+                $data['progress_bar'] = [3];
+                break;
             case 'processed' : //已处理
                 $data['progress_bar'] = [4];
                 break;
