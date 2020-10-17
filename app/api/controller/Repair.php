@@ -69,7 +69,6 @@ class Repair extends AuthBase
      */
     public function rlist()
     {
-        $this->number = '03059';
         $number = $this->number;
         $nums = config('repair.numberToExecute')[$number]??[];
         if (!$nums) {
