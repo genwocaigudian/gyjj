@@ -63,6 +63,10 @@ class Repair extends AuthBase
             return Show::error($validate->getError());
         }
 
+        if (isset($data['img_url'])) {
+            $data['img_url'] = json_encode($data['img_url']);
+        }
+
         try {
             $result = (new RepairServices())->insertData($data);
         } catch (\Exception $e) {
@@ -80,7 +84,7 @@ class Repair extends AuthBase
     public function read($id)
     {
         try {
-            $result = (new RepairServices())->getNormalCateById($id);
+            $result = (new RepairServices())->getNormalById($id);
         } catch (\Exception $e) {
             Log::error('api/repair/read 错误:' . $e->getMessage());
             return Show::error($e->getMessage(), $e->getCode());
@@ -106,6 +110,9 @@ class Repair extends AuthBase
         $validate = new RepairValidate();
         if (!$validate->scene('update')->check($data)) {
             return Show::error($validate->getError());
+        }
+        if (isset($data['img_url'])) {
+            $data['img_url'] = json_encode($data['img_url']);
         }
         try {
             $res = (new RepairServices())->update($id, $data);

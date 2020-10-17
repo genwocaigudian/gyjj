@@ -136,11 +136,13 @@ class Repair extends BaseServices
 	 */
 	public function getNormalById($id)
 	{
-		$res = $this->model->getById($id);
-		if (!$res) {
-			return [];
-		}
-		return $res;
+        $res = $this->model->getById($id);
+        if (!$res) {
+            return [];
+        }
+        $info = $res->toArray();
+        $info['img_url'] = json_decode($res['img_url']);
+        return $info;
 	}
 
     /**
