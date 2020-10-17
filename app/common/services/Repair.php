@@ -28,11 +28,26 @@ class Repair extends BaseServices
      */
     public function insertData($data)
     {
+        if (isset($data['img_url'])) {
+            $data['img_url'] = json_encode($data['img_url']);
+        }
+
+        //获取审批人id
+        $cate = (new RepairCate())->getNormalById($data['repair_cate_id']);
+        $pid = $cate['pid']??1;
+        $config = config('repair.pidBindNumber');
+        $number = $config[$pid];
+        $approver = (new User())->getNormalUserByNumber($number);
+        $data['approver_id'] = $approver['id']??0;
+
+        $noticeOpenId = $approver['openid']??'';
+
         try {
             $id = $this->add($data);
         } catch (\Exception $e) {
             throw new Exception($e->getMessage());
         }
+        //发送微信消息通知
         return ['id' => $id];
     }
 
@@ -106,22 +121,6 @@ class Repair extends BaseServices
     
     /**
      * @param $id
-     * @return array
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     */
-    public function getNormalBannerById($id)
-    {
-        $res = $this->model->getBannerById($id);
-        if (!$res || $res->status != config('status.mysql.table_normal')) {
-            return [];
-        }
-        return $res->toArray();
-    }
-    
-    /**
-     * @param $id
      * @param $data
      * @return bool
      * @throws DataNotFoundException
@@ -166,7 +165,7 @@ class Repair extends BaseServices
      */
     public function delete($id)
     {
-        $cate = $this->getNormalBannerById($id);
+        $cate = $this->getNormalById($id);
         if (!$cate) {
             throw new Exception("数据不存在");
         }

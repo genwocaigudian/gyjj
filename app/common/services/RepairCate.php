@@ -50,4 +50,21 @@ class RepairCate extends BaseServices
         }
         return $result;
     }
+
+    /**
+     * @param $id
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getNormalById($id)
+    {
+        $res = $this->model->getById($id);
+        if (!$res) {
+            return [];
+        }
+        $info = $res->toArray();
+        return $info;
+    }
 }

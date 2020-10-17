@@ -26,13 +26,13 @@ class Repair extends AuthBase
                 $data['progress_bar'] = [1];
                 break;
             case 'processing' : //处理中
-                $data['progress_bar'] = [2,3];
+                $data['progress_bar'] = [1,2,3];
                 break;
             case 'processed' : //已处理
                 $data['progress_bar'] = [4];
                 break;
             case 'approve' : //审批中
-                $data['progress_bar'] = [2];
+                $data['progress_bar'] = [1,2];
                 break;
             default:
                 $data['progress_bar'] = [0,1,2,3,4];
@@ -63,9 +63,7 @@ class Repair extends AuthBase
             return Show::error($validate->getError());
         }
 
-        if (isset($data['img_url'])) {
-            $data['img_url'] = json_encode($data['img_url']);
-        }
+        $data['user_id'] = $this->userId;
 
         try {
             $result = (new RepairServices())->insertData($data);
