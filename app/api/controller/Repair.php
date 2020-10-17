@@ -34,8 +34,9 @@ class Repair extends AuthBase
                 break;
             case 'processed' : //已处理
                 $data['progress_bar'] = [0,4];
-                $data['user_id'] = $this->userId;
-                if ($this->permission == 1) {
+                if ($this->permission == 0) {
+                    $data['user_id'] = $this->userId;
+                } elseif ($this->permission == 1) {
                     $data['approver_id'] = $this->userId;
                 } elseif ($this->permission == 2) {
                     $data['repare_id'] = $this->userId;

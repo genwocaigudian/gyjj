@@ -126,7 +126,7 @@ class Repair extends BaseModel
             $res = $this;
         }
         $result = $res->field($field)->order($order)->paginate($num);
-        //echo $this->getLastSql();exit;
+//        echo $this->getLastSql();exit;
         return $result;
     }
 }
