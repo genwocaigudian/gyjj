@@ -7,6 +7,8 @@ class AuthBase extends ApiBase
 {
     public $userId = 0;
     public $type = 0;
+    public $permission = 0;
+    public $number = '';
     public $username = '';
     public $authorization = '';
 
@@ -54,6 +56,16 @@ class AuthBase extends ApiBase
         if ($user['number']) {
             $this->type = $user['type'];
             $this->number = $user['number'];
+            $permission = 0;
+            $leaders = config('repair.leaders');
+            $repairs = config('repair.repairs');
+            if (in_array($this->number, $repairs)) {
+                $permission = 2;
+            }
+            if (in_array($this->number, $leaders)) {
+                $permission = 1;
+            }
+            $this->permission = $permission;
             return true;
         }
         return false;

@@ -18,22 +18,13 @@ class User extends AuthBase
     {
         $user = (new UserServices())->getNormalUserById($this->userId);
         $res = [];
-        $isPermission = 0;
-        $leaders = config('repair.leaders');
-        $repairs = config('repair.repairs');
-        if (in_array($this->number, $repairs)) {
-            $isPermission = 2;
-        }
-        if (in_array($this->number, $leaders)) {
-            $isPermission = 1;
-        }
         if ($user) {
             $res = [
-                'id' => $user['id'],
-                'type' => $user['type'],
-                'number' => $user['number'],
+                'id' => $this->userId,
+                'type' => $this->type,
+                'number' => $this->number,
                 'username' => $user['username'],
-	            'is_permission' => $isPermission
+	            'permission' => $this->permission
             ];
         }
         return Show::success($res);

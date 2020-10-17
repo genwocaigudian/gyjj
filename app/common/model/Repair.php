@@ -92,6 +92,21 @@ class Repair extends BaseModel
         $query->whereIn('progress_bar', $value);
     }
 
+    public function searchUserIdAttr($query, $value)
+    {
+        $query->where('user_id', '=', $value);
+    }
+
+    public function searchRepareIdAttr($query, $value)
+    {
+        $query->where('repare_id', '=', $value);
+    }
+
+    public function searchApproverIdAttr($query, $value)
+    {
+        $query->where('approver_id', '=', $value);
+    }
+
     /**
      * @param $likeKeys
      * @param $data
