@@ -88,7 +88,13 @@ class Repair extends BaseServices
             $list = $this->model->getPaginateList($likeKeys, $data, $field = '*', $num);
             $result = $list->toArray();
             if ($result['data']) {
+                $uids = array_unique(array_column($result['data'], 'user_id'));
+                if ($uids) {
+                    $users = (new User())->getUserByIds($uids);
+                    $userNames = array_column($users, 'username', 'id');
+                }
                 foreach ($result['data'] as &$datum) {
+                    $datum['user_name'] = $userNames[$datum['user_id']]??'';
                     $datum['img_url'] = json_decode($datum['img_url'], true);
                 }
             }
