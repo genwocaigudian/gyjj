@@ -87,6 +87,11 @@ class Repair extends BaseServices
         try {
             $list = $this->model->getPaginateList($likeKeys, $data, $field = '*', $num);
             $result = $list->toArray();
+            if ($result['data']) {
+                foreach ($result['data'] as &$datum) {
+                    $datum['img_url'] = json_decode($datum['img_url'], true);
+                }
+            }
         } catch (\Exception $e) {
             $result = Arr::getPaginateDefaultData($num);
         }
