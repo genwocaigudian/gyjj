@@ -34,17 +34,20 @@ class Repair extends AuthBase
                 break;
             case 'processed' : //已处理
                 $data['progress_bar'] = [0,4];
-                if ($this->permission == 0) {
-                    $data['user_id'] = $this->userId;
-                } elseif ($this->permission == 1) {
-                    $data['approver_id'] = $this->userId;
-                } elseif ($this->permission == 2) {
-                    $data['repare_id'] = $this->userId;
-                }
+                $data['user_id'] = $this->userId;
                 break;
             case 'approve' : //审批中
                 $data['progress_bar'] = [1,2];
                 $data['approver_id'] = $this->userId;
+                break;
+            case 'hasbeen' : //已审批 或者 已维修
+                if ($this->permission == 1) {
+                    $data['approver_id'] = $this->userId;
+                    $data['progress_bar'] = [1,2];
+                } elseif ($this->permission == 2) {
+                    $data['repare_id'] = $this->userId;
+                    $data['progress_bar'] = [4];
+                }
                 break;
             default:
                 $data['progress_bar'] = [0,1,2,3,4];
