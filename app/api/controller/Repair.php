@@ -48,6 +48,28 @@ class Repair extends AuthBase
     }
 
     /**
+     * 获取维修人列表
+     * @return Json
+     * @throws \think\db\exception\DbException
+     */
+    public function rlist()
+    {
+        $this->number = '03059';
+        $number = $this->number;
+        $nums = config('repair.numberToExecute')[$number]??[];
+        if (!$nums) {
+            return Show::success();
+        }
+        try {
+            $list = (new \app\common\services\User())->getNormalUserByNumbers($nums);
+        } catch (\Exception $e) {
+            $list = [];
+        }
+
+        return Show::success($list);
+    }
+
+    /**
      * 新增
      * @return Json
      */

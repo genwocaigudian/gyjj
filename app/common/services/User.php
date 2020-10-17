@@ -124,6 +124,19 @@ class User extends BaseServices
     }
 
     /**
+     * @param $nums
+     * @return array
+     */
+    public function getNormalUserByNumbers($nums)
+    {
+        $user = $this->model->getUserByNumbers($nums);
+        if (!$user) {
+            return [];
+        }
+        return $user->toArray();
+    }
+
+    /**
      * @param $id
      * @param $data
      * @return bool

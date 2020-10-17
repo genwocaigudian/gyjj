@@ -121,6 +121,24 @@ class User extends BaseModel
         return $this->where($where)->find();
     }
 
+    /**
+     * @param $nums
+     * @return array|bool|\think\Model|null
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getUserByNumbers($nums)
+    {
+        $field = 'id, username';
+        if (!$nums) {
+            return false;
+        }
+        $result = $this->whereIn('number', $nums)->field($field)->select();
+//        echo $this->getLastSql();exit;
+        return $result;
+    }
+
     public function updateById($id, $data)
     {
         $id = intval($id);
