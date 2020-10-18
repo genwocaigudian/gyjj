@@ -44,10 +44,13 @@ class Repair extends BaseServices
 
         try {
             $id = $this->add($data);
+	        //发送微信消息通知
+	        if ($noticeOpenId) {
+		        (new Wechat())->Template($noticeOpenId, 'approver');
+	        }
         } catch (\Exception $e) {
             throw new Exception($e->getMessage());
         }
-        //发送微信消息通知
         return ['id' => $id];
     }
 

@@ -31,6 +31,10 @@ return [
     //获取微信关注用户列表
     'user_list' => "https://api.weixin.qq.com/cgi-bin/user/get?" .
         "access_token=%s&next_openid=%s",
+	
+	//模板消息推送
+	'template_url' => "https://api.weixin.qq.com/cgi-bin/message/template/send?" .
+		"access_token=%s",
 
     'api_token_pre' => 'api_token_',
 	//随机秘钥
