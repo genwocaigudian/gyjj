@@ -41,6 +41,19 @@ class RepairCate extends BaseModel
         $res = $this->find($id);
         return $res;
     }
+	
+	/**
+	 * @param $id
+	 * @return array|bool|\think\Model|null
+	 * @throws DataNotFoundException
+	 * @throws DbException
+	 * @throws ModelNotFoundException
+	 */
+	public function getByIds($ids)
+	{
+		$res = $this->whereIn('id', $ids)->select()->toArray();
+		return $res;
+	}
 
     /**
      * @param $where

@@ -69,6 +69,25 @@ class Repair extends BaseServices
         }
         return $result;
     }
+	
+	/**
+	 * @param $data
+	 * @return array
+	 */
+	public function getExportList($data)
+	{
+		$likeKeys = [];
+		if (!empty($data)) {
+			$likeKeys = array_keys($data);
+		}
+		try {
+			$list = $this->model->getExportList($likeKeys, $data);
+			$result = $list->toArray();
+		} catch (\Exception $e) {
+			$result = [];
+		}
+		return $result;
+	}
 
     /**
      * @return array
@@ -103,14 +122,28 @@ class Repair extends BaseServices
             $list = $this->model->getPaginateList($likeKeys, $data, $field = '*', $num);
             $result = $list->toArray();
             if ($result['data']) {
+            	$day = 0;
                 $uids = array_unique(array_column($result['data'], 'user_id'));
-                if ($uids) {
+                $aids = array_unique(array_column($result['data'], 'approver_id'));
+	            $rids = array_unique(array_column($result['data'], 'repare_id'));
+	            $cateIds = array_unique(array_column($result['data'], 'repair_cate_id'));
+	            $uids = array_unique(array_merge($uids, $aids, $rids));
+	            if ($uids) {
                     $users = (new User())->getUserByIds($uids);
                     $userNames = array_column($users, 'username', 'id');
                 }
+	            if ($cateIds) {
+		            $cates = (new RepairCate())->getNormalByIds($cateIds);
+		            $cateNames = array_column($cates, 'name', 'id');
+	            }
                 foreach ($result['data'] as &$datum) {
-                    $datum['user_name'] = $userNames[$datum['user_id']]??'';
+                	$day = floor((strtotime($datum['update_time'])-strtotime($datum['create_time']))/86400);
+                    $datum['username'] = $userNames[$datum['user_id']]??'';
+                    $datum['approvername'] = $userNames[$datum['approver_id']]??'';
+                    $datum['reparename'] = $userNames[$datum['repare_id']]??'';
+                    $datum['catename'] = $cateNames[$datum['repair_cate_id']]??'';
                     $datum['img_url'] = json_decode($datum['img_url'], true);
+                    $datum['day'] = $day;
                 }
             }
         } catch (\Exception $e) {

@@ -22,8 +22,6 @@ class Repair extends BaseModel
     ];
 
     protected $hidden = [
-        'create_time',
-        'update_time',
         'delete_time'
     ];
     /**
@@ -86,6 +84,32 @@ class Repair extends BaseModel
 //        echo $res->getLastSql();exit;
         return $result;
     }
+	
+	/**
+	 * @param $likeKeys
+	 * @param $data
+	 * @param string $field
+	 * @return Collection
+	 * @throws DataNotFoundException
+	 * @throws DbException
+	 * @throws ModelNotFoundException
+	 */
+	public function getExportList($likeKeys, $data, $field = "*")
+	{
+		if (!empty($likeKeys)) {
+			$res = $this->withSearch($likeKeys, $data);
+		} else {
+			$res = $this;
+		}
+		
+//		$result = $res->field($field)->select();
+		$result = $this->where('repair_cate_id', '=', $data['repair_cate_id'])
+			->field(["repair_cate_id", "count(*) as count"])
+			->group("repair_cate_id")
+			->select();
+//        echo $res->getLastSql();exit;
+		return $result;
+	}
 
     public function searchProgressBarAttr($query, $value)
     {
