@@ -31,8 +31,8 @@ class Sync extends Command
         $task = new \EasyTask\Task();
         $task->setRunTimePath($this->app->getRuntimePath());
         $task->addFunc(function () {
-            $hour = date('H');
-            if ($hour != 17)
+            $date = date('H:i:s');
+            if ($date != "23:59:59")
             {
                 return;
             }
