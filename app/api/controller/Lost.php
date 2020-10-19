@@ -18,7 +18,7 @@ class Lost extends AuthBase
      */
     public function index()
     {
-        $data = input('param.');
+        $data = [];
         $data['status'] = 1;
         try {
             $list = (new LostServices())->getPaginateList($data, 10);
