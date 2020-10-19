@@ -3,10 +3,14 @@
 
 namespace app\common\model;
 
+use think\model\concern\SoftDelete;
 use think\model\Relation;
 
 class News extends BaseModel
 {
+	use SoftDelete;
+	protected $deleteTime = 'delete_time';
+	protected $dateFormat = 'Y-m-d';
     public $allowField = [
         'title',
         'small_title',
@@ -17,10 +21,9 @@ class News extends BaseModel
         'is_hot',
     ];
 
-    protected $dateFormat = 'Y-m-d';
-
     protected $type = [
-//        'create_time'  =>  'timestamp',
+        'create_time'  =>  'timestamp',
+        'update_time'  =>  'timestamp',
         'pub_date'  =>  'timestamp',
     ];
 

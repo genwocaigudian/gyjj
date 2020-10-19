@@ -5,7 +5,6 @@ namespace app\common\services;
 
 use app\admin\services\AdminUser as AdminUserService;
 use app\common\lib\Arr;
-use app\common\lib\Str;
 use app\common\model\News as NewsModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -310,11 +309,12 @@ class News extends BaseServices
                 'img_urls' => json_encode($url),
                 'pub_date' => strtotime($value['pubDate']),
                 'user_id' => 1,
-	            'content' => $content
+	            'content' => $content,
+//	            'create_time' => time(),
+//	            'update_time' => time()
             ];
 //            array_push($data, $temp);
 	        $id = $this->insertData($temp);
-	        halt($id);
 	        
 	        if ($key == 5) {
 	        	break;
