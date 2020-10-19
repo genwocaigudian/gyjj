@@ -67,7 +67,7 @@ class News extends BaseModel
     public function getVideoPaginateList($likeKeys, $data, $field = "*", $num = 10)
     {
         $order = [
-            "id" => "desc"
+            "pub_date" => "desc"
         ];
         if (!empty($likeKeys)) {
             $res = $this->withSearch($likeKeys, $data);
