@@ -16,13 +16,12 @@ class BaseServices
     {
         $data['status'] = config("status.mysql.table_normal");
         try {
-            $this->model->save($data);
+            $res = $this->model->strict(false)->insertGetId($data);
         } catch (\Exception $e) {
             Log::error('错误信息:' . $e->getMessage());
             return 0;
         }
-
-        return $this->model->id;
+        return $res;
     }
 
     /**

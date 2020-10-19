@@ -5,6 +5,7 @@ namespace app\common\services;
 
 use app\admin\services\AdminUser as AdminUserService;
 use app\common\lib\Arr;
+use app\common\lib\Str;
 use app\common\model\News as NewsModel;
 use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
@@ -136,7 +137,7 @@ class News extends BaseServices
         try {
             $id = $this->add($data);
             if (isset($data['content'])) {
-                $this->model->NewsContent()->save(['content'=>$data['content']]);
+                $this->model->NewsContent()->insert(['news_id'=>$id,'content'=>$data['content']]);
             }
         } catch (\Exception $e) {
             throw new Exception('数据库内部异常');
@@ -243,6 +244,22 @@ class News extends BaseServices
         }
         return $res->toArray();
     }
+	
+	/**
+	 * @param int $cateId
+	 * @return array
+	 * @throws DataNotFoundException
+	 * @throws DbException
+	 * @throws ModelNotFoundException
+	 */
+	public function getLimitByCateId($cateId = 0)
+	{
+		$res = $this->model->getLimitByCateId($cateId);
+		if (!$res) {
+			return [];
+		}
+		return $res->toArray();
+	}
 
     /**
      * @param $id
@@ -271,11 +288,18 @@ class News extends BaseServices
     public function sync()
     {
         $xmlStr = file_get_contents('http://www.hfgyxx.com/rss/news_10601_1060108.xml');
-        $obj = simplexml_load_string($xmlStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-        $eJSON = json_encode($obj);
-        $dJSON = json_decode($eJSON, true);
-        $data = [];
-        foreach ($dJSON['channel']['item'] as $key => $value) {
+	    $obj = simplexml_load_string($xmlStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+	    $eJSON = json_encode($obj);
+	    $dJSON = json_decode($eJSON, true);
+	    $data = [];
+	    foreach ($dJSON['channel']['item'] as $key => $value) {
+		    $link = $value['link'];
+		    $htmlStr = file_get_contents($link);
+//		    $htmlStr = Str::solverGarbled($link);
+	        $htmlStr = mb_convert_encoding($htmlStr, "utf-8", "gbk");
+		    $pattern = '/<div class="xwcon" id="xwcontentdisplay">(.+?)<\/div>/is';
+	        preg_match($pattern, $htmlStr, $match);
+	        $content = $match[1]??'';
             $url = $value['enclosure']["@attributes"]['url']??'';
             $url = array($url);
             $temp = [
@@ -286,12 +310,18 @@ class News extends BaseServices
                 'img_urls' => json_encode($url),
                 'pub_date' => strtotime($value['pubDate']),
                 'user_id' => 1,
+	            'content' => $content
             ];
-            array_push($data, $temp);
-
+//            array_push($data, $temp);
+	        $id = $this->insertData($temp);
+	        halt($id);
+	        
+	        if ($key == 5) {
+	        	break;
+	        }
         }
-        $data = Arr::uniqueByKey($data, 'pub_date');
-        $res = $this->model->insertAll($data);
+//        $data = Arr::uniqueByKey($data, 'pub_date');
+//        $res = $this->model->insertAll($data);
         return true;
     }
 }

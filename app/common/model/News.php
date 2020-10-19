@@ -17,14 +17,15 @@ class News extends BaseModel
         'is_hot',
     ];
 
-    protected $dateFormat = 'Y-m-d H:i:s';
+    protected $dateFormat = 'Y-m-d';
 
     protected $type = [
-        'create_time'  =>  'timestamp',
+//        'create_time'  =>  'timestamp',
         'pub_date'  =>  'timestamp',
     ];
 
     protected $hidden = [
+        'create_time',
         'update_time',
         'delete_time'
     ];
@@ -196,4 +197,29 @@ class News extends BaseModel
         $res->NewsContent->update_time = time();
         return $res->together(['NewsContent'])->save($data);
     }
+	
+	/**
+	 * @param $cateId
+	 * @param string $num
+	 * @return \think\Collection
+	 * @throws \think\db\exception\DataNotFoundException
+	 * @throws \think\db\exception\DbException
+	 * @throws \think\db\exception\ModelNotFoundException
+	 */
+	public function getLimitByCateId($cateId = 0, $num = 3)
+	{
+		$where = [
+			"cate_id" => $cateId,
+		];
+		
+		$order = [
+			"pub_date" => "desc"
+		];
+		$result = $this->where($where)
+			->order($order)
+			->limit($num)
+			->select();
+		
+		return $result;
+	}
 }
