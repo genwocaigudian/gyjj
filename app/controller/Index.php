@@ -10,4 +10,18 @@ class Index extends BaseController
     {
         return Show::success();
     }
+
+    public function test()
+    {
+//        $xmlStr = file_get_contents('http://www.hfgyxx.com/rss/news_10601_1060108.xml');
+//        $xml = new \SimpleXMLElement($xmlStr);
+//        $res = $xml->xpath();
+
+        $values = simplexml_load_file('http://www.hfgyxx.com/rss/news_10601_1060108.xml');
+
+        foreach ($values as $value) {
+            var_dump($value->item);die();
+        }
+        return Show::success([]);
+    }
 }
