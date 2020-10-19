@@ -32,7 +32,7 @@ class Sync extends Command
         $task->setRunTimePath($this->app->getRuntimePath());
         $task->addFunc(function () {
             $date = date('H:i:s');
-            if ($date != "23:59:59")
+            if ($date != "00:00:00")
             {
                 return;
             }

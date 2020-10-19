@@ -29,7 +29,7 @@ class News extends BaseServices
      */
     public function getPaginateList($data, $num)
     {
-        $field = 'id, small_title, cate_id, title, is_top, is_hot, status, img_urls, desc, create_time';
+        $field = 'id, small_title, cate_id, title, is_top, is_hot, status, img_urls, desc, pub_date';
         $likeKeys = [];
         if (!empty($data)) {
             $likeKeys = array_keys($data);
@@ -136,7 +136,13 @@ class News extends BaseServices
         try {
             $id = $this->add($data);
             if (isset($data['content'])) {
-                $this->model->NewsContent()->insert(['news_id'=>$id,'content'=>$data['content']]);
+            	$cData = [
+            		'news_id' => $id,
+            		'content' => $data['content'],
+            		'create_time' => time(),
+            		'update_time' => time(),
+	            ];
+                $this->model->NewsContent()->insert($cData);
             }
         } catch (\Exception $e) {
             throw new Exception('数据库内部异常');
@@ -291,7 +297,16 @@ class News extends BaseServices
 	    $eJSON = json_encode($obj);
 	    $dJSON = json_decode($eJSON, true);
 	    $data = [];
+	    $newsList = (new News())->getLimitByCateId(2);
+	    $nums = array_column($newsList, 'xwbh');
+	    
 	    foreach ($dJSON['channel']['item'] as $key => $value) {
+		    if ($key == 3) {
+			    break;
+		    }
+		    if (in_array($value['xwbh'], $nums)) {
+		    	continue;
+		    }
 		    $link = $value['link'];
 		    $htmlStr = file_get_contents($link);
 //		    $htmlStr = Str::solverGarbled($link);
@@ -310,15 +325,11 @@ class News extends BaseServices
                 'pub_date' => strtotime($value['pubDate']),
                 'user_id' => 1,
 	            'content' => $content,
-//	            'create_time' => time(),
-//	            'update_time' => time()
+	            'create_time' => time(),
+	            'update_time' => time()
             ];
 //            array_push($data, $temp);
 	        $id = $this->insertData($temp);
-	        
-	        if ($key == 5) {
-	        	break;
-	        }
         }
 //        $data = Arr::uniqueByKey($data, 'pub_date');
 //        $res = $this->model->insertAll($data);
