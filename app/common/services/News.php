@@ -139,7 +139,6 @@ class News extends BaseServices
                 $this->model->NewsContent()->save(['content'=>$data['content']]);
             }
         } catch (\Exception $e) {
-            halt($e->getMessage());
             throw new Exception('数据库内部异常');
         }
         $result = [
@@ -275,10 +274,11 @@ class News extends BaseServices
         $obj = simplexml_load_string($xmlStr, 'SimpleXMLElement', LIBXML_NOCDATA);
         $eJSON = json_encode($obj);
         $dJSON = json_decode($eJSON, true);
-        foreach ($dJSON['channel']['item'] as $value) {
+        $data = [];
+        foreach ($dJSON['channel']['item'] as $key => $value) {
             $url = $value['enclosure']["@attributes"]['url']??'';
             $url = array($url);
-            $data = [
+            $temp = [
                 'title' => $value['title'],
                 'desc' => $value['description'],
                 'cate_id' => 2,
@@ -287,8 +287,10 @@ class News extends BaseServices
                 'pub_date' => strtotime($value['pubDate']),
                 'user_id' => 1,
             ];
-            $res = $this->insertData($data);
+            array_push($data, $temp);
+
         }
+        $res = $this->model->insertAll($data);
         return true;
     }
 }
