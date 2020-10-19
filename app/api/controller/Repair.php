@@ -24,9 +24,11 @@ class Repair extends AuthBase
         switch ($status) {
             case 'commit' ://已提交
                 $data['progress_bar'] = [1];
+                $data['user_id'] = $this->userId;
                 break;
             case 'processing' : //处理中
                 $data['progress_bar'] = [1,2,3];
+                $data['user_id'] = $this->userId;
                 break;
             case 'repairing' : //维修中
                 $data['progress_bar'] = [3];
@@ -51,6 +53,7 @@ class Repair extends AuthBase
                 break;
             default:
                 $data['progress_bar'] = [0,1,2,3,4];
+                $data['user_id'] = $this->userId;
                 break;
         }
         try {
