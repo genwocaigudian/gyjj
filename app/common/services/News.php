@@ -144,6 +144,7 @@ class News extends BaseServices
                 $this->model->NewsContent()->save(['content'=>$data['content']]);
             }
         } catch (\Exception $e) {
+            halt($e->getMessage());
             throw new Exception('数据库内部异常');
         }
         $result = [
@@ -286,10 +287,10 @@ class News extends BaseServices
                 'cate_id' => 2,
                 'xwbh' => $value['xwbh'],
                 'img_urls' => json_encode((array)$value['enclosure']['@attributes']['url']),
-                'pub_date' => $value['pubDate'],
+                'pub_date' => strtotime($value['pubDate']),
                 'user_id' => 1,
             ];
-            $this->insertData($data);
+            $res = $this->insertData($data);
         }
         return true;
     }
