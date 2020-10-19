@@ -16,7 +16,7 @@ class Selection extends AuthBase
      */
     public function index()
     {
-        $data = input('param.');
+        $data = [];
         $data['target'] = $this->type;
         try {
             $list = (new SelectionServices())->getPaginateList($data, 10);
