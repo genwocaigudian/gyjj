@@ -29,7 +29,7 @@ class Wechat extends BaseServices
 	{
 		$tempId = '4ESW8ufYi9nxcXarlLJHljJ0Xojz4kw2XRcxzMSqZ9s';
 		$value = '您有一个需要审批的请求';
-		$url = '/api/repair';
+		$url = 'https://ahgyjj.schoolpi.net/#/pages/wserve/index/index';
 		
 		if ($flag !== 'approver') {
 			$tempId = 'nrYCufbPi3qjhCqZ-6at1p4Enl9qsL-yAvKLYr3uL80';
