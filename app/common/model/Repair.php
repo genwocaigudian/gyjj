@@ -21,6 +21,8 @@ class Repair extends BaseModel
         'end_time'  =>  'timestamp'
     ];
 
+    public static $statusMap = ['拒绝', '已提交', '已审核', '已维修', '已完成'];
+
     protected $hidden = [
         'delete_time'
     ];

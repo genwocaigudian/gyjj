@@ -67,6 +67,29 @@ class Repair extends BaseServices
         try {
             $list = $this->model->getList($likeKeys, $data);
             $result = $list->toArray();
+            if ($result) {
+                $uids = array_unique(array_column($result, 'user_id'));
+                $aids = array_unique(array_column($result, 'approver_id'));
+                $rids = array_unique(array_column($result, 'repare_id'));
+                $cateIds = array_unique(array_column($result, 'repair_cate_id'));
+                $uids = array_unique(array_merge($uids, $aids, $rids));
+                if ($uids) {
+                    $users = (new User())->getUserByIds($uids);
+                    $userNames = array_column($users, 'username', 'id');
+                }
+                if ($cateIds) {
+                    $cates = (new RepairCate())->getNormalByIds($cateIds);
+                    $cateNames = array_column($cates, 'name', 'id');
+                }
+                foreach ($result as &$datum) {
+                    $datum['username'] = $userNames[$datum['user_id']]??'';
+                    $datum['approvername'] = $userNames[$datum['approver_id']]??'';
+                    $datum['reparename'] = $userNames[$datum['repare_id']]??'';
+                    $datum['catename'] = $cateNames[$datum['repair_cate_id']]??'';
+                    $datum['status'] = RepairModel::$statusMap[$datum['status']];
+                    $datum['img_url'] = json_decode($datum['img_url'], true);
+                }
+            }
         } catch (\Exception $e) {
             $result = [];
         }
@@ -145,6 +168,7 @@ class Repair extends BaseServices
                     $datum['approvername'] = $userNames[$datum['approver_id']]??'';
                     $datum['reparename'] = $userNames[$datum['repare_id']]??'';
                     $datum['catename'] = $cateNames[$datum['repair_cate_id']]??'';
+                    $datum['status'] = RepairModel::$statusMap[$datum['status']];
                     $datum['img_url'] = json_decode($datum['img_url'], true);
                     $datum['day'] = $day;
                 }
