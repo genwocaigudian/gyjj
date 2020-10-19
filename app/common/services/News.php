@@ -286,7 +286,7 @@ class News extends BaseServices
                 'desc' => $value['description'],
                 'cate_id' => 2,
                 'xwbh' => $value['xwbh'],
-                'img_urls' => json_encode((array)$value['enclosure']['@attributes']['url']),
+                'img_urls' => json_encode((array)$value['enclosure']["@attributes"]['url']),
                 'pub_date' => strtotime($value['pubDate']),
                 'user_id' => 1,
             ];
