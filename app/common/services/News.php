@@ -133,11 +133,6 @@ class News extends BaseServices
      */
     public function insertData($data)
     {
-        $res = $this->getNormalNewsByName($data['title']);
-        if ($res) {
-            throw new Exception("新闻标题不可重复");
-        }
-        
         try {
             $id = $this->add($data);
             if (isset($data['content'])) {
