@@ -21,7 +21,7 @@ class Lottery extends AuthBase
      */
     public function index()
     {
-        $data = input('param.');
+        $data = [];
         $data['target'] = $this->type;
         $data['status'] = config('status.mysql.table_normal');
         try {
