@@ -43,7 +43,7 @@ class Repair extends AuthBase
             case 'hasbeen' : //已审批 或者 已维修
                 if ($this->permission == 1) {
                     $data['approver_id'] = $this->userId;
-                    $data['progress_bar'] = [3, 4];
+                    $data['progress_bar'] = [0, 3];
                 } elseif ($this->permission == 2) {
                     $data['repare_id'] = $this->userId;
                     $data['progress_bar'] = [4];
