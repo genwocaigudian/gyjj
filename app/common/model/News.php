@@ -17,7 +17,7 @@ class News extends BaseModel
         'is_hot',
     ];
 
-    protected $dateFormat = 'Y-m-d';
+    protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $type = [
         'create_time'  =>  'timestamp',

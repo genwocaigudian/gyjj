@@ -290,6 +290,7 @@ class News extends BaseServices
             array_push($data, $temp);
 
         }
+        $data = Arr::uniqueByKey($data, 'pub_date');
         $res = $this->model->insertAll($data);
         return true;
     }
