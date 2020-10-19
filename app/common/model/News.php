@@ -20,7 +20,8 @@ class News extends BaseModel
     protected $dateFormat = 'Y-m-d';
 
     protected $type = [
-        'start_time'  =>  'timestamp',
+        'create_time'  =>  'timestamp',
+        'pub_date'  =>  'timestamp',
     ];
 
     protected $hidden = [
@@ -39,7 +40,7 @@ class News extends BaseModel
     public function getPaginateList($likeKeys, $data, $field = "*", $num = 10)
     {
         $order = [
-            "id" => "desc"
+            "pub_date" => "desc"
         ];
         if (!empty($likeKeys)) {
             $res = $this->withSearch($likeKeys, $data);
@@ -126,7 +127,7 @@ class News extends BaseModel
         ];
         
         $order = [
-            "id" => "desc"
+            "pub_date" => "desc"
         ];
         $result = $this->whereIn('cate_id', [1,2,3,4,5,6,8,9,10,11])
             ->where($where)
