@@ -23,9 +23,10 @@ class Problem extends AuthBase
 
 	    $id = $data['question_id'];
         $isSubmit = 0;
+        $userId = $this->userId;
         try {
             $list = (new ProblemServices())->getNormalListWithOption($id);
-            $isSubmit = (new QuestionResult())->isSubmit($id);
+            $isSubmit = (new QuestionResult())->isSubmit($id, $userId);
         } catch (\Exception $e) {
             $list = [];
         }

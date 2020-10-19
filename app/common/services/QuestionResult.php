@@ -162,14 +162,15 @@ class QuestionResult extends BaseServices
     /**
      * 判断用户是否提交过答案
      * @param $id
+     * @param $userId
      * @return bool
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function isSubmit($id)
+    public function isSubmit($id, $userId)
     {
-        $res = $this->model->getByCondition(['question_id' => $id]);
+        $res = $this->model->getByCondition(['question_id' => $id, 'user_id' => $userId]);
         if (!$res) {
             return 0;
         }
