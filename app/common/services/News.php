@@ -281,12 +281,14 @@ class News extends BaseServices
         $eJSON = json_encode($obj);
         $dJSON = json_decode($eJSON, true);
         foreach ($dJSON['channel']['item'] as $value) {
+            $url = $value['enclosure']["@attributes"]['url'];
+            $url = array($url);
             $data = [
                 'title' => $value['title'],
                 'desc' => $value['description'],
                 'cate_id' => 2,
                 'xwbh' => $value['xwbh'],
-                'img_urls' => json_encode((array)$value['enclosure']["@attributes"]['url']),
+                'img_urls' => json_encode($url),
                 'pub_date' => strtotime($value['pubDate']),
                 'user_id' => 1,
             ];
