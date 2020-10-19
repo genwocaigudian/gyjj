@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "44830ba6b1ae5a125b6a2452581ca597",
+    "content-hash": "cab74405692e5446479c8d907ee555a9",
     "packages": [
         {
             "name": "casbin/casbin",
@@ -193,6 +193,57 @@
                 "thinkphp"
             ],
             "time": "2019-12-02T03:15:28+00:00"
+        },
+        {
+            "name": "easy-task/easy-task",
+            "version": "v2.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thinker-gao/easy-task.git",
+                "reference": "3dc6431d4b31c3802c623ca1dab7d602b02aa059"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thinker-gao/easy-task/zipball/3dc6431d4b31c3802c623ca1dab7d602b02aa059",
+                "reference": "3dc6431d4b31c3802c623ca1dab7d602b02aa059",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.4"
+            },
+            "suggest": {
+                "ext-event": "For better performance. "
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "EasyTask\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "GaoJiuFeng",
+                    "email": "392223903@qq.com"
+                }
+            ],
+            "description": "easy-task, simple timer, timing task",
+            "keywords": [
+                "easy-task"
+            ],
+            "time": "2020-08-05T11:18:38+00:00"
         },
         {
             "name": "easywechat-composer/easywechat-composer",
