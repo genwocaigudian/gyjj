@@ -133,6 +133,10 @@ class Repair extends BaseModel
         $query->where('approver_id', '=', $value);
     }
 
+    public function searchCreateTimeAttr($query, $value) {
+        $query->whereBetweenTime('create_time', $value[0], $value[1]);
+    }
+
     /**
      * @param $likeKeys
      * @param $data

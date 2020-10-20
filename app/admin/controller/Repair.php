@@ -16,6 +16,16 @@ class Repair extends AdminAuthBase
     public function index()
     {
         $data = [];
+        $cateId = input('param.repair_cate_id', 0, 'intval');
+        $time = input('param.time', '', 'trim');
+        if ($cateId) {
+            $data['repair_cate_id'] = $cateId;
+        }
+        if(!empty($time)) {
+            $data['create_time'] = explode(" - ", $time);
+            $data['create_time'][0] = $data['create_time'][0] . " 00:00:00";
+            $data['create_time'][1] = $data['create_time'][1] . " 23:59:59";
+        }
         $list = (new RepairService())->getPaginateList($data,10);
         
         return Show::success($list);
