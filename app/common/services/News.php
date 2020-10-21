@@ -290,9 +290,10 @@ class News extends BaseServices
      * @throws Exception
      * @throws ModelNotFoundException
      */
-    public function sync()
+    public function rssSync()
     {
         $xmlStr = file_get_contents('http://www.hfgyxx.com/rss/news_10601_1060108.xml');
+        $xmlStr = file_get_contents('http://www.hfgyxx.com/rss/news_10601_1060107.xml');
 	    $obj = simplexml_load_string($xmlStr, 'SimpleXMLElement', LIBXML_NOCDATA);
 	    $eJSON = json_encode($obj);
 	    $dJSON = json_decode($eJSON, true);
@@ -309,7 +310,6 @@ class News extends BaseServices
 		    }
 		    $link = $value['link'];
 		    $htmlStr = file_get_contents($link);
-//		    $htmlStr = Str::solverGarbled($link);
 	        $htmlStr = mb_convert_encoding($htmlStr, "utf-8", "gbk");
 		    $pattern = '/<div class="xwcon" id="xwcontentdisplay">(.+?)<\/div>/is';
 	        preg_match($pattern, $htmlStr, $match);
