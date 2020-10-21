@@ -307,7 +307,7 @@ class News extends BaseServices
 	    $nums = array_column($newsList, 'xwbh');
 	    
 	    foreach ($dJSON['channel']['item'] as $key => $value) {
-		    if ($key == 10) {
+		    if ($key == 9) {
 			    break;
 		    }
 		    if (in_array($value['xwbh'], $nums)) {
