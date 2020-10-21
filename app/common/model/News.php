@@ -22,8 +22,6 @@ class News extends BaseModel
     ];
 
     protected $type = [
-        'create_time'  =>  'timestamp',
-        'update_time'  =>  'timestamp',
         'pub_date'  =>  'timestamp',
     ];
 

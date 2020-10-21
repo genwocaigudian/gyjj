@@ -139,8 +139,8 @@ class News extends BaseServices
             	$cData = [
             		'news_id' => $id,
             		'content' => $data['content'],
-            		'create_time' => time(),
-            		'update_time' => time(),
+            		'create_time' => $data['create_time'],
+            		'update_time' => $data['update_time'],
 	            ];
                 $this->model->NewsContent()->insert($cData);
             }
