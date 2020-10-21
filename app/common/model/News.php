@@ -207,7 +207,7 @@ class News extends BaseModel
 	 * @throws \think\db\exception\DbException
 	 * @throws \think\db\exception\ModelNotFoundException
 	 */
-	public function getLimitByCateId($cateId = 0, $num = 3)
+	public function getLimitByCateId($cateId = 0, $num = 10)
 	{
 		$where = [
 			"cate_id" => $cateId,
@@ -220,7 +220,7 @@ class News extends BaseModel
 			->order($order)
 			->limit($num)
 			->select();
-		
+
 		return $result;
 	}
 }

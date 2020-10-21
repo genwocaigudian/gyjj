@@ -14,7 +14,7 @@ class Index extends BaseController
 
     public function test()
     {
-        $res = (new News())->rssSync();
+        $res = (new News())->rssSync(2);
         return Show::success([$res]);
     }
 }
