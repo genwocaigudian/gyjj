@@ -78,6 +78,7 @@ class News extends AdminAuthBase
         $data['img_urls'] = json_encode($data['img_urls']);
         $data['create_time'] = time();
         $data['update_time'] = time();
+        $data['pub_date'] = time();
 
         try {
             $result = (new NewsService())->insertData($data);
