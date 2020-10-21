@@ -220,6 +220,7 @@ class News extends BaseModel
 			->order($order)
 			->limit($num)
 			->select();
+//		echo $this->getLastSql();exit();
 
 		return $result;
 	}
