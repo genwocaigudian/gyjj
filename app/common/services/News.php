@@ -284,21 +284,26 @@ class News extends BaseServices
     }
 
     /**
+     * 同步校方新闻数据
+     * @param $cateId
      * @return bool
      * @throws DataNotFoundException
      * @throws DbException
      * @throws Exception
      * @throws ModelNotFoundException
      */
-    public function rssSync()
+    public function rssSync($cateId)
     {
-        $xmlStr = file_get_contents('http://www.hfgyxx.com/rss/news_10601_1060108.xml');
-        $xmlStr = file_get_contents('http://www.hfgyxx.com/rss/news_10601_1060107.xml');
+        if ($cateId == 2) {
+            $xmlStr = file_get_contents('http://www.hfgyxx.com/rss/news_10601_1060108.xml');
+        } else {
+            $xmlStr = file_get_contents('http://www.hfgyxx.com/rss/news_10601_1060107.xml');
+        }
 	    $obj = simplexml_load_string($xmlStr, 'SimpleXMLElement', LIBXML_NOCDATA);
 	    $eJSON = json_encode($obj);
 	    $dJSON = json_decode($eJSON, true);
 	    $data = [];
-	    $newsList = (new News())->getLimitByCateId(2);
+	    $newsList = (new News())->getLimitByCateId($cateId);
 	    $nums = array_column($newsList, 'xwbh');
 	    
 	    foreach ($dJSON['channel']['item'] as $key => $value) {
@@ -319,7 +324,7 @@ class News extends BaseServices
             $temp = [
                 'title' => $value['title'],
                 'desc' => $value['description'],
-                'cate_id' => 2,
+                'cate_id' => $cateId,
                 'xwbh' => $value['xwbh'],
                 'img_urls' => json_encode($url),
                 'pub_date' => strtotime($value['pubDate']),
@@ -328,11 +333,8 @@ class News extends BaseServices
 	            'create_time' => time(),
 	            'update_time' => time()
             ];
-//            array_push($data, $temp);
 	        $id = $this->insertData($temp);
         }
-//        $data = Arr::uniqueByKey($data, 'pub_date');
-//        $res = $this->model->insertAll($data);
         return true;
     }
 }

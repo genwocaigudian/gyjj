@@ -7,18 +7,18 @@ use app\common\services\News;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
-use think\console\input\Option;
 use think\console\Output;
 
-class Sync extends Command
+class RssSync extends Command
 {
     protected function configure()
     {
         //设置名称为task
-        $this->setName('sync')
+        $this->setName('rss_sync')
             //增加一个命令参数
             ->addArgument('action', Argument::OPTIONAL, "action", '')
-            ->addArgument('force', Argument::OPTIONAL, "force", '');
+            ->addArgument('force', Argument::OPTIONAL, "force", '')
+            ->setDescription('the rss_sync command');
     }
 
     protected function execute(Input $input, Output $output)
@@ -37,7 +37,10 @@ class Sync extends Command
                 return;
             }
             //Write your code
-            (new News())->sync();
+            $cateIds = [2, 6];
+            foreach ($cateIds as $cateId) {
+                (new News())->rssSync($cateId);
+            }
 
         }, 'request', 1, 1);
 
