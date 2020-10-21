@@ -294,9 +294,9 @@ class News extends BaseServices
      */
     public function rssSync($cateId)
     {
-        if ($cateId == 2) {
+        if ($cateId == 2) {//校园新闻
             $xmlStr = file_get_contents('http://www.hfgyxx.com/rss/news_10601_1060108.xml');
-        } else {
+        } else {//通知公告
             $xmlStr = file_get_contents('http://www.hfgyxx.com/rss/news_10601_1060107.xml');
         }
 	    $obj = simplexml_load_string($xmlStr, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -307,12 +307,15 @@ class News extends BaseServices
 	    $nums = array_column($newsList, 'xwbh');
 	    
 	    foreach ($dJSON['channel']['item'] as $key => $value) {
-		    if ($key == 3) {
+		    if ($key == 10) {
 			    break;
 		    }
 		    if (in_array($value['xwbh'], $nums)) {
 		    	continue;
 		    }
+            if ($value['xwbh'] == '159367545322075703') {//通知公告置顶新闻过滤
+                continue;
+            }
 		    $link = $value['link'];
 		    $htmlStr = file_get_contents($link);
 	        $htmlStr = mb_convert_encoding($htmlStr, "utf-8", "gbk");
