@@ -89,9 +89,7 @@ class AdminUser extends AdminBaseServices
         if (!$user) {
             return [];
         }
-
-        $depart = (new Department())->getNormalById($user['department_id']);
-        $user['depart_name'] = $depart['name']??'';
+        
         //获取用户的所有角色
         $data = [
             'type' => 'g',
