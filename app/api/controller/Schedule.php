@@ -5,8 +5,8 @@ namespace app\api\controller;
 use app\api\validate\Schedule as ScheduleValidate;
 use app\common\lib\Arr;
 use app\common\lib\Show;
-use app\common\model\Jskcb;
-use app\common\model\Xskcb;
+use app\common\model\Jskcb1 as JskcbModel;
+use app\common\model\Xskcb1 as XskcbModel;
 use think\response\Json;
 
 //课程表
@@ -30,10 +30,10 @@ class Schedule extends AuthBase
         $xn = $data['xn'];
         switch ($this->type) {
             case 2:
-                $model = new Xskcb();
+                $model = new XskcbModel();
                 break;
             default:
-                $model = new Jskcb();
+                $model = new JskcbModel();
                 break;
         }
         try {
@@ -54,10 +54,10 @@ class Schedule extends AuthBase
     {
         switch ($this->type) {
             case 2:
-                $model = new Xskcb();
+                $model = new XskcbModel();
                 break;
             default:
-                $model = new Jskcb();
+                $model = new JskcbModel();
                 break;
         }
         try {

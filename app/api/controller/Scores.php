@@ -5,9 +5,9 @@ namespace app\api\controller;
 use app\api\validate\Scores as ScoresValidate;
 use app\common\lib\Arr;
 use app\common\lib\Show;
-use app\common\model\Jskcb;
-use app\common\model\Xscjb;
-use app\common\model\Xskcb;
+use app\common\model\Jskcb1 as JskcbModel;
+use app\common\model\Xscjb1 as XscjbModel;
+use app\common\model\Xskcb1 as XskcbModel;
 use think\response\Json;
 
 //学生成绩表
@@ -30,7 +30,7 @@ class Scores extends AuthBase
         $xn = $data['xn'];
         switch ($this->type) {
             case 2:
-                $model = new Xscjb();
+                $model = new XscjbModel();
                 break;
             default:
                 return Show::success($list);
@@ -54,7 +54,7 @@ class Scores extends AuthBase
         $list = [];
         switch ($this->type) {
             case 2:
-                $model = new Xscjb();
+                $model = new XscjbModel();
                 break;
             default:
                 return Show::success($list);

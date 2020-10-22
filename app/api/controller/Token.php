@@ -5,8 +5,8 @@ namespace app\api\controller;
 
 use app\api\validate\User as UserValidate;
 use app\common\lib\Show;
-use app\common\model\Jsxxb;
-use app\common\model\Xsxxb;
+use app\common\model\Jsxxb1 as JsxxbModel;
+use app\common\model\Xsxxb1 as XsxxbModel;
 use app\common\services\User as UserServices;
 use app\common\services\UserCode;
 use app\common\services\UserToken;
@@ -105,10 +105,10 @@ class Token extends ApiBase
 
         switch ($data['type']) {
             case 1:
-                $info = (new Jsxxb())->getByZGH($data['number']);
+                $info = (new JsxxbModel())->getByZGH($data['number']);
                 break;
             case 2:
-                $info = (new Xsxxb())->getByXH($data['number']);
+                $info = (new XsxxbModel())->getByXH($data['number']);
                 break;
             default:
                 $info = false;

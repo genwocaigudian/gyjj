@@ -37,17 +37,17 @@ class Wechat extends AdminAuthBase
                     {
                         "name": "微主页",
                         "type": "view",
-                        "url": "https://ahgyjj.schoolpi.net/#/"
+                        "url": "http://web.hfgyxx.net/#/"
                     },
                     {
                         "name": "微生活",
                         "type": "view",
-                        "url": "https://ahgyjj.schoolpi.net/#/pages/wserve/index/index"
+                        "url": "http://web.hfgyxx.net/#/pages/wserve/index/index"
                     },
                     {
                         "name": "微服务",
                         "type": "view",
-                        "url": "https://ahgyjj.schoolpi.net/#/pages/wlife/index/index"
+                        "url": "http://web.hfgyxx.net/#/pages/wlife/index/index"
                     }
                 ]
             }
