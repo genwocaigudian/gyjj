@@ -227,9 +227,9 @@ class AdminUser extends AdminBaseServices
 
         $insertData = [
             'username' => $data['username'],
-            'number' => $data['number'],
-            'is_leader' => $data['is_leader'],
-            'department_id' => $data['department_id'],
+//            'number' => $data['number'],
+//            'is_leader' => $data['is_leader'],
+//            'department_id' => $data['department_id'],
             'password' => md5($data['password'].config('admin.password_suffix')),
             'last_login_time' => time(),
             'last_login_ip' => $data['last_login_ip'],
