@@ -29,7 +29,7 @@ class News extends ApiBase
         $id = input('param.id', 0, 'intval');
         try {
             $result = (new NewsService())->formatNews($id);
-            $result = (new NewsService())->updateReadCount($id);
+            $res = (new NewsService())->updateReadCount($id);
         } catch (\Exception $e) {
             return Show::error($e->getMessage(), $e->getCode());
         }
