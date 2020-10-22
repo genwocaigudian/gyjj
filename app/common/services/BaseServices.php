@@ -16,6 +16,24 @@ class BaseServices
     {
         $data['status'] = config("status.mysql.table_normal");
         try {
+            $this->model->save($data);
+        } catch (\Exception $e) {
+            Log::error('错误信息:' . $e->getMessage());
+            return 0;
+        }
+        // // 返回主键ID
+        return $this->model->id;
+    }
+
+    /**
+     * 异步同步数据新增
+     * @param $data
+     * @return int
+     */
+    public function syncAdd($data)
+    {
+        $data['status'] = config("status.mysql.table_normal");
+        try {
             $res = $this->model->strict(false)->insertGetId($data);
         } catch (\Exception $e) {
             Log::error('错误信息:' . $e->getMessage());

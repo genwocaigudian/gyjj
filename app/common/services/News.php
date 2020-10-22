@@ -154,6 +154,37 @@ class News extends BaseServices
     }
 
     /**
+     * 插入数据
+     * @param $data
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws Exception
+     * @throws ModelNotFoundException
+     */
+    public function insertSyncData($data)
+    {
+        try {
+            $id = $this->syncAdd($data);
+            if (isset($data['content'])) {
+                $cData = [
+                    'news_id' => $id,
+                    'content' => $data['content'],
+                    'create_time' => $data['create_time'],
+                    'update_time' => $data['update_time'],
+                ];
+                $this->model->NewsContent()->insert($cData);
+            }
+        } catch (\Exception $e) {
+            throw new Exception('数据库内部异常');
+        }
+        $result = [
+            'id' => $id
+        ];
+        return $result;
+    }
+
+    /**
      * @param $id
      * @param $data
      * @return bool
@@ -336,7 +367,7 @@ class News extends BaseServices
 	            'create_time' => time(),
 	            'update_time' => time()
             ];
-	        $id = $this->insertData($temp);
+	        $id = $this->insertSyncData($temp);
         }
         return true;
     }
