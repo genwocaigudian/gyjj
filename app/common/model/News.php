@@ -224,4 +224,10 @@ class News extends BaseModel
 
 		return $result;
 	}
+
+    public function incCount($id, $num) {
+        return $this->where("id", "=", $id)
+            ->inc("read_count", $num)
+            ->update();
+    }
 }

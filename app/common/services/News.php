@@ -340,4 +340,15 @@ class News extends BaseServices
         }
         return true;
     }
+
+    /**
+     * 更新阅读人数
+     * @param $id
+     * @return bool
+     */
+    public function updateReadCount($id)
+    {
+        $this->model->incCount($id, 1);
+        return true;
+    }
 }

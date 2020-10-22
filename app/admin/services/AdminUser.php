@@ -89,7 +89,7 @@ class AdminUser extends AdminBaseServices
         if (!$user) {
             return [];
         }
-        
+
         //获取用户的所有角色
         $data = [
             'type' => 'g',
