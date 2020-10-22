@@ -135,10 +135,10 @@ class AdminUser extends AdminBaseServices
         if (!$user) {
             throw new Exception('不存在该用户');
         }
-        $userResult = $this->getNormalUserByUsername($data['username']);
-        if ($userResult && $userResult['id'] != $id) {
-            throw new Exception('该用户已存在');
-        }
+//        $userResult = $this->getNormalUserByUsername($data['username']);
+//        if ($userResult && $userResult['id'] != $id) {
+//            throw new Exception('该用户已存在');
+//        }
         return $this->model->updateById($id, $data);
     }
 
