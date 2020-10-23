@@ -101,7 +101,7 @@ class Index extends BaseController
         $response = $client->request('GET', 'https://highschool.schoolpi.net/api/vocational_lists/index', [
             'query' => [
                 'schoolid' => 23,
-                'mark' => 39,
+                'mark' => 35,
             ]
         ]);
         $body = json_decode($response->getBody()->getContents(), true);
@@ -113,24 +113,21 @@ class Index extends BaseController
 //                    'mark' => $value['id'],
 //                ]
 //            ]);
-            $response = curl_get("https://highschool.schoolpi.net/api/vocational_lists/view?schoolid=23&id={$value['id']}");
+//            $response = curl_get("https://highschool.schoolpi.net/api/vocational_lists/view?schoolid=23&id={$value['id']}");
 
-            $body = json_decode($response, true);
+//            $body = json_decode($response, true);
             $temp = [
-                'title' => $value['title'],
-                'cate_id' => 10,
-                'img_urls' => json_encode($value['thumb']),
+                'title' => $value['name'],
+                'cate_id' => 14,
+                'img_urls' => json_encode(array($value['video_url'])),
                 'user_id' => 1,
-                'content' => "",
                 'create_time' => time(),
                 'update_time' => time(),
+                'pub_date' => strtotime($value['create_time']),
                 'read_count' => $value['hits']??0,
             ];
-            $temp['content'] = $body['code'] == 1 ? $body['data']['content'] : "";
-            $temp['pub_date'] = strtotime($body['data']['create_time']);
-            $temp['read_count'] = $body['data']['hits'];
-            array_push($data, $temp);
-//            (new News())->insertData($temp);
+//            array_push($data, $temp);
+            (new News())->insertSyncData($temp);
 //            return Show::success(['data' => $body['data']]);
         }
 
