@@ -106,11 +106,18 @@ class Proctor extends BaseModel
             'date' => 'asc'
         ];
 
-        $result = $this->where('format_date', '=', $data['date'])
+        $where = [];
+        if (!$data['date']) {
+            $data['date'] = date('Y-m-d', time());
+            $where[] = ['format_date', '>=', $data['date']];
+        } else {
+            $where[] = ['format_date', '=', $data['date']];
+        }
+
+        $result = $this->where($where)
             ->where(function ($query) use ($data) {
                 $query->where('number1', $data['number'])->whereOr('number2', $data['number']);
             })
-//            ->whereOr('number2', '=', $data['number'])
             ->field($field)
             ->order($order)
             ->select();

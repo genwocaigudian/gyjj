@@ -17,13 +17,13 @@ class Proctor extends AuthBase
      */
     public function index()
     {
-        $data = input('param.');
+        $data['date'] = input('param.date', '', 'trim');
         $list = [];
-
-        $validate = new ProctorValidate();
-        if (!$validate->scene('index')->check($data)) {
-            return Show::error($validate->getError());
-        }
+//
+//        $validate = new ProctorValidate();
+//        if (!$validate->scene('index')->check($data)) {
+//            return Show::error($validate->getError());
+//        }
 
         try {
             $user = (new UserServices())->getNormalUserById($this->userId);
@@ -48,7 +48,6 @@ class Proctor extends AuthBase
             $data['number'] = $user['number']??'';
             $list = (new ProctorServices())->getDateGroup($data);
         } catch (\Exception $e) {
-            halt($e->getMessage());
             $list = [];
         }
 
