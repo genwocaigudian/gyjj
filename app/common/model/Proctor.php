@@ -74,16 +74,45 @@ class Proctor extends BaseModel
      */
     public function getDateGroup($data = [])
     {
-        $field = 'date';
+        $field = 'format_date';
         $order = [
             'date' => 'asc'
         ];
 
-        $result = $this->whereTime('create_time', '<=', $data['time'])
-            ->where('number', '=', $data['number'])
+        $result = $this->where('format_date', '>=', $data['date'])
+            ->where(function ($query) use ($data) {
+                $query->where('number1', $data['number'])->whereOr('number2', $data['number']);
+            })
+//            ->whereOr('number2', '=', $data['number'])
             ->field($field)
             ->order($order)
             ->group($field)
+            ->select();
+//        echo $this->getLastSql();exit;
+        return $result;
+    }
+
+    /**
+     * @param array $data
+     * @return Collection
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getListByDateAndNumber($data = [])
+    {
+        $field = '*';
+        $order = [
+            'date' => 'asc'
+        ];
+
+        $result = $this->where('format_date', '=', $data['date'])
+            ->where(function ($query) use ($data) {
+                $query->where('number1', $data['number'])->whereOr('number2', $data['number']);
+            })
+//            ->whereOr('number2', '=', $data['number'])
+            ->field($field)
+            ->order($order)
             ->select();
 //        echo $this->getLastSql();exit;
         return $result;

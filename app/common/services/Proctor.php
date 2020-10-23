@@ -43,9 +43,9 @@ class Proctor extends BaseServices
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function getListByData($data)
+    public function getListByDateAndNumber($data)
     {
-        $list = $this->model->getByCondition($data);
+        $list = $this->model->getListByDateAndNumber($data);
         return $list;
     }
 

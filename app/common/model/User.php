@@ -108,6 +108,15 @@ class User extends BaseModel
         return $this->where($where)->find();
     }
 
+    public function getUserByNames($username)
+    {
+        if (empty($username)) {
+            return false;
+        }
+
+        return $this->whereIn('username', $username)->select()->toArray();
+    }
+
     public function getUserByNumber($number)
     {
         if (empty($number)) {

@@ -111,6 +111,15 @@ class User extends BaseServices
     }
 
     /**
+     * @param $username
+     * @return array
+     */
+    public function getUserByNames($username)
+    {
+        return $this->model->getUserByNames($username);
+    }
+
+    /**
      * @param $number
      * @return array
      */

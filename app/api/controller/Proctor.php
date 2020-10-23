@@ -28,7 +28,7 @@ class Proctor extends AuthBase
         try {
             $user = (new UserServices())->getNormalUserById($this->userId);
             $data['number'] = $user['number'];
-            $list = (new ProctorServices())->getListByData($data);
+            $list = (new ProctorServices())->getListByDateAndNumber($data);
         } catch (\Exception $e) {
             return Show::success($list);
         }
@@ -41,7 +41,8 @@ class Proctor extends AuthBase
      */
     public function group()
     {
-        $data['time'] = time();
+        $data['date'] = date('Y-m-d', time());
+//        halt(date('Y-m-d', 1603382400));
         try {
             $user = (new UserServices())->getNormalUserById($this->userId);
             $data['number'] = $user['number']??'';
