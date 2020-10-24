@@ -15,8 +15,47 @@ class Index extends BaseController
 
     public function test()
     {
-        $res = (new News())->rssSync(2);
-        return Show::success([$res]);
+    	$config = config('news');
+    	$cateKeys = array_keys($config['news1']);
+    	$data = [];
+	    $client = new Client();
+    	foreach ($cateKeys as $cateId) {
+		    $response = $client->request('GET', 'https://highschool.schoolpi.net/api/vocational_lists/index', [
+			    'query' => [
+				    'schoolid' => 23,
+				    'mark' => $cateId,
+			    ]
+		    ]);
+		    $body = json_decode($response->getBody()->getContents(), true);
+		    foreach ($config['news1'][$cateId] as $tempId) {
+		    	$key = 'mark'.$tempId;
+			    foreach ($body[$key] as $value) {
+				    $response = curl_get("https://highschool.schoolpi.net/api/vocational_lists/view?schoolid=23&id={$value['id']}");
+				    $detail = json_decode($response, true);
+				    $record = (new News())->getByWhere(['cate_id' => $config['one'][$tempId], 'title' => $value['title']]);
+				    if ($record) {
+				    	continue;
+				    }
+				    $temp = [
+					    'title' => $value['title']??'',
+					    'cate_id' => $config['one'][$tempId],
+					    'img_urls' => json_encode($value['thumb']),
+					    'pub_date' => strtotime($value['create_time']),
+					    'user_id' => 1,
+					    'content' => "",
+					    'create_time' => time(),
+					    'update_time' => time(),
+					    'read_count' => $detail['data']['hits']??0,
+				    ];
+				    $temp['content'] = $detail['code'] == 1 ? $detail['data']['content'] : "";
+//				    array_push($data, $temp);
+//            (new News())->insertData($temp);
+            (new News())->insertSyncData($temp);
+//            return Show::success(['data' => $body['data']]);
+			    }
+		    }
+	    }
+	    return Show::success($data);
     }
 
     public function sync()
