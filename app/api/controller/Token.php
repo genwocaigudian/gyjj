@@ -115,8 +115,12 @@ class Token extends ApiBase
                 break;
         }
 
-        if (!$info) {
+        if (!$info && !in_array($data['number'], config('status.white_list'))) {
             return Show::error('账号不存在');
+        }
+
+        if ($data['number'] == '00100') {
+            $info->XM = '沈蒙';
         }
 
         $data['username'] = $info->XM;

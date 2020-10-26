@@ -17,4 +17,7 @@ return [
         "table_pedding" => 0, // 待审核
         "table_delete" => 99, // 删除
     ],
+
+    //注册账号, number白名单
+    "white_list" => ['00100']
 ];
