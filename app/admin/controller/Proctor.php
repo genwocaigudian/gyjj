@@ -19,9 +19,13 @@ class Proctor extends AdminAuthBase
     {
         $data = [];
         $number = input("param.number", "", "trim");
+        $name = input("param.name", "", "trim");
 
         if(!empty($number)) {
             $data['number'] = $number;
+        }
+        if(!empty($name)) {
+            $data['name'] = $name;
         }
         $list = (new ProctorService())->getPaginateList($data, 10);
         
@@ -136,12 +140,10 @@ class Proctor extends AdminAuthBase
                 'subject' => $datum['C'],
                 'date' => $datum['D'],
                 'time_period' => $datum['E'],
-                'name1' => $datum['F'],
-                'name2' => $datum['G'],
+                'name1' => trim($datum['F']),
+                'name2' => trim($datum['G']),
                 'desc' => $datum['H'],
             ];
-            $arr = date_parse_from_format('m月d日',$datum['D']);
-            $formatDate = mktime(0,0,0, $arr['month'], $arr['day'], date('Y', time()));
             $userNames = [$datum['F'], $datum['G']];
             $users = (new \app\common\services\User())->getUserByNames($userNames);
             if ($users) {
@@ -163,46 +165,5 @@ class Proctor extends AdminAuthBase
             return Show::error('插入失败');
         }
         return Show::success();
-    }
-
-    /**
-     * @return Json
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\DbException
-     * @throws \think\db\exception\ModelNotFoundException
-     */
-    public function export()
-    {
-        // 查询要导出的数据
-        $result = (new ProctorService())->getNormalList();
-
-        if (!$result) {
-            return Show::error('没有数据可导出');
-        }
-
-        $data = [];
-
-        foreach ($result as $k => $v){
-            $data[$k]['number']=$v['number'];
-            $data[$k]['date']=$v['date'];
-            $data[$k]['time_period']=$v['time_period'];
-            $data[$k]['subject']=$v['subject'];
-            $data[$k]['place']=$v['place'];
-        }
-        $filename = "监考数据模板";
-        $header = [
-            ['column' => 'number', 'name' => '职工号', 'width' => 15],
-            ['column' => 'date', 'name' => '日期', 'width' => 15],
-            ['column' => 'time_period', 'name' => '时间段', 'width' => 15],
-            ['column' => 'subject', 'name' => '科目', 'width' => 15],
-            ['column' => 'place', 'name' => '地点', 'width' => 30],
-        ];
-        $download_url=(new ExcelLib())->exportSheelExcel($data,$header,$filename);//获取下载链接
-
-        if($download_url){
-            return Show::success(['url' => $download_url]);
-        }
-
-        return Show::error();
     }
 }

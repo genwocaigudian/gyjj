@@ -137,6 +137,17 @@ class Proctor extends BaseModel
     }
 
     /**
+     * number查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchNameAttr($query, $value)
+    {
+        $query->where('name1', $value)->whereOr('name2', $value);
+    }
+
+    /**
      * @param $likeKeys
      * @param $data
      * @param string $field
