@@ -5,8 +5,8 @@ namespace app\api\controller;
 
 use app\api\validate\User as UserValidate;
 use app\common\lib\Show;
-use app\common\model\Jsxxb as JsxxbModel;
-use app\common\model\Xsxxb as XsxxbModel;
+use app\common\model\Jsxxb1 as JsxxbModel;
+use app\common\model\Xsxxb1 as XsxxbModel;
 use app\common\services\User as UserServices;
 use app\common\services\UserCode;
 use app\common\services\UserToken;
