@@ -5,8 +5,8 @@ namespace app\api\controller;
 
 use app\api\validate\User as UserValidate;
 use app\common\lib\Show;
-use app\common\model\Jsxxb1 as JsxxbModel;
-use app\common\model\Xsxxb1 as XsxxbModel;
+use app\common\model\Jsxxb as JsxxbModel;
+use app\common\model\Xsxxb as XsxxbModel;
 use app\common\services\User as UserServices;
 use app\common\services\UserCode;
 use app\common\services\UserToken;
@@ -97,6 +97,7 @@ class Token extends ApiBase
         }
 
         $data = input('param.');
+        $username = '';
 
         $validate = new UserValidate();
         if (!$validate->scene('bind')->check($data)) {
@@ -120,10 +121,10 @@ class Token extends ApiBase
         }
 
         if ($data['number'] == '00100') {
-            $info->XM = '沈蒙';
+            $username = '沈蒙';
         }
 
-        $data['username'] = $info->XM;
+        $data['username'] = $info->XM??$username;
         $data['identity_card'] = $info->SFZH??'';
 
         $uid = $this->getUid();
