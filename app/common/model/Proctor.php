@@ -144,7 +144,7 @@ class Proctor extends BaseModel
      */
     public function searchNameAttr($query, $value)
     {
-        $query->where('name1', $value)->whereOr('name2', $value);
+        $query->where('name1', 'like', $value)->whereOr('name2', 'like', $value);
     }
 
     /**
