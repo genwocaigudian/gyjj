@@ -439,109 +439,147 @@ class News extends BaseServices
 	 * @throws Exception
 	 * @throws ModelNotFoundException
 	 */
-	public function newsSync2($cateId)
+	public function newsSync2()
 	{
-		if ($cateId == 2) {//校园新闻
-			$xmlStr = file_get_contents('http://www.hfgyxx.com/rss/news_10601_1060108.xml');
-		} else {//通知公告
-			$xmlStr = file_get_contents('http://www.hfgyxx.com/rss/news_10601_1060107.xml');
-		}
-		$obj = simplexml_load_string($xmlStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-		$eJSON = json_encode($obj);
-		$dJSON = json_decode($eJSON, true);
+		$config = config('news');
+		$cateKeys = array_keys($config['news2']);
 		$data = [];
-		$newsList = (new News())->getLimitByCateId($cateId);
-		$nums = array_column($newsList, 'xwbh');
-		
-		foreach ($dJSON['channel']['item'] as $key => $value) {
-			if ($key == 9) {
-				break;
+		$client = new Client();
+		foreach ($cateKeys as $cateId) {
+			$response = $client->request('GET', 'https://highschool.schoolpi.net/api/vocational_lists/index', [
+				'query' => [
+					'schoolid' => 23,
+					'mark' => $cateId,
+				]
+			]);
+			$body = json_decode($response->getBody()->getContents(), true);
+			foreach ($body['data'] as $value) {
+				if (!$value['title']) {
+					continue;
+				}
+				$response = curl_get("https://highschool.schoolpi.net/api/vocational_lists/view?schoolid=23&id={$value['id']}");
+				$detail = json_decode($response, true);
+				$record = (new News())->getByWhere(['cate_id' => $config['news2'][$cateId], 'title' => $value['title']]);
+				if ($record) {
+					continue;
+				}
+				
+				$thumb = is_array($value['thumb']) ? json_encode($value['thumb']) : json_encode(array($value['thumb']));
+				$temp = [
+					'title' => $value['title'],
+					'cate_id' => $config['news2'][$cateId],
+					'img_urls' => $thumb,
+					'pub_date' => strtotime($value['create_time']),
+					'user_id' => 1,
+					'content' => "",
+					'create_time' => time(),
+					'update_time' => time(),
+					'read_count' => $value['hits']??0,
+				];
+				$temp['content'] = $detail['code'] == 1 ? $detail['data']['content'] : "";
+//			    array_push($data, $temp);
+				(new News())->insertSyncData($temp);
 			}
-			if (in_array($value['xwbh'], $nums)) {
-				continue;
-			}
-			if ($value['xwbh'] == '159367545322075703') {//通知公告置顶新闻过滤
-				continue;
-			}
-			$link = $value['link'];
-			$htmlStr = file_get_contents($link);
-			$htmlStr = mb_convert_encoding($htmlStr, "utf-8", "gbk");
-			$pattern = '/<div class="xwcon" id="xwcontentdisplay">(.+?)<\/div>/is';
-			preg_match($pattern, $htmlStr, $match);
-			$content = $match[1]??'';
-			$url = $value['enclosure']["@attributes"]['url']??'';
-			$url = array($url);
-			$temp = [
-				'title' => $value['title'],
-				'desc' => $value['description'],
-				'cate_id' => $cateId,
-				'xwbh' => $value['xwbh'],
-				'img_urls' => json_encode($url),
-				'pub_date' => strtotime($value['pubDate']),
-				'user_id' => 1,
-				'content' => $content,
-				'create_time' => time(),
-				'update_time' => time()
-			];
-			$id = $this->insertSyncData($temp);
 		}
 		return true;
 	}
 	
 	/**
 	 * 同步校派小程序新闻数据
-	 * @param $cateId
 	 * @return bool
 	 * @throws DataNotFoundException
 	 * @throws DbException
 	 * @throws Exception
 	 * @throws ModelNotFoundException
 	 */
-	public function newsSync3($cateId)
+	public function newsSync3()
 	{
-		if ($cateId == 2) {//校园新闻
-			$xmlStr = file_get_contents('http://www.hfgyxx.com/rss/news_10601_1060108.xml');
-		} else {//通知公告
-			$xmlStr = file_get_contents('http://www.hfgyxx.com/rss/news_10601_1060107.xml');
-		}
-		$obj = simplexml_load_string($xmlStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-		$eJSON = json_encode($obj);
-		$dJSON = json_decode($eJSON, true);
+		$config = config('news');
+		$cateKeys = array_keys($config['news3']);
+		$cateId = current($cateKeys);
 		$data = [];
-		$newsList = (new News())->getLimitByCateId($cateId);
-		$nums = array_column($newsList, 'xwbh');
-		
-		foreach ($dJSON['channel']['item'] as $key => $value) {
-			if ($key == 9) {
-				break;
-			}
-			if (in_array($value['xwbh'], $nums)) {
+		$client = new Client();
+		$response = $client->request('GET', 'https://highschool.schoolpi.net/api/vocational_lists/index', [
+			'query' => [
+				'schoolid' => 23,
+				'mark' => $cateId,
+			]
+		]);
+		$body = json_decode($response->getBody()->getContents(), true);
+		foreach ($body['data'] as $value) {
+			if (!$value['title']) {
 				continue;
 			}
-			if ($value['xwbh'] == '159367545322075703') {//通知公告置顶新闻过滤
+			$response = curl_get("https://highschool.schoolpi.net/api/vocational_lists/view?schoolid=23&id={$value['id']}");
+			$detail = json_decode($response, true);
+			$record = (new News())->getByWhere(['cate_id' => current($config['news3']), 'title' => $value['title']]);
+			if ($record) {
 				continue;
 			}
-			$link = $value['link'];
-			$htmlStr = file_get_contents($link);
-			$htmlStr = mb_convert_encoding($htmlStr, "utf-8", "gbk");
-			$pattern = '/<div class="xwcon" id="xwcontentdisplay">(.+?)<\/div>/is';
-			preg_match($pattern, $htmlStr, $match);
-			$content = $match[1]??'';
-			$url = $value['enclosure']["@attributes"]['url']??'';
-			$url = array($url);
+			
+			$thumb = is_array($value['thumb']) ? json_encode($value['thumb']) : json_encode(array($value['thumb']));
 			$temp = [
 				'title' => $value['title'],
-				'desc' => $value['description'],
-				'cate_id' => $cateId,
-				'xwbh' => $value['xwbh'],
-				'img_urls' => json_encode($url),
-				'pub_date' => strtotime($value['pubDate']),
+				'cate_id' => current($config['news3']),
+				'img_urls' => $thumb,
+				'pub_date' => strtotime($detail['data']['create_time']),
 				'user_id' => 1,
-				'content' => $content,
+				'content' => "",
 				'create_time' => time(),
-				'update_time' => time()
+				'update_time' => time(),
+				'read_count' => $detail['data']['hits']??0,
 			];
-			$id = $this->insertSyncData($temp);
+			$temp['content'] = $detail['code'] == 1 ? $detail['data']['content'] : "";
+//			    array_push($data, $temp);
+			(new News())->insertSyncData($temp);
+		}
+		return true;
+	}
+	
+	/**
+	 * 同步校派小程序新闻数据
+	 * @return bool
+	 * @throws DataNotFoundException
+	 * @throws DbException
+	 * @throws Exception
+	 * @throws ModelNotFoundException
+	 */
+	public function newsSync4()
+	{
+		$config = config('news');
+		$cateKeys = array_keys($config['news4']);
+		$cateId = current($cateKeys);
+		$data = [];
+		$client = new Client();
+		$response = $client->request('GET', 'https://highschool.schoolpi.net/api/vocational_lists/index', [
+			'query' => [
+				'schoolid' => 23,
+				'mark' => $cateId,
+			]
+		]);
+		$body = json_decode($response->getBody()->getContents(), true);
+		foreach ($body['data'] as $value) {
+			if (!$value['name']) {
+				continue;
+			}
+			$record = (new News())->getByWhere(['cate_id' => current($config['news4']), 'title' => $value['name']]);
+			if ($record) {
+				continue;
+			}
+			
+			$thumb = is_array($value['thumb']) ? json_encode($value['thumb']) : json_encode(array($value['thumb']));
+			$temp = [
+				'title' => $value['name'],
+				'cate_id' => current($config['news4']),
+				'img_urls' => $thumb,
+				'user_id' => 1,
+				'create_time' => time(),
+				'update_time' => time(),
+				'pub_date' => strtotime($value['create_time']),
+				'read_count' => $value['hits']??0,
+			];
+//		    array_push($data, $temp);
+			(new News())->insertSyncData($temp);
 		}
 		return true;
 	}
