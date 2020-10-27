@@ -9,6 +9,6 @@ return [
     	'lost' => 'app\api\command\Lost',
     	'lottery' => 'app\api\command\Lottery',
     	'rss_sync' => 'app\command\RssSync',
-    	'news_sync1' => 'app\command\NewsSync1',
+    	'news_sync' => 'app\command\NewsSync',
     ],
 ];
