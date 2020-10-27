@@ -4,8 +4,8 @@ namespace app\api\controller;
 
 use app\common\lib\Arr;
 use app\common\lib\Show;
-use app\common\model\BookBorrow;
-use app\common\model\BookList;
+use app\common\model\BookBorrow1 as BookBorrowModel;
+use app\common\model\BookList1 as BookListModel;
 use think\response\Json;
 
 class Books extends AuthBase
@@ -18,7 +18,7 @@ class Books extends AuthBase
     {
         $data = input('param.');
         try {
-            $list = (new BookList())->getPaginateList($data);
+            $list = (new BookListModel())->getPaginateList($data);
         } catch (\Exception $e) {
             $list = Arr::getPaginateDefaultData(10);
         }
@@ -40,7 +40,7 @@ class Books extends AuthBase
             return Show::success($list);
         }
 
-        $list = (new BookBorrow())->getPaginateListById($user['identity_card']);
+        $list = (new BookBorrowModel())->getPaginateListById($user['identity_card']);
 
         return Show::success($list);
     }
