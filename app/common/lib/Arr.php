@@ -83,6 +83,7 @@ class Arr
                 $grouped[$key] = call_user_func_array('array_group_by', $parms);
             }
         }
+        $grouped = array_values($grouped);
         return $grouped;
     }
 
