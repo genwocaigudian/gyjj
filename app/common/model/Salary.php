@@ -121,8 +121,10 @@ class Salary extends BaseModel
     {
         if (!empty($likeKeys)) {
             $res = $this->withSearch($likeKeys, $data);
+        } else {
+            $res = $this;
         }
-        $result = $this->field($field)->paginate($num);
+        $result = $res->field($field)->paginate($num);
 //        echo $this->getLastSql();exit;
         return $result;
     }
