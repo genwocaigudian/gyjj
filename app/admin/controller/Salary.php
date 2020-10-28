@@ -45,9 +45,12 @@ class Salary extends AdminAuthBase
 
         $insertData = [];
         foreach ($data as $datum) {
-        	$date = explode('.', $datum['A']);
-        	$month = $date[0].'-'.$date[1];
-        	$month = date('Y-m', strtotime($month));
+            if (empty($datum['A'])) {
+                continue;
+            }
+            $date = explode('.', $datum['A']);
+            $month = $date[0].'-'.$date[1];
+            $month = date('Y-m', strtotime($month));
             $temp = [
                 'month' => $month,
                 'number' => $datum['B'],
