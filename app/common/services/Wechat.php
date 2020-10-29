@@ -20,21 +20,30 @@ class Wechat extends BaseServices
         $this->appSecret = config('wx.app_secret');
         $this->config = config('wx');
     }
-	
-	/**
-	 * 模板消息
-	 * @return \think\response\Json
-	 */
+
+    /**
+     * 模板消息
+     * @param $openId
+     * @param string $flag
+     * @return int
+     * @throws \Exception
+     */
 	public function Template($openId, $flag = 'approver')
 	{
-		$tempId = '4ESW8ufYi9nxcXarlLJHljJ0Xojz4kw2XRcxzMSqZ9s';
-		$value = '您有一个需要审批的请求';
 		$url = 'http://web.hfgyxx.net/#/pages/wserve/index/index';
-		
-		if ($flag !== 'approver') {
-			$tempId = 'nrYCufbPi3qjhCqZ-6at1p4Enl9qsL-yAvKLYr3uL80';
-			$value = '您有一个需要维修的任务';
-		}
+		if ($flag == 'approver') {
+            $tempId = '4ESW8ufYi9nxcXarlLJHljJ0Xojz4kw2XRcxzMSqZ9s';
+            $value = '您有一个需要审批的请求';
+		} elseif ($flag == 'repair') {
+            $tempId = 'nrYCufbPi3qjhCqZ-6at1p4Enl9qsL-yAvKLYr3uL80';
+            $value = '您有一个需要维修的任务';
+        } elseif ($flag == 'done') {
+            $tempId = 'mjhTXfBvPxlVTMwwYkl2nP2VHbo07aAODzgxT9KhVqA';
+            $value = '您收到一个维修评价';
+        } else {
+            $tempId = '4ESW8ufYi9nxcXarlLJHljJ0Xojz4kw2XRcxzMSqZ9s';
+            $value = '您有一个需要审批的请求';
+        }
 		
 		$arr = [
 			'touser' => $openId,

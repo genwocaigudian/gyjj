@@ -155,8 +155,13 @@ class Repair extends AuthBase
             $res = (new RepairServices())->update($id, $data);
             //发送维修消息模板通知给维修人
             if (isset($data['progress_bar']) && $data['progress_bar']==3 && isset($data['repare_id'])) {
-	            $repare = (new \app\common\services\User())->getNormalUserById($data['repare_id']);
-	            (new \app\common\services\Wechat())->Template($repare['openid'], 'reparer');
+	            $repair = (new \app\common\services\User())->getNormalUserById($data['repare_id']);
+	            (new \app\common\services\Wechat())->Template($repair['openid'], 'repair');
+            }
+            if (isset($data['progress_bar']) && $data['progress_bar']==4
+                && isset($data['approver_id']) && isset($data['comment'])) {
+                $approver = (new \app\common\services\User())->getNormalUserById($data['approver_id']);
+                (new \app\common\services\Wechat())->Template($approver['openid'], 'done');
             }
         } catch (\Exception $e) {
             return Show::error($e->getMessage());

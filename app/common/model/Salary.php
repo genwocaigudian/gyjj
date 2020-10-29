@@ -119,10 +119,15 @@ class Salary extends BaseModel
      */
     public function getPaginateList($likeKeys, $data, $field = "*", $num = 10)
     {
+        $order = [
+            'id' => 'desc'
+        ];
         if (!empty($likeKeys)) {
             $res = $this->withSearch($likeKeys, $data);
+        } else {
+            $res = $this;
         }
-        $result = $this->field($field)->paginate($num);
+        $result = $res->field($field)->order($order)->paginate($num);
 //        echo $this->getLastSql();exit;
         return $result;
     }

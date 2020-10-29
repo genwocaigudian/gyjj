@@ -35,9 +35,10 @@ class Selection extends AuthBase
     {
         $id = input('param.id', 0, 'intval');
         $isSubmit = 0;
+        $userId = $this->userId;
         try {
             $result = (new SelectionOption())->getPaginateList($id);
-            $isSubmit = (new SelectionResult())->isSubmit($id);
+            $isSubmit = (new SelectionResult())->isSubmit($userId, $id);
         } catch (\Exception $e) {
             return Show::error($e->getMessage());
         }
