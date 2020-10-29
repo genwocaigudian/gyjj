@@ -89,15 +89,16 @@ class SelectionResult extends BaseServices
 
     /**
      * 判断用户是否提交过答案
+     * @param $userId
      * @param $sid
      * @return bool
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
      */
-    public function isSubmit($sid)
+    public function isSubmit($userId, $sid)
     {
-        $res = $this->model->getByCondition(['selection_id' => $sid]);
+        $res = $this->model->getByCondition(['selection_id' => $sid, 'user_id' => $userId]);
         if (!$res) {
             return 0;
         }
