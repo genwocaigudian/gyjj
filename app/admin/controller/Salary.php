@@ -15,8 +15,8 @@ class Salary extends AdminAuthBase
     public function index()
     {
         $pwd = input('param.password', '', 'trim');
-        if ($pwd != '') {
-
+        if ($pwd != '00100') {
+            return Show::error('权限不足');
         }
         $data = [];
         $name = input('param.username', '', 'trim');
