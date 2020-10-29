@@ -22,7 +22,7 @@ class Jskcb1 extends Model
      */
     public function getList($number, $xn = '', $xq = 1)
     {
-        $field = 'xn,xq,bjmc,kcmc,xqj,xm';
+        $field = 'xn,xq,bjmc,kcmc,xqj,xm,jc';
         if (!$number) {
             return false;
         }

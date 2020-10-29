@@ -14,6 +14,10 @@ class Salary extends AdminAuthBase
      */
     public function index()
     {
+        $pwd = input('param.password', '', 'trim');
+        if ($pwd != '') {
+
+        }
         $data = [];
         $name = input('param.username', '', 'trim');
         $number = input('param.number', '', 'trim');

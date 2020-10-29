@@ -25,7 +25,7 @@ return [
 		        'value' => '微服务',
 		        'child' => [
 			        ['id' => 21, 'value' => '掌上报修', 'index' => '/service'],
-			        ['id' => 22, 'value' => '工资管理', 'index' => '/wage'],
+//			        ['id' => 22, 'value' => '工资管理', 'index' => '/wage'],
 			        ['id' => 23, 'value' => '监考信息', 'index' => '/proctor'],
 		        ],
 	        ],
@@ -49,6 +49,14 @@ return [
                     ['id' => 42, 'value' => '部门管理', 'index' => '/tissue'],
                     ['id' => 43, 'value' => '人员管理', 'index' => '/crew'],
                 ],
-	        ]
+	        ],
+            [
+                'id' => 5,
+                'icon' => 'el-icon-s-custom',
+                'value' => '工资管理',
+                'child' => [
+                    ['id' => 22, 'value' => '工资管理', 'index' => '/wage'],
+                ],
+            ],
         ]
 ];
