@@ -9,18 +9,6 @@ class Index extends BaseController
 {
     public function index()
     {
-        //1.获取分类接口
-        $cateService = new \app\common\services\Category();
-        $cateList = $cateService->getNormalAllCategorys();
-        //2.按照发布时间倒序获取最新10条新闻
-
         return Show::success();
-    }
-    
-    public function redis()
-    {
-        $code = Num::getCode(6);
-        cache(config('rediskey.code_pre').'18855479876', $code, config('rediskey.code_expire'));
-        echo 'redis';
     }
 }
