@@ -11,7 +11,7 @@ class Lost extends Validate
     ];
     
     protected $message = [
-        'title' => 'title不可为空',
+        'title' => '标题不可为空',
     ];
     
     protected $scene = [
