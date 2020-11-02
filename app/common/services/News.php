@@ -269,7 +269,8 @@ class News extends BaseServices
         unset($result['newsContent']);
 
         if ($result['content']) {
-            $preg = "/^style=(.*?)\"/si";
+//            $preg = "/^style=(.*?)\"/si";
+            $preg = "/style(.*?)>/si";
             $result['content'] = preg_replace($preg, "", $result['content']);
         }
         
