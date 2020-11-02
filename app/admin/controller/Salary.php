@@ -2,8 +2,10 @@
 namespace app\admin\controller;
 
 use app\common\lib\Excel as ExcelLib;
+use app\common\lib\Key;
 use app\common\lib\Show;
 use app\common\services\Salary as SalaryService;
+use think\facade\Cache;
 use think\response\Json;
 
 class Salary extends AdminAuthBase
@@ -14,10 +16,17 @@ class Salary extends AdminAuthBase
      */
     public function index()
     {
-        $pwd = input('param.password', '', 'trim');
-        if ($pwd != '00100') {
+        $passWord = input('param.password', '', 'trim');
+
+        $value = Cache::get(Key::SalaryPassWordKey());
+        if (!$value) {
+            $value = Cache::set(Key::SalaryPassWordKey(), '000000');
+        }
+
+        if ($passWord != $value) {
             return Show::error('权限不足');
         }
+        
         $data = [];
         $name = input('param.username', '', 'trim');
         $number = input('param.number', '', 'trim');
@@ -139,6 +148,22 @@ class Salary extends AdminAuthBase
             return Show::error($e->getMessage());
         }
 
+        return Show::success();
+    }
+
+    /**
+     * 设置权限密码
+     * @return Json
+     */
+    public function spwd()
+    {
+        $passWord1 = input('param.password1', '', 'trim');
+        $passWord2 = input('param.password2', '', 'trim');
+        $value = Cache::get(Key::SalaryPassWordKey());
+        if ($passWord1 != $value) {
+            return Show::error('密码不正确');
+        }
+        $value = Cache::set(Key::SalaryPassWordKey(), $passWord2);
         return Show::success();
     }
 }

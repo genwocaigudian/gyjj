@@ -22,4 +22,12 @@ class Key
     public static function LotteryKey($lotteryId) {
         return config('rediskey.lottery_by_id') . $lotteryId;
     }
+
+    /**
+     * 后台查看权限密码 key
+     * @return string
+     */
+    public static function SalaryPassWordKey() {
+        return config('rediskey.salary_password');
+    }
 }

@@ -15,4 +15,7 @@ return [
     'lottery_by_id' => 'lottery_by_id_',
     'lottery_incr_by_id' => 'lottery_incr_by_id_',
     'lottery_status_key' => 'lottery_status',
+
+    //薪资管理
+    'salary_password' => 'salary_password',
 ];
