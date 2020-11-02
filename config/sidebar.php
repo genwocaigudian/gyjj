@@ -52,8 +52,8 @@ return [
 	        ],
             [
                 'id' => 5,
-                'icon' => 'el-icon-s-custom',
-                'value' => '工资管理',
+                'icon' => 'el-icon-money',
+                'value' => '薪资管理',
                 'child' => [
                     ['id' => 22, 'value' => '工资管理', 'index' => '/wage'],
                 ],
