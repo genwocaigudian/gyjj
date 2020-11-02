@@ -126,6 +126,8 @@ class Lottery extends BaseServices
         if ($res) {
             throw new Exception("标题不可重复");
         }
+        
+        $data['awards_setting'] = json_encode($data['awards_setting']);
 
         try {
             $id = $this->add($data);

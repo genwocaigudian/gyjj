@@ -175,6 +175,7 @@ class Lottery extends AdminAuthBase
             $data[$k]['title']=$lotteryInfo['title'];
             $data[$k]['username']=$userRes[$v['user_id']]['username']??'';
             $data[$k]['number']=$userRes[$v['user_id']]['number']??'';
+            $data[$k]['rank']=$v['rank'].'等奖'??'';
         }
 //        $filename = "报修数据文档".date('YmdHis');
         $filename = "中奖结果数据";
@@ -182,6 +183,7 @@ class Lottery extends AdminAuthBase
             ['column' => 'title', 'name' => '活动名称', 'width' => 15],
             ['column' => 'username', 'name' => '姓名', 'width' => 15],
             ['column' => 'number', 'name' => '职工号', 'width' => 15],
+            ['column' => 'rank', 'name' => '奖项', 'width' => 15],
         ];
         $download_url=(new ExcelLib())->exportSheelExcel($data,$header,$filename);//获取下载链接
 

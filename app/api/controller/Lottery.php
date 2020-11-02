@@ -42,7 +42,7 @@ class Lottery extends AuthBase
         if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
-        $data = input('post.');
+        $data = input('param.');
 
         $validate = new LotteryValidate();
         if (!$validate->scene('save')->check($data)) {
@@ -53,14 +53,42 @@ class Lottery extends AuthBase
 
         try {
             $info = (new LotteryServices())->getNormalById($id);
+            $setting = json_decode($info['awards_setting'], true);
+            $settingKeys = array_keys($setting);
+            $settingValues = array_values($setting);
+            $settingCount = array_sum($settingValues);
             $userId = $info['user_id']??0;
             if ($userId != $this->userId) {
                 return Show::error('您没有开奖权限!');
             }
             $count = (new WinnerServices())->getCountById($id);
-            if ($count > $info['count']) {
+            if ($count >= $settingCount) {
                 return Show::error('奖项已抽完!');
             }
+            
+            if ($count == 0) {
+            	$count = 1;
+            }
+            
+            $reverse = array_reverse($setting, true);
+            $result = [];
+            $i = 0;
+            foreach ($reverse as $key => $value) {
+            	$i += $value;
+	            $result[$key] = $i;
+            }
+            
+	        $rank = end($settingKeys);
+            foreach ($result as $k => $v) {
+            	if ($count == end($result)) {
+            		$rank = $k;
+            		break;
+	            }
+            	if ($count >= $v) {
+            		$rank = $k - 1;
+	            }
+            }
+            $data['rank'] = $rank;
 
             $result = (new WinnerServices())->insertData($data);
         } catch (\Exception $e) {
@@ -117,4 +145,36 @@ class Lottery extends AuthBase
         $res['number'] = Num::fixFourNum($num);
         return Show::success($res);
     }
+	
+	/**
+	 * 读号
+	 * @return mixed
+	 */
+	public function list()
+	{
+		$data = input('param.');
+		
+		$validate = new LotteryValidate();
+		if (!$validate->scene('list')->check($data)) {
+			return Show::error($validate->getError());
+		}
+		$res = (new WinnerServices())->getList($data);
+		if ($res) {
+			$userIds = array_unique(array_column($res, 'user_id'));
+			$userList = (new \app\common\services\User())->getUserByIds($userIds);
+			$userRes = [];
+			if ($userList) {
+				foreach ($userList as $value) {
+					$userRes[$value['id']] = [
+						'id' => $value['id'],
+						'username' => $value['username'],
+					];
+				}
+			}
+			foreach ($res as $k => &$v){
+				$v['username'] = $userRes[$v['user_id']]['username']??'';
+			}
+		}
+		return Show::success($res);
+	}
 }
