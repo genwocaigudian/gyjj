@@ -267,6 +267,11 @@ class News extends BaseServices
         $result['content'] = $result['newsContent']['content']??'';
         $result['img_urls'] = json_decode($result['img_urls']);
         unset($result['newsContent']);
+
+        if ($result['content']) {
+            $preg = "/<style[\s\S]*?<\/style>/i";
+            $result['content'] = preg_replace($preg, "", $result['content']);
+        }
         
         return $result;
     }
