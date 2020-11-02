@@ -269,7 +269,7 @@ class News extends BaseServices
         unset($result['newsContent']);
 
         if ($result['content']) {
-            $preg = "/^style=*?>/i";
+            $preg = "/^style=*?>/si";
             $result['content'] = preg_replace($preg, "", $result['content']);
         }
         
