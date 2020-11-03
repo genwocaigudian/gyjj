@@ -166,4 +166,18 @@ class Salary extends AdminAuthBase
         $value = Cache::set(Key::SalaryPassWordKey(), $passWord2);
         return Show::success();
     }
+
+    /**
+     * 验证密码
+     * @return Json
+     */
+    public function check()
+    {
+        $passWord = input('param.password', '', 'trim');
+        $value = Cache::get(Key::SalaryPassWordKey());
+        if ($passWord != $value) {
+            return Show::error('密码不正确');
+        }
+        return Show::success();
+    }
 }
