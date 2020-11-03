@@ -56,6 +56,9 @@ class Lottery extends AdminAuthBase
 
         $departUserInfo = (new DepartmentUser())->getNormalById($data['user_id']);
         $userInfo = (new \app\common\services\User())->getNormalUserByNumber($departUserInfo['number']);
+        if (!$userInfo) {
+            return Show::error('先让此用户在公众号端进行绑定!');
+        }
         $data['user_id'] = $userInfo['id']??0;
         $data['start_time'] = $data['start_time'] . '00:00:00';
         $data['end_time'] = $data['end_time'] . '23:59:59';
