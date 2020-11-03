@@ -46,6 +46,7 @@ class Lottery extends AdminAuthBase
         if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
+
         $data = input('post.');
 
         $validate = new LotteryValidate();
