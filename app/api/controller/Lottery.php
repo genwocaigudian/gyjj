@@ -8,6 +8,7 @@ use app\common\lib\Key;
 use app\common\lib\Num;
 use app\common\lib\Show;
 use app\common\services\Lottery as LotteryServices;
+use app\common\services\LotteryOption;
 use app\common\services\LotteryWinning as WinnerServices;
 use think\facade\Cache;
 use think\facade\Log;
@@ -53,7 +54,14 @@ class Lottery extends AuthBase
 
         try {
             $info = (new LotteryServices())->getNormalById($id);
-            $setting = json_decode($info['awards_setting'], true);
+            $awardsSetting = (new LotteryOption())->getList(['lottery_id' => $id]);
+            $awardsSetting = array_column($awardsSetting, 'count');
+            $awardsCount = count($awardsSetting);
+            $setting = [];
+            foreach ($awardsSetting as $key => $va) {
+                $setting[$awardsCount-$key] = $va;
+            }
+//            $setting = json_decode($info['awards_setting'], true);
             $settingKeys = array_keys($setting);
             $settingValues = array_values($setting);
             $settingCount = array_sum($settingValues);
@@ -69,16 +77,16 @@ class Lottery extends AuthBase
             if ($count == 0) {
             	$count = 1;
             }
-            
-            $reverse = array_reverse($setting, true);
+
             $result = [];
             $i = 0;
-            foreach ($reverse as $key => $value) {
+            foreach ($setting as $key => $value) {
             	$i += $value;
 	            $result[$key] = $i;
             }
-            
-	        $rank = end($settingKeys);
+
+//	        $rank = end($settingKeys);
+	        $rank = current($settingKeys);
             foreach ($result as $k => $v) {
             	if ($count == end($result)) {
             		$rank = $k;

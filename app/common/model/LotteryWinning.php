@@ -81,7 +81,7 @@ class LotteryWinning extends BaseModel
             $res = $this;
         }
 
-        $result = $res->field($field)->select();
+        $result = $res->field($field)->order('id desc')->select();
 //        echo $res->getLastSql();exit;
         return $result;
     }
