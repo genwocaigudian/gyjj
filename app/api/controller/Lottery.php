@@ -185,6 +185,7 @@ class Lottery extends AuthBase
 			}
 			foreach ($res as $k => &$v){
 				$v['username'] = $userRes[$v['user_id']]['username']??'';
+				$v['number'] = Num::fixFourNum($v['number']);
 			}
 		}
 		return Show::success($res);
