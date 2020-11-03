@@ -122,20 +122,20 @@ class LotteryWinning extends BaseServices
      */
     public function insertData($data)
     {
-        $res = Cache::hGetAll(Key::LotteryKey($data['id']));
-        if (empty($res)) {
-            throw new \Exception('没有足够的人数参与此次抽奖!');
-        }
-        $randNum = array_rand(array_flip($res), 1);
+//        $res = Cache::hGetAll(Key::LotteryKey($data['id']));
+//        if (empty($res)) {
+//            throw new \Exception('没有足够的人数参与此次抽奖!');
+//        }
+//        $randNum = array_rand(array_flip($res), 1);
         $data['lottery_id'] = $data['id'];
         $data['status'] = 1;
-        foreach ($res as $key => $value) {
-            if ($randNum == $value) {
-                $data['number'] = $value;
-                $data['user_id'] = $key;
-                Cache::hDel(Key::LotteryKey($data['id']), $key);
-            }
-        }
+//        foreach ($res as $key => $value) {
+//            if ($randNum == $value) {
+//                $data['number'] = $value;
+//                $data['user_id'] = $key;
+//                Cache::hDel(Key::LotteryKey($data['id']), $key);
+//            }
+//        }
         unset($data['id']);
 
         try {
@@ -145,7 +145,7 @@ class LotteryWinning extends BaseServices
         }
         $result = [
             'id' => $id,
-            'number' => Num::fixFourNum($data['number']),
+//            'number' => Num::fixFourNum($data['number']),
         ];
         return $result;
     }

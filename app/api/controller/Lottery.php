@@ -55,11 +55,15 @@ class Lottery extends AuthBase
         try {
             $info = (new LotteryServices())->getNormalById($id);
             $awardsSetting = (new LotteryOption())->getList(['lottery_id' => $id]);
+            $rankNameArr = array_column($awardsSetting, 'value');
             $awardsSetting = array_column($awardsSetting, 'count');
             $awardsCount = count($awardsSetting);
-            $setting = [];
+            $setting = $rName = [];
             foreach ($awardsSetting as $key => $va) {
                 $setting[$awardsCount-$key] = $va;
+            }
+            foreach ($rankNameArr as $k => $v) {
+                $rName[$awardsCount-$k] = $v;
             }
 //            $setting = json_decode($info['awards_setting'], true);
             $settingKeys = array_keys($setting);
@@ -85,7 +89,6 @@ class Lottery extends AuthBase
 	            $result[$key] = $i;
             }
 
-//	        $rank = end($settingKeys);
 	        $rank = current($settingKeys);
             foreach ($result as $k => $v) {
             	if ($count == end($result)) {
@@ -97,6 +100,7 @@ class Lottery extends AuthBase
 	            }
             }
             $data['rank'] = $rank;
+            $data['rank_name'] = $rName[$rank];
 
             $result = (new WinnerServices())->insertData($data);
         } catch (\Exception $e) {
