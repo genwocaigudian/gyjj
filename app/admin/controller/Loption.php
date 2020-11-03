@@ -15,11 +15,12 @@ class Loption extends AdminAuthBase
      */
     public function index()
     {
-        $data = input('param.');
+        $input = input('param.');
         $validate = new LotteryOptionValidate();
-        if (!$validate->scene('index')->check($data)) {
+        if (!$validate->scene('index')->check($input)) {
             return Show::error($validate->getError());
         }
+        $data['lottery_id'] = $input['lottery_id'];
         $list = (new LotteryOptionService())->getPaginateList($data, 10);
         
         return Show::success($list);
