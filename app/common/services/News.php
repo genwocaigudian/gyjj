@@ -271,7 +271,11 @@ class News extends BaseServices
         if ($result['content'] && $result['cate_id'] == 6) {
 //            $preg = "/style(.*?)\"/si";
 //            $preg = "/(style)=\"[\s\S]*?\"/i";
-            $preg = "/(style)=\"[\s\S]*?\"/i";
+            $preg = "/text-indent(.*?);/i";
+            $result['content'] = preg_replace($preg, "text-indent:2em", $result['content']);
+            $preg = "/font-family(.*?);/i";
+            $result['content'] = preg_replace($preg, "", $result['content']);
+            $preg = "/font-size(.*?);/i";
             $result['content'] = preg_replace($preg, "", $result['content']);
         }
         
