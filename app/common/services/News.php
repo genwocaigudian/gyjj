@@ -268,8 +268,9 @@ class News extends BaseServices
         $result['img_urls'] = json_decode($result['img_urls']);
         unset($result['newsContent']);
 
-        if ($result['content']) {
+        if ($result['content'] && $result['cate_id'] == 6) {
 //            $preg = "/style(.*?)\"/si";
+//            $preg = "/(style)=\"[\s\S]*?\"/i";
             $preg = "/(style)=\"[\s\S]*?\"/i";
             $result['content'] = preg_replace($preg, "", $result['content']);
         }
