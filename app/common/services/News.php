@@ -279,6 +279,8 @@ class News extends BaseServices
             $result['content'] = preg_replace($preg, "", $result['content']);
             $preg = "/background(.*?);/i";
             $result['content'] = preg_replace($preg, "", $result['content']);
+            $preg = "/margin-left(.*?);/i";
+            $result['content'] = preg_replace($preg, "", $result['content']);
         }
         
         return $result;
