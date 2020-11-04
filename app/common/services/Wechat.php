@@ -30,7 +30,7 @@ class Wechat extends BaseServices
      */
 	public function Template($openId, $flag = 'approver')
 	{
-		$url = 'http://web.hfgyxx.net/#/pages/wserve/index/index';
+		$url = 'http://web.hfgyxx.net/#/pages/wserve/maintain/index';
 		if ($flag == 'approver') {
             $tempId = '4ESW8ufYi9nxcXarlLJHljJ0Xojz4kw2XRcxzMSqZ9s';
             $value = '您有一个需要审批的请求';
