@@ -63,6 +63,9 @@ class Duser extends AdminAuthBase
         }
 
         $user = (new \app\common\services\User())->getNormalUserByNumber($data['number']);
+        if (!$user) {
+            return Show::error('先让此用户在公众号端进行绑定!');
+        }
         $data['username'] = $user['username']??'';
 
         try {
