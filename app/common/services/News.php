@@ -268,7 +268,7 @@ class News extends BaseServices
         $result['img_urls'] = json_decode($result['img_urls']);
         unset($result['newsContent']);
 
-        if ($result['content'] && $result['cate_id'] == 6) {
+        if ($result['content']) {
 //            $preg = "/style(.*?)\"/si";
 //            $preg = "/(style)=\"[\s\S]*?\"/i";
             $preg = "/text-indent(.*?);/i";
@@ -281,6 +281,8 @@ class News extends BaseServices
             $result['content'] = preg_replace($preg, "", $result['content']);
             $preg = "/margin-left(.*?);/i";
             $result['content'] = preg_replace($preg, "", $result['content']);
+            $preg = "/<img.*?>/i";
+            $result['content'] = preg_replace($preg, "<p class=\"text_img\">$0</p>", $result['content']);
         }
         
         return $result;
