@@ -177,7 +177,7 @@ class News extends AdminAuthBase
         $id = input('post.id');
 
         try {
-            $res = (new NewsService())->delete($id);
+            $res = (new NewsService())->del($id);
         } catch (\Exception $e) {
             return Show::error($e->getMessage());
         }
