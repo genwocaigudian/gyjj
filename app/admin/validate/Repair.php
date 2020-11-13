@@ -13,7 +13,7 @@ class Repair extends Validate
     
     protected $message = [
         'name' => 'name不可为空',
-        'repair_cate_id' => 'repair_cate_id不可为空',
+        'repair_cate_id' => '请重新选择要导出的分类',
     ];
     
     protected $scene = [
