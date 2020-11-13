@@ -10,7 +10,7 @@ use TencentCloud\Vod\V20180717\Models\DescribeAllClassRequest;
 use TencentCloud\Vod\V20180717\Models\SearchMediaRequest;
 use TencentCloud\Vod\V20180717\VodClient;
 
-class Tencent extends AuthBase
+class Tencent extends ApiBase
 {
 	protected $config;
 	protected $secrctId = '';
