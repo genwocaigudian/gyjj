@@ -10,5 +10,6 @@ return [
     	'lottery' => 'app\api\command\Lottery',
     	'rss_sync' => 'app\command\RssSync',
     	'news_sync' => 'app\command\NewsSync',
+    	'video_sync' => 'app\command\VideoSync',
     ],
 ];

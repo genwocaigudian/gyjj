@@ -89,4 +89,22 @@ class Video extends BaseModel
 //        echo $this->getLastSql();exit;
         return $result;
     }
+
+    /**
+     * @param string $num
+     * @return \think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getLimit($num = 10)
+    {
+        $order = [
+            "upload_time" => "desc"
+        ];
+        $result = $this->order($order)->limit($num)->select();
+//		echo $this->getLastSql();exit();
+
+        return $result;
+    }
 }

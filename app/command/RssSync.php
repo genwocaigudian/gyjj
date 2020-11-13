@@ -31,8 +31,9 @@ class RssSync extends Command
         $task = new \EasyTask\Task();
         $task->setRunTimePath($this->app->getRuntimePath());
         $task->addFunc(function () {
-            $date = date('H:i:s');
-            if ($date != "00:00:00")
+//            $date = date('H:i:s');
+            $date = date('i');
+            if ($date != "10")
             {
                 return;
             }

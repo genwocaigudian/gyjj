@@ -4,21 +4,23 @@ declare (strict_types = 1);
 namespace app\command;
 
 use app\common\services\News;
+use app\common\services\Video;
+use app\common\services\VideoCategory;
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
 use think\console\Output;
 
-class NewsSync extends Command
+class VideoSync extends Command
 {
     protected function configure()
     {
         //设置名称为task
-        $this->setName('news_sync')
+        $this->setName('video_sync')
             //增加一个命令参数
             ->addArgument('action', Argument::OPTIONAL, "action", '')
             ->addArgument('force', Argument::OPTIONAL, "force", '')
-            ->setDescription('the news_sync command');
+            ->setDescription('the video_sync command');
     }
 
     protected function execute(Input $input, Output $output)
@@ -33,15 +35,13 @@ class NewsSync extends Command
         $task->addFunc(function () {
 //            $date = date('H:i:s');
             $date = date('i');
-            if ($date != "00")
+            if ($date != "30")
             {
                 return;
             }
             //Write your code
-	        (new News())->newsSync1();
-	        (new News())->newsSync2();
-	        (new News())->newsSync3();
-	        (new News())->newsSync4();
+            (new VideoCategory())->cateSync();
+            (new Video())->videoSync();
 
         }, 'request', 1, 1);
 
