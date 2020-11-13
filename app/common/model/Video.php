@@ -23,7 +23,6 @@ class Video extends BaseModel
         'create_time',
         'update_time',
         'delete_time',
-        'vid'
     ];
 
     /**
@@ -97,7 +96,7 @@ class Video extends BaseModel
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getLimit($num = 10)
+    public function getLimit($num = 20)
     {
         $order = [
             "upload_time" => "desc"
