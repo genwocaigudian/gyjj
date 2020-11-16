@@ -40,14 +40,14 @@ class Wechat extends AdminAuthBase
                         "url": "http://web.hfgyxx.net/#/"
                     },
                     {
-                        "name": "微生活",
-                        "type": "view",
-                        "url": "http://web.hfgyxx.net/#/pages/wlife/index/index"
-                    },
-                    {
                         "name": "微服务",
                         "type": "view",
                         "url": "http://web.hfgyxx.net/#/pages/wserve/index/index"
+                    },
+                    {
+                        "name": "微生活",
+                        "type": "view",
+                        "url": "http://web.hfgyxx.net/#/pages/wlife/index/index"
                     }
                 ]
             }
