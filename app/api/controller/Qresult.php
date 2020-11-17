@@ -13,6 +13,9 @@ class Qresult extends AuthBase
     /**
      * 新增
      * @return Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function save()
     {
@@ -22,6 +25,17 @@ class Qresult extends AuthBase
         $data = input('param.');
 
         $questionId = $data['question_id']??0;
+
+        $info = (new Question())->getNormalById($questionId);
+        if (!$info) {
+            return Show::error('数据不存在');
+        }
+
+        $date = date('Y-m-d');
+
+        if ($date > $info['end_time'] || $date < $info['start_time']) {
+            return Show::error('还未到参与时间哦');
+        }
 
 //        $validate = new QresultValidate();
 //        if (!$validate->scene('save')->check($data)) {

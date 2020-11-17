@@ -136,6 +136,17 @@ class Lottery extends BaseModel
      * @param $query
      * @param $value
      */
+    public function searchEndTimeAttr($query, $value)
+    {
+        $query->whereTime('end_time', '>', $value);
+    }
+
+    /**
+     * status查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
     public function searchStatusAttr($query, $value)
     {
         $query->where('status', '=', $value);

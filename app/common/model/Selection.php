@@ -142,6 +142,17 @@ class Selection extends BaseModel
 	}
 
     /**
+     * status查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchEndTimeAttr($query, $value)
+    {
+        $query->whereTime('end_time', '>', $value);
+    }
+
+    /**
      * @param $likeKeys
      * @param $data
      * @param string $field

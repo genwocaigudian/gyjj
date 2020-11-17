@@ -18,6 +18,7 @@ class Selection extends AuthBase
     {
         $data = [];
         $data['target'] = $this->type;
+        $data['end_time'] = date('Y-m-d');
         try {
             $list = (new SelectionServices())->getPaginateList($data, 10);
         } catch (\Exception $e) {

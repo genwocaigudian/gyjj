@@ -16,6 +16,7 @@ class Question extends AuthBase
     public function index()
     {
         $data = [];
+        $data['end_time'] = date('Y-m-d');
         try {
             $list = (new QuestionServices())->getPaginateList($data, 10);
         } catch (\Exception $e) {
