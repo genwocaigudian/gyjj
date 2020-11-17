@@ -210,6 +210,6 @@ class Selection extends BaseServices
         if (!$list) {
             return [];
         }
-        return $list->toArray();
+        return $list;
     }
 }

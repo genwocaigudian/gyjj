@@ -52,7 +52,8 @@ class BaseModel extends Model
         }
         $result = $this->where($condition)
             ->order($order)
-            ->select();
+            ->select()
+            ->toArray();
 
 //        echo $this->getLastSql();exit;
         return $result;
