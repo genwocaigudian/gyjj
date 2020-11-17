@@ -132,11 +132,24 @@ class Lottery extends AuthBase
 
     /**
      * 取号
-     * @return mixed
+     * @return Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function take()
     {
         $id = input('param.id', 0, 'intval');
+        $info = (new \app\common\services\Lottery())->getNormalById($id);
+        if (!$info) {
+            return Show::error('数据不存在');
+        }
+
+        $date = date('Y-m-d');
+
+        if ($date > $info['end_time'] || $date < $info['start_time']) {
+            return Show::error('还未到参与时间哦');
+        }
         $incr = Cache::incr(Key::LotteryNumIncrKey($id));
         $num = Cache::hSet(Key::LotteryKey($id), $this->userId, $incr);
         $incrNum = Num::fixFourNum($incr);

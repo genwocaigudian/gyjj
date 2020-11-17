@@ -13,6 +13,9 @@ class Sresult extends AuthBase
     /**
      * 新增
      * @return Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
      */
     public function save()
     {
@@ -24,6 +27,17 @@ class Sresult extends AuthBase
         $validate = new SresultValidate();
         if (!$validate->scene('save')->check($data)) {
             return Show::error($validate->getError());
+        }
+
+        $info = (new Selection())->getListByWhere(['selection_id' => $data['selection_id']]);
+        if (!$info) {
+            return Show::error('数据不存在');
+        }
+
+        $date = date('Y-m-d');
+
+        if ($date > $info['end_time'] || $date < $info['start_time']) {
+            return Show::error('还未到参与时间哦');
         }
 
         $insertData = [];

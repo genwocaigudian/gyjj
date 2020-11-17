@@ -243,4 +243,21 @@ class Lottery extends BaseServices
         }
         return $res;
     }
+
+    /**
+     * 根据条件获取列表
+     * @param $where
+     * @return bool
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getListByWhere($where)
+    {
+        $list = $this->model->getByCondition($where);
+        if (!$list) {
+            return [];
+        }
+        return $list->toArray();
+    }
 }
