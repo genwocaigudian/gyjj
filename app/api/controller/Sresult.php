@@ -29,7 +29,7 @@ class Sresult extends AuthBase
             return Show::error($validate->getError());
         }
 
-        $info = (new Selection())->getListByWhere(['selection_id' => $data['selection_id']]);
+        $info = (new Selection())->getNormalById($data['selection_id']);
         if (!$info) {
             return Show::error('数据不存在');
         }

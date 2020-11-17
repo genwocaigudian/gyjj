@@ -26,7 +26,7 @@ class Qresult extends AuthBase
 
         $questionId = $data['question_id']??0;
 
-        $info = (new Question())->getListByWhere(['question_id' => $questionId]);
+        $info = (new Question())->getNormalById($questionId);
         if (!$info) {
             return Show::error('数据不存在');
         }

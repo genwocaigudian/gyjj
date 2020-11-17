@@ -195,21 +195,4 @@ class Question extends BaseServices
         $this->model->incCount($id, 1);
         return true;
     }
-
-    /**
-     * 根据条件获取列表
-     * @param $where
-     * @return bool
-     * @throws DataNotFoundException
-     * @throws DbException
-     * @throws ModelNotFoundException
-     */
-    public function getListByWhere($where)
-    {
-        $list = $this->model->getByCondition($where);
-        if (!$list) {
-            return [];
-        }
-        return $list;
-    }
 }
