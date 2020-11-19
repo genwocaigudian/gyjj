@@ -26,8 +26,18 @@ class Lottery extends AuthBase
         $data['target'] = $this->type;
         $data['status'] = config('status.mysql.table_normal');
 //        $data['end_time'] = date('Y-m-d');
+	    $isExpired = 0;
+	    $date = date("Y-m-d");
         try {
             $list = (new LotteryServices())->getPaginateList($data, 10);
+            if ($list['data']) {
+            	foreach ($list['data'] as &$value) {
+		            if ($value['end_time'] < $date) {
+			            $isExpired = 1;
+		            }
+		            $value['is_expired'] = $isExpired;
+	            }
+            }
         } catch (\Exception $e) {
             $list = Arr::getPaginateDefaultData(10);
         }
