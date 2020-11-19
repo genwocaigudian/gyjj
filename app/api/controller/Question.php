@@ -8,6 +8,7 @@ use app\common\services\Question as QuestionServices;
 use app\api\validate\Qresult as QuestionValidate;
 use think\response\Json;
 
+//问卷调查
 class Question extends AuthBase
 {
     /**
@@ -16,7 +17,7 @@ class Question extends AuthBase
     public function index()
     {
         $data = [];
-        $data['end_time'] = date('Y-m-d');
+//        $data['end_time'] = date('Y-m-d');
         try {
             $list = (new QuestionServices())->getPaginateList($data, 10);
         } catch (\Exception $e) {

@@ -118,8 +118,12 @@ class Lottery extends AuthBase
     public function read()
     {
         $id = input('param.id', 0, 'intval');
+	    $date = date('Y-m-d');
         try {
             $result = (new LotteryServices())->getNormalById($id);
+            if ($result['end_time'] < $date) {
+	            return Show::error('此项活动已结束');
+            }
         } catch (\Exception $e) {
             Log::error('api/lottery/read 错误:' . $e->getMessage());
             return Show::error($e->getMessage(), $e->getCode());

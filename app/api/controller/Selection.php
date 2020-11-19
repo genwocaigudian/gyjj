@@ -18,7 +18,7 @@ class Selection extends AuthBase
     {
         $data = [];
         $data['target'] = $this->type;
-        $data['end_time'] = date('Y-m-d');
+//        $data['end_time'] = date('Y-m-d');
         try {
             $list = (new SelectionServices())->getPaginateList($data, 10);
         } catch (\Exception $e) {
@@ -36,8 +36,13 @@ class Selection extends AuthBase
     {
         $id = input('param.id', 0, 'intval');
         $isSubmit = 0;
+        $date = date('Y-m-d');
         $userId = $this->userId;
         try {
+        	$info = (new \app\common\services\Selection())->getNormalById($id);
+        	if ($info['end_time'] < $date) {
+		        return Show::error('此项活动已结束');
+	        }
             $result = (new SelectionOption())->getPaginateList($id);
             $isSubmit = (new SelectionResult())->isSubmit($userId, $id);
         } catch (\Exception $e) {
