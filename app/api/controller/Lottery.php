@@ -25,7 +25,7 @@ class Lottery extends AuthBase
         $data = [];
         $data['target'] = $this->type;
         $data['status'] = config('status.mysql.table_normal');
-        $data['end_time'] = date('Y-m-d');
+//        $data['end_time'] = date('Y-m-d');
         try {
             $list = (new LotteryServices())->getPaginateList($data, 10);
         } catch (\Exception $e) {

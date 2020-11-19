@@ -154,7 +154,7 @@ class Question extends BaseModel
     public function getPaginateList($likeKeys, $data, $field = "*", $num = 10)
     {
         $order = [
-            'id' => 'desc'
+            'start_time' => 'desc'
         ];
         if (!empty($likeKeys)) {
             $res = $this->withSearch($likeKeys, $data);
