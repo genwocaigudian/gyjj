@@ -135,16 +135,17 @@ class Proctor extends AdminAuthBase
                 continue;
             }
             $temp = [
-                'class' => $datum['A'],
-                'place' => $datum['B'],
-                'subject' => $datum['C'],
-                'date' => $datum['D'],
-                'time_period' => $datum['E'],
-                'name1' => trim($datum['F']),
-                'name2' => trim($datum['G']),
-                'desc' => $datum['H'],
+                'title' => $datum['A'],
+                'class' => $datum['B'],
+                'place' => $datum['C'],
+                'subject' => $datum['D'],
+                'date' => $datum['E'],
+                'time_period' => $datum['F'],
+                'name1' => trim($datum['G']),
+                'name2' => trim($datum['H']),
+                'desc' => $datum['I'],
             ];
-            $userNames = [$datum['F'], $datum['G']];
+            $userNames = [$datum['G'], $datum['H']];
             $users = (new \app\common\services\User())->getUserByNames($userNames);
             if ($users) {
                 foreach ($users as $key => $user) {
@@ -154,7 +155,7 @@ class Proctor extends AdminAuthBase
             }
 
             //格式化文档日期
-            $arr = date_parse_from_format('m月d日',$datum['D']);
+            $arr = date_parse_from_format('m月d日',$datum['E']);
             $formatDate = mktime(0,0,0, $arr['month'], $arr['day'], date('Y', time()));
             $temp['format_date'] = date('Y-m-d', $formatDate);
             array_push($insertData, $temp);
