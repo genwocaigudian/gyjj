@@ -28,7 +28,7 @@ class Library extends ApiBase
 	    foreach ($body['major'] as $key => &$value) {
 		    $value['color'] = $collegeColor[$key % 4];
 	    	foreach ($value['data'] as $k => &$v) {
-			    $v['color'] = $majorColor[$key % 5];
+			    $v['color'] = $majorColor[$k % 5];
 		    }
 	    }
         return Show::success($body);
