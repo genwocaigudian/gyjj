@@ -30,7 +30,7 @@ class News extends BaseServices
      */
     public function getPaginateList($data, $num)
     {
-        $field = 'id, small_title, cate_id, title, is_top, is_hot, status, img_urls, desc, pub_date';
+        $field = 'id, small_title, cate_id, title, is_top, is_hot, status, img_urls, cover_url, desc, pub_date';
         $likeKeys = [];
         if (!empty($data)) {
             $likeKeys = array_keys($data);
@@ -67,7 +67,7 @@ class News extends BaseServices
      */
     public function getVideoPaginateList($data, $num)
     {
-        $field = 'id, small_title, cate_id, title, is_top, is_hot, status, img_urls, desc, create_time';
+        $field = 'id, small_title, cate_id, title, is_top, is_hot, status, img_urls, cover_url, desc, create_time';
         $likeKeys = [];
         if (!empty($data)) {
             $likeKeys = array_keys($data);
@@ -93,7 +93,7 @@ class News extends BaseServices
     
     public function getNormalAllNews()
     {
-        $field = "id, small_title, title, is_top, is_hot, status, img_urls, desc, create_time";
+        $field = "id, small_title, title, is_top, is_hot, status, img_urls, cover_url, desc, create_time";
         try {
             $res = $this->model->getNormalNews($field, 10);
         } catch (\Exception $e) {
