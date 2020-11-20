@@ -20,6 +20,17 @@ class Library extends ApiBase
             ]
         ]);
         $body = json_decode($response->getBody()->getContents(), true);
+        $collegeColor = ['#F7C065', '#4AC282', '#3694D2', '#95AEFE'];
+        $majorColor = ['#FCC261', '#C8DF73', '#A3B1DE', '#F87B65', '#89CCA9'];
+        foreach ($body['college'] as $key => &$value) {
+	        $value['color'] = $collegeColor[$key % 4];
+        }
+	    foreach ($body['major'] as $key => &$value) {
+		    $value['color'] = $collegeColor[$key % 4];
+	    	foreach ($value['data'] as $k => &$v) {
+			    $v['color'] = $majorColor[$key % 5];
+		    }
+	    }
         return Show::success($body);
     }
     
