@@ -219,9 +219,12 @@ class News extends BaseServices
         }
 
         try {
-            if (isset($data['content'])) {
+            if (isset($data['content']) && !empty($data['content'])) {
                 $res = $this->model->updateContentRelation($id, $data);
             } else {
+            	if (isset($data['content'])) {
+            		unset($data['content']);
+	            }
                 $res = $this->model->updateById($id, $data);
             }
         } catch (\Exception $e) {
