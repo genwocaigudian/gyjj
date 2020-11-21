@@ -111,6 +111,10 @@ class News extends AdminAuthBase
         $data['create_time'] = time();
         $data['update_time'] = time();
         $data['pub_date'] = time();
+        
+        if ($data['desc']) {
+        	$data['content'] = $data['desc'];
+        }
 
         try {
             $result = (new NewsService())->insertData($data);
