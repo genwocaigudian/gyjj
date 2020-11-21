@@ -113,7 +113,7 @@ class News extends AdminAuthBase
         $data['pub_date'] = time();
         
         if ($data['desc']) {
-        	$data['content'] = $data['desc'];
+        	$data['content'] = $data['desc']??$data['title'];
         }
 
         try {
