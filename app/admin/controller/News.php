@@ -162,7 +162,7 @@ class News extends AdminAuthBase
 //        $data = input('post.');
         $data = $this->request->only(['is_hot', 'is_top', 'title', 'small_title', 'img_urls', 'cover_url', 'content'], 'post');
         
-        if (!$data['cover_url']) {
+        if (!isset($data['cover_url'])) {
         	$data['cover_url'] = [];
         }
 
