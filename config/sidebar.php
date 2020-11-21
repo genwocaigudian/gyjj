@@ -15,7 +15,7 @@ return [
 			        ['id' => 13, 'value' => '文章管理', 'index' => '/article'],
 			        ['id' => 14, 'value' => '佳作赏析', 'index' => '/excellent'],
 //			        ['id' => 15, 'value' => '校园风光', 'index' => '/scenery'],
-			        ['id' => 16, 'value' => '高校视频', 'index' => '/video'],
+			        ['id' => 16, 'value' => '学校视频', 'index' => '/video'],
 			        ['id' => 17, 'value' => '报名管理', 'index' => '/apply'],
 		        ],
 	        ],
