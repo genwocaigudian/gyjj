@@ -105,9 +105,14 @@ class News extends AdminAuthBase
         if (!$validate->scene('savev')->check($data)) {
             return Show::error($validate->getError());
         }
+        
+        if (!$data['cover_url']) {
+        	$data['cover_url'] = [];
+        }
 
         $data['user_id'] = $this->userId;
         $data['img_urls'] = json_encode($data['img_urls']);
+        $data['cover_url'] = json_encode($data['cover_url']);
         $data['create_time'] = time();
         $data['update_time'] = time();
         $data['pub_date'] = time();

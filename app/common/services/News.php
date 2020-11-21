@@ -45,6 +45,7 @@ class News extends BaseServices
                 foreach ($result['data'] as $key => &$data) {
                     $data['color'] = $color[$key % 4];
                     $data['img_urls'] = json_decode($data['img_urls'], true);
+                    $data['cover_url'] = json_decode($data['cover_url'], true);
                     $data['cate_name'] = $cateNames[$data['cate_id']]['name'];
                 }
             }
@@ -82,6 +83,7 @@ class News extends BaseServices
                 foreach ($result['data'] as $key => &$data) {
                     $data['color'] = $color[$key % 4];
                     $data['img_urls'] = json_decode($data['img_urls'], true);
+                    $data['cover_url'] = json_decode($data['cover_url'], true);
                     $data['cate_name'] = $cateNames[$data['cate_id']]['name'];
                 }
             }
@@ -107,6 +109,7 @@ class News extends BaseServices
         $res = $res->toArray();
         foreach ($res as &$re) {
             $re['img_urls'] = json_decode($re['img_urls'], true);
+            $re['cover_url'] = json_decode($re['cover_url'], true);
         }
         return $res;
     }
@@ -266,6 +269,7 @@ class News extends BaseServices
         $result['user_name'] = $users[$result['user_id']]??'';
         $result['content'] = $result['newsContent']['content']??'';
         $result['img_urls'] = json_decode($result['img_urls']);
+        $result['cover_url'] = json_decode($result['cover_url']);
         unset($result['newsContent']);
 
         if ($result['content']) {
