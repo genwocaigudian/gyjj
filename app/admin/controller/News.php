@@ -106,7 +106,7 @@ class News extends AdminAuthBase
             return Show::error($validate->getError());
         }
         
-        if (!$data['cover_url']) {
+        if (isset($data['cover_url']) && !$data['cover_url']) {
         	$data['cover_url'] = [];
         }
 
