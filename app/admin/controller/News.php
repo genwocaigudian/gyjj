@@ -160,7 +160,7 @@ class News extends AdminAuthBase
 
         $id = input('param.id', 0, 'intval');
 //        $data = input('post.');
-        $data = $this->request->only(['is_hot', 'is_top', 'title', 'small_title', 'img_urls', 'cover_url', 'content'], 'post');
+        $data = $this->request->only(['is_hot', 'is_top', 'title', 'small_title', 'img_urls', 'cover_url', 'desc', 'content'], 'post');
         
         if (!isset($data['cover_url'])) {
         	$data['cover_url'] = [];
