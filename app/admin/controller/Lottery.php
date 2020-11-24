@@ -107,6 +107,14 @@ class Lottery extends AdminAuthBase
 
         $id = input('param.id', 0, 'intval');
         $data = input('post.');
+        
+        if (!$data['user_id']) {
+        	return Show::error('请设置抽奖人');
+        }
+	
+	    $departUser = (new DepartmentUser())->getNormalById($data['user_id']);
+	    $user = (new \app\common\services\User())->getNormalUserByNumber($departUser['number']);
+	    $data['user_id'] = $user['id'];
 
         try {
             $res = (new LotteryService())->update($id, $data);
