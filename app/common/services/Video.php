@@ -145,7 +145,6 @@ class Video extends BaseServices
         $list = $this->getLimit();
         $ids = array_column($list, 'vid');
 	
-	
 	    foreach ($videoList['MediaInfoSet'] as $item) {
 		    $insertData = [];
 		    $baseInfo = $item['BasicInfo'];
@@ -165,7 +164,7 @@ class Video extends BaseServices
                 'cover_url' => $baseInfo['CoverUrl'],
                 'upload_time' => $createTime,
             ];
-            $this->add($insertData);
+            $this->syncAdd($insertData);
         }
 
 //        $this->insertAll($insertData);
