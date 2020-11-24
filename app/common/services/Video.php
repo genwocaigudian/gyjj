@@ -144,11 +144,11 @@ class Video extends BaseServices
 
         $list = $this->getLimit();
         $ids = array_column($list, 'vid');
-
-        $insertData = [];
-
-        foreach ($videoList['MediaInfoSet'] as $item) {
-            $baseInfo = $item['BasicInfo'];
+	
+	
+	    foreach ($videoList['MediaInfoSet'] as $item) {
+		    $insertData = [];
+		    $baseInfo = $item['BasicInfo'];
             $createTime = strtotime($baseInfo['CreateTime']);
             $pathInfo = pathinfo($baseInfo['MediaUrl']);
             if (!in_array($pathInfo['extension'], ['mp4'])) {
@@ -157,7 +157,7 @@ class Video extends BaseServices
             if (in_array($baseInfo['Vid'], $ids)) {
                 continue;
             }
-            $insertData[] = [
+            $insertData = [
                 'title' => $baseInfo['Name'],
                 'vid' => $baseInfo['Vid'],
                 'class_id' => $baseInfo['ClassId'],
@@ -165,9 +165,10 @@ class Video extends BaseServices
                 'cover_url' => $baseInfo['CoverUrl'],
                 'upload_time' => $createTime,
             ];
+            $this->add($insertData);
         }
 
-        $this->insertAll($insertData);
+//        $this->insertAll($insertData);
 
         return true;
     }
