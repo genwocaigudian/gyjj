@@ -18,7 +18,7 @@ class Lost extends AdminAuthBase
     {
         $data = [];
         $title = input('param.title', '', 'trim');
-        $time = input('param.time', '', 'trim');
+        $time = input('param.create_time', '', 'trim');
         if (!empty($title)) {
             $data['title'] = $title;
         }
