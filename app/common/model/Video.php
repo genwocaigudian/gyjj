@@ -96,7 +96,7 @@ class Video extends BaseModel
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getLimit($num = 20)
+    public function getLimit($num = 100)
     {
         $order = [
             "upload_time" => "desc"
