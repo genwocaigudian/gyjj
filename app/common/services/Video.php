@@ -132,7 +132,7 @@ class Video extends BaseServices
             $client = new VodClient($cred, "", $clientProfile);
 
             $req = new SearchMediaRequest();
-            $params = ["Limit" => 50, "Offest" => 0, "Categories" => ["Video"]];
+            $params = ["Limit" => 100, "Offest" => 0, "Categories" => ["Video"]];
 //			$params = [];
             $req->fromJsonString(json_encode($params));
             $resp = $client->SearchMedia($req);
