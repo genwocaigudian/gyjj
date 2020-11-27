@@ -132,7 +132,7 @@ class Video extends BaseServices
             $client = new VodClient($cred, "", $clientProfile);
 
             $req = new SearchMediaRequest();
-            $params = ["Limit" => 100, "Offest" => 0, "Categories" => ["Video"]];
+            $params = ["Limit" => 50, "Offest" => 0, "Categories" => ["Video"]];
 //			$params = [];
             $req->fromJsonString(json_encode($params));
             $resp = $client->SearchMedia($req);
@@ -144,9 +144,9 @@ class Video extends BaseServices
 
         $list = $this->getLimit();
         $ids = array_column($list, 'vid');
+        $insertData = [];
 	
 	    foreach ($videoList['MediaInfoSet'] as $item) {
-		    $insertData = [];
 		    $baseInfo = $item['BasicInfo'];
             $createTime = strtotime($baseInfo['CreateTime']);
             $pathInfo = pathinfo($baseInfo['MediaUrl']);

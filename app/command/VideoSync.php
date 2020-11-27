@@ -35,7 +35,7 @@ class VideoSync extends Command
         $task->addFunc(function () {
 //            $date = date('H:i:s');
             $date = date('i');
-            if ($date != "30")
+            if ($date != "00")
             {
                 return;
             }
