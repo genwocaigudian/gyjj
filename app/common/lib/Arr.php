@@ -93,7 +93,7 @@ class Arr
      * @param string $sort  排序类型  SORT_ASC     SORT_DESC
      * @return array 排序后的数组
      */
-    public function arraySort($array, $keys, $sort = SORT_DESC) {
+    public static function arraySort($array, $keys, $sort = SORT_DESC) {
         $keysValue = [];
         foreach ($array as $k => $v) {
             $keysValue[$k] = $v[$keys];
