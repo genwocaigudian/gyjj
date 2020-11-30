@@ -234,6 +234,7 @@ class AdminUser extends AdminBaseServices
             'last_login_time' => time(),
             'last_login_ip' => $data['last_login_ip'],
             'operate_user' => 'admin',
+            'status' => $data['status'],
         ];
 
         try {
