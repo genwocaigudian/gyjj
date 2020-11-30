@@ -45,7 +45,7 @@ class Schedule extends AuthBase
 
         $list = Arr::groupArr($list->toArray(), 'XQJ');
         foreach ($list as $key => &$value) {
-            $value = Arr::arraySort($value, SORT_ASC);
+            $value = Arr::arraySort($value, 'JC', SORT_ASC);
         }
         return Show::success($list);
     }
