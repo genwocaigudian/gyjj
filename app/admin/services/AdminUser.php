@@ -72,7 +72,7 @@ class AdminUser extends AdminBaseServices
     public function getNormalUserById($id)
     {
         $user = $this->model->getAdminUserById($id);
-        if (!$user || $user->status != config('status.mysql.table_normal')) {
+        if (!$user) {
             return [];
         }
         return $user->toArray();
