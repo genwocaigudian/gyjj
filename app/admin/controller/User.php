@@ -17,10 +17,7 @@ class User extends AdminAuthBase
      */
     public function index()
     {
-        $status = input("param.status", 1, "intval");
-        $data = [
-            "status" => $status,
-        ];
+        $data = [];
         try {
             $list = (new AdminUserService())->getPaginateLists($data, 10);
         } catch (\Exception $e) {
@@ -63,7 +60,7 @@ class User extends AdminAuthBase
         }
 
         $data['last_login_ip'] = $this->request->ip();
-        
+
         try {
             $result = (new AdminUserService())->insertData($data);
             if ($data['rulename'] && is_array($data['rulename'])) {
