@@ -21,11 +21,17 @@
         "hyperf/framework": "~2.0.0",
         "hyperf/guzzle": "~2.0.0",
         "hyperf/http-server": "~2.0.0",
-        "hyperf/logger": "~2.0.0",
+        "hyperf/logger": "^2.0",
         "hyperf/memory": "~2.0.0",
         "hyperf/process": "~2.0.0",
-        "hyperf/redis": "~2.0.0",
-        "hyperf/database": "~2.0.0"
+        "hyperf/redis": "^2.0",
+        "hyperf/database": "~2.0.0",
+        "hyperf/model-cache": "^2.0",
+        "hyperf/constants": "^2.0",
+        "hyperf/async-queue": "^2.0",
+        "hyperf/validation": "^2.0",
+        "hyperf/di": "^2.0",
+        "phper666/jwt-auth": "~3.0.0"
     },
     "require-dev": {
         "swoole/ide-helper": "^4.5",
