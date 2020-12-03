@@ -57,7 +57,6 @@ class Wechat extends AdminAuthBase
         $client = new Client();
         $response = $client->get($url);
         $at = json_decode($response->getBody(), true);
-        halt($at);
         $accessToken = $at['access_token'];
 
         $menuUrl = sprintf($this->config['create_menu'], $accessToken);
