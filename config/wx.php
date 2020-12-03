@@ -4,8 +4,8 @@
  * 微信公众号相关配置
  */
 return [
-    'app_id' => 'wxd988b1bd367a300b',         // AppID
-    'app_secret' => 'a5d0b16afe09fe5a0842512de417a3c0',    // AppSecret
+    'app_id' => 'wx1f35328a029b8c68',         // AppID
+    'app_secret' => '6897b9c79cb11d99018805c8860a9725',    // AppSecret
 	
 	//获取code
     'get_code_url' => "https://open.weixin.qq.com/connect/oauth2/authorize?" .
