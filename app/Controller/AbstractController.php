@@ -11,6 +11,7 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
+use App\Common\Http\Response;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
@@ -30,9 +31,14 @@ abstract class AbstractController
      */
     protected $request;
 
+//    /**
+//     * @Inject
+//     * @var ResponseInterface
+//     */
+
     /**
-     * @Inject
-     * @var ResponseInterface
+     * @Inject()
+     * @var Response
      */
     protected $response;
 }

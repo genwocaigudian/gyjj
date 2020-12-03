@@ -13,9 +13,9 @@ use Hyperf\HttpServer\Router\Router;
 
 Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\IndexController@index');
 
-Router::post('/sys/login', 'App\Controller\Admin\UserController@login'); //管理员登录
+Router::post('/admin/login', 'App\Controller\Admin\UserController@login'); //管理员登录
 
-Router::addGroup('/sys/', function () {
+Router::addGroup('/admin/', function () {
 
     Router::get('menu/nav', 'App\Controller\Admin\MenuController@sysMenuNav'); // 登录用户的菜单和权限
     Router::get('menu/list', 'App\Controller\Admin\MenuController@sysMenuList'); // 获取Menu列表
@@ -28,7 +28,7 @@ Router::addGroup('/sys/', function () {
     Router::get('user/info', 'App\Controller\Admin\UserController@getInfoByLoginUserId'); // 登录的用户信息
     Router::get('user/info/{id:\d+}', 'App\Controller\Admin\UserController@getInfoByUserId'); // 获取用户信息
     Router::get('user/list', 'App\Controller\Admin\UserController@sysUserList'); // 管理员用户列表
-    Router::post('user/save', 'App\Controller\Admin\UserController@sysUserSave'); // 保存管理员
+    Router::post('user/save', 'App\Controller\Admin\UserController@userSave'); // 保存管理员
     Router::post('user/update', 'App\Controller\Admin\UserController@sysUserUpdate'); // update管理员
     Router::post('user/delete', 'App\Controller\Admin\UserController@sysUserDelete'); // 删除管理员
     Router::post('user/password', 'App\Controller\Admin\UserController@password'); // 修改密码
@@ -57,5 +57,5 @@ Router::addGroup('/sys/', function () {
     Router::post('logout', 'App\Controller\Admin\UserController@sysLogout'); // 退出登录
 }
 //    ,['middleware' => [App\Middleware\Admin\AdminAuthMiddleware::class]]
-    ,['middleware' => [Phper666\JWTAuth\Middleware\JWTAuthMiddleware::class]]
+//    ,['middleware' => [Phper666\JWTAuth\Middleware\JWTAuthMiddleware::class]]
 );

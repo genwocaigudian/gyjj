@@ -3,7 +3,6 @@
 declare (strict_types=1);
 namespace App\Model;
 
-use Hyperf\Database\Model\SoftDeletes;
 use Hyperf\DbConnection\Model\Model;
 /**
  * @property int $id 
@@ -20,7 +19,6 @@ use Hyperf\DbConnection\Model\Model;
  */
 class AdminUser extends Model
 {
-    use SoftDeletes;
     /**
      * The table associated with the model.
      *
@@ -32,11 +30,13 @@ class AdminUser extends Model
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = ['id', 'username', 'password', 'created_at', 'updated_at'];
     /**
      * The attributes that should be cast to native types.
      *
      * @var array
      */
     protected $casts = ['id' => 'integer', 'status' => 'integer', 'created_at' => 'datetime', 'updated_at' => 'datetime'];
+
+
 }
