@@ -2,6 +2,7 @@
 
 namespace app\admin\services;
 
+use app\common\lib\Show;
 use app\common\lib\Str;
 use app\common\lib\Time;
 use app\admin\model\AdminUser as AdminUserModel;
@@ -34,6 +35,13 @@ class AdminUser extends AdminBaseServices
         $password = $data['password'];
         try {
             $user = $this->model->getAdminUserByUserName($username);
+            if (!$user || $user->password != md5($password.config('admin.password_suffix'))) {
+                throw new Exception('用户名或密码错误');
+            }
+
+            if ($user->status != config('status.mysql.table_normal')) {
+                throw new Exception('账号已停用');
+            }
             $updateData = [
                 'last_login_time' => time(),
                 'last_login_ip' => Request::ip(),
@@ -41,13 +49,7 @@ class AdminUser extends AdminBaseServices
             ];
             $this->model->updateById($user->id, $updateData);
         } catch (\Exception $e) {
-            Log::error('admin/service/login 错误:' . $e->getMessage());
-            throw new Exception('数据库内部异常');
-        }
-        
-        if (!$user || $user->password != md5($password.config('admin.password_suffix'))
-            || $user->status != config('status.mysql.table_normal')) {
-            throw new Exception('用户名或密码错误');
+            throw new Exception($e->getMessage());
         }
 
         $token = Str::getLoginToken($user->id);
@@ -70,7 +72,7 @@ class AdminUser extends AdminBaseServices
     public function getNormalUserById($id)
     {
         $user = $this->model->getAdminUserById($id);
-        if (!$user || $user->status != config('status.mysql.table_normal')) {
+        if (!$user) {
             return [];
         }
         return $user->toArray();
@@ -232,6 +234,7 @@ class AdminUser extends AdminBaseServices
             'last_login_time' => time(),
             'last_login_ip' => $data['last_login_ip'],
             'operate_user' => 'admin',
+            'status' => $data['status'],
         ];
 
         try {

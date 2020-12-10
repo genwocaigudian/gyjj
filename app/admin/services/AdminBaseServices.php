@@ -14,7 +14,9 @@ class AdminBaseServices
      */
     public function add($data)
     {
-        $data['status'] = config("status.mysql.table_normal");
+        if (!isset($data['status'])) {
+            $data['status'] = config("status.mysql.table_normal");
+        }
         try {
             $this->model->save($data);
         } catch (\Exception $e) {
