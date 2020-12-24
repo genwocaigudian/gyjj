@@ -132,6 +132,10 @@ class Token extends ApiBase
             return Show::error('账号不存在');
         }
 
+        if (isset($data['flag'])) {
+            unset($data['flag']);
+        }
+
         $user = (new UserServices())->update($uid, $data);
 
         if (!$user) {

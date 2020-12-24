@@ -21,7 +21,7 @@ class Jsxxb1 extends Model
      */
     public function getByZGH($zgh, $flag)
     {
-        if (!$zgh || $flag) {
+        if (!$zgh || !$flag) {
             return false;
         }
         $res = $this->where(['ZGH' => $zgh, 'LXDH' => $flag])->find();

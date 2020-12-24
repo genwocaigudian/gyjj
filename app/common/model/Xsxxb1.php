@@ -21,7 +21,7 @@ class Xsxxb1 extends Model
      */
     public function getByXH($xh, $flag)
     {
-        if (!$xh || $flag) {
+        if (!$xh || !$flag) {
             return false;
         }
         $res = $this->where(['XH' => $xh, 'SFZH' => $flag])->find();
