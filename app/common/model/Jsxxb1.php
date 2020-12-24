@@ -13,17 +13,18 @@ class Jsxxb1 extends Model
 
     /**
      * @param $zgh
+     * @param $flag
      * @return array|bool|Model|null
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getByZGH($zgh)
+    public function getByZGH($zgh, $flag)
     {
-        if (!$zgh) {
+        if (!$zgh || $flag) {
             return false;
         }
-        $res = $this->where(['ZGH' => $zgh])->find();
+        $res = $this->where(['ZGH' => $zgh, 'LXDH' => $flag])->find();
         return $res;
     }
 }

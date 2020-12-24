@@ -106,10 +106,10 @@ class Token extends ApiBase
 
         switch ($data['type']) {
             case 1:
-                $info = (new JsxxbModel())->getByZGH($data['number']);
+                $info = (new JsxxbModel())->getByZGH($data['number'], $data['flag']);
                 break;
             case 2:
-                $info = (new XsxxbModel())->getByXH($data['number']);
+                $info = (new XsxxbModel())->getByXH($data['number'], $data['flag']);
                 break;
             default:
                 $info = false;
