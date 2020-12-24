@@ -126,6 +126,7 @@ class Token extends ApiBase
 
         $data['username'] = $info->XM??$username;
         $data['identity_card'] = $info->SFZH??'';
+        $data['mobile'] = $info->LXDH??'';
 
         $uid = $this->getUid();
         if (!$uid) {
