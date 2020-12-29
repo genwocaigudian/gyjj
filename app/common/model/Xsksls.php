@@ -24,4 +24,13 @@ class Xsksls extends Model
         $res = $this->where(['ksh' => $ksh])->find();
         return $res;
     }
+	
+	public function getById($id)
+	{
+		if (!$id) {
+			return false;
+		}
+		$res = $this->find($id);
+		return $res;
+	}
 }

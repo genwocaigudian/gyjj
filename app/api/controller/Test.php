@@ -9,23 +9,38 @@ use think\facade\View;
 
 class Test extends ApiBase
 {
-    /**
-     * 获取
-     */
-    public function get()
+    public function index()
     {
         return View::fetch();
-//        $code = input('ksh', '', 'trim');
-//        if (!$code) {
-//            return Show::error('请输入考生号');
-//        }
-//
-//        $info = (new XskslsModel())->get($code);
-//
-//        if(!$info) {
-//            return Show::error('未查到数据, 请重新输入正确的考生号');
-//        }
-//
-//        return Show::success(['res' => $info['fjh']]);
+    }
+    
+    public function check()
+    {
+        if (!$this->request->isPost()) {
+            return Show::error('请求方式错误');
+        }
+        $code = input('username', '', 'trim');
+        if (!$code) {
+            return Show::error('请输入考生号');
+        }
+
+        $info = (new XskslsModel())->get($code);
+
+        if (!$info) {
+            return Show::error('未查到数据, 请重新输入正确的考生号');
+        }
+    
+        return Show::success($info);
+    }
+    
+    public function success()
+    {
+        $id = input('id', 0, 'intval');
+        $info = (new XskslsModel())->getById($id);
+        return View::fetch('success', [
+            'xm' => $info['xm']??"",
+            'ksh' => $info['ksh']??"",
+            'fjh' => $info['fjh']??"",
+        ]);
     }
 }
