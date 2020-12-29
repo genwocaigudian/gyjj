@@ -14,7 +14,7 @@ class Enroll extends AdminAuthBase
     public function index()
     {
         $data = [];
-        $list = (new EnrollService())->getPaginateList($data,10);
+        $list = (new EnrollService())->getPaginateList($data, 10);
         
         return Show::success($list);
     }

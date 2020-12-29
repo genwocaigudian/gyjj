@@ -19,18 +19,18 @@ class Selection extends AuthBase
         $data = [];
         $data['target'] = $this->type;
 //        $data['end_time'] = date('Y-m-d');
-	    $date = date("Y-m-d");
+        $date = date("Y-m-d");
         try {
             $list = (new SelectionServices())->getPaginateList($data, 10);
-	        if ($list['data']) {
-		        foreach ($list['data'] as &$value) {
-			        $isExpired = 0;
-			        if ($value['end_time'] < $date) {
-				        $isExpired = 1;
-			        }
-			        $value['is_expired'] = $isExpired;
-		        }
-	        }
+            if ($list['data']) {
+                foreach ($list['data'] as &$value) {
+                    $isExpired = 0;
+                    if ($value['end_time'] < $date) {
+                        $isExpired = 1;
+                    }
+                    $value['is_expired'] = $isExpired;
+                }
+            }
         } catch (\Exception $e) {
             $list = Arr::getPaginateDefaultData(10);
         }
@@ -49,10 +49,10 @@ class Selection extends AuthBase
         $date = date('Y-m-d');
         $userId = $this->userId;
         try {
-        	$info = (new \app\common\services\Selection())->getNormalById($id);
-        	if ($info['end_time'] < $date) {
-		        return Show::error('此项活动已结束');
-	        }
+            $info = (new \app\common\services\Selection())->getNormalById($id);
+            if ($info['end_time'] < $date) {
+                return Show::error('此项活动已结束');
+            }
             $result = (new SelectionOption())->getPaginateList($id);
             $isSubmit = (new SelectionResult())->isSubmit($userId, $id);
         } catch (\Exception $e) {

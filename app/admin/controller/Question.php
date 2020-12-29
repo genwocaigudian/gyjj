@@ -22,10 +22,10 @@ class Question extends AdminAuthBase
         $title = input("param.title", "", "trim");
         $status = input("param.status", "", "trim");
 
-        if(!empty($title)) {
+        if (!empty($title)) {
             $data['title'] = $title;
         }
-        if(!empty($status)) {
+        if (!empty($status)) {
             $data['status'] = $status;
         }
         $list = (new QuestionService())->getPaginateList($data, 10);
@@ -123,36 +123,36 @@ class Question extends AdminAuthBase
 
         return Show::success();
     }
-	
-	/**
-	 * 图表导出
-	 * @return Json
-	 */
-	public function estats()
-	{
-		$data = input('post.');
-		
-		$validate = new QuestionValidate();
-		if (!$validate->scene('export')->check($data)) {
-			return Show::error($validate->getError());
-		}
-		
-		$qid = $data['question_id'];
-		
-		// 查询要导出的数据
-		$result = (new QresultService())->getGroupOptionCount($qid);
-		
-		if (!$result) {
-			return Show::error('没有数据可导出');
-		}
-		
-		$excel = new ExcelLib();
-		$download_url = $excel->barSheet($result);
-		
-		if($download_url){
-			return Show::success(['url' => $download_url]);
-		}
-		
-		return Show::error();
-	}
+    
+    /**
+     * 图表导出
+     * @return Json
+     */
+    public function estats()
+    {
+        $data = input('post.');
+        
+        $validate = new QuestionValidate();
+        if (!$validate->scene('export')->check($data)) {
+            return Show::error($validate->getError());
+        }
+        
+        $qid = $data['question_id'];
+        
+        // 查询要导出的数据
+        $result = (new QresultService())->getGroupOptionCount($qid);
+        
+        if (!$result) {
+            return Show::error('没有数据可导出');
+        }
+        
+        $excel = new ExcelLib();
+        $download_url = $excel->barSheet($result);
+        
+        if ($download_url) {
+            return Show::success(['url' => $download_url]);
+        }
+        
+        return Show::error();
+    }
 }

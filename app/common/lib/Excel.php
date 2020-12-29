@@ -492,7 +492,7 @@ class Excel
         $rootPath = app()->getRootPath();
         $savePath = '/upload' . '/exportExcel/' . $fileName . '.' . strtolower($format);
         $a = $rootPath . 'public' . $savePath;
-	    $writer->save($a);
+        $writer->save($a);
         /* 释放内存 */
         $spreadsheet->disconnectWorksheets();
         unset($spreadsheet);

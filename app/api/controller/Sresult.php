@@ -41,14 +41,14 @@ class Sresult extends AuthBase
         }
 
         $insertData = [];
-	    foreach ($data['option_id'] as $key => $datum) {
-	        $temp = [
-	            'user_id' => $this->userId,
-	            'selection_id' => $data['selection_id'],
-	            'option_id' => $datum,
+        foreach ($data['option_id'] as $key => $datum) {
+            $temp = [
+                'user_id' => $this->userId,
+                'selection_id' => $data['selection_id'],
+                'option_id' => $datum,
             ];
-	        array_push($insertData, $temp);
-	    }
+            array_push($insertData, $temp);
+        }
 
         try {
             $result = (new SelectionResult())->insertAll($insertData);

@@ -15,21 +15,21 @@ class Problem extends AuthBase
      */
     public function index()
     {
-    	$data = input('param.');
-	    $validate = new ProblemValidate();
-	    if (!$validate->scene('index')->check($data)) {
-		    return Show::error($validate->getError());
-	    }
+        $data = input('param.');
+        $validate = new ProblemValidate();
+        if (!$validate->scene('index')->check($data)) {
+            return Show::error($validate->getError());
+        }
 
-	    $id = $data['question_id'];
+        $id = $data['question_id'];
         $isSubmit = 0;
         $date = date("Y-m-d");
         $userId = $this->userId;
         try {
-        	$info = (new \app\common\services\Question())->getNormalById($id);
-        	if ($info['end_time'] < $date) {
-        		return Show::error('此项活动已结束');
-	        }
+            $info = (new \app\common\services\Question())->getNormalById($id);
+            if ($info['end_time'] < $date) {
+                return Show::error('此项活动已结束');
+            }
             $list = (new ProblemServices())->getNormalListWithOption($id);
             $isSubmit = (new QuestionResult())->isSubmit($id, $userId);
         } catch (\Exception $e) {

@@ -21,10 +21,10 @@ class Proctor extends AdminAuthBase
         $number = input("param.number", "", "trim");
         $name = input("param.name", "", "trim");
 
-        if(!empty($number)) {
+        if (!empty($number)) {
             $data['number'] = $number;
         }
-        if(!empty($name)) {
+        if (!empty($name)) {
             $data['name'] = $name;
         }
         $list = (new ProctorService())->getPaginateList($data, 10);
@@ -155,8 +155,8 @@ class Proctor extends AdminAuthBase
             }
 
             //格式化文档日期
-            $arr = date_parse_from_format('m月d日',$datum['E']);
-            $formatDate = mktime(0,0,0, $arr['month'], $arr['day'], date('Y', time()));
+            $arr = date_parse_from_format('m月d日', $datum['E']);
+            $formatDate = mktime(0, 0, 0, $arr['month'], $arr['day'], date('Y', time()));
             $temp['format_date'] = date('Y-m-d', $formatDate);
             array_push($insertData, $temp);
         }

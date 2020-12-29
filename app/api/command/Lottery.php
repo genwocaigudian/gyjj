@@ -1,5 +1,5 @@
 <?php
-declare (strict_types = 1);
+declare(strict_types = 1);
 
 namespace app\api\command;
 
@@ -21,11 +21,11 @@ class Lottery extends Command
     protected function execute(Input $input, Output $output)
     {
         $service = new LotteryService();
-    	while (true) {
+        while (true) {
             $service->lotteryCommand();
-    		sleep(1);
-	    }
-    	// 指令输出
-    	$output->writeln('lottery command end');
+            sleep(1);
+        }
+        // 指令输出
+        $output->writeln('lottery command end');
     }
 }

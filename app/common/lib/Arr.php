@@ -93,7 +93,8 @@ class Arr
      * @param string $sort  排序类型  SORT_ASC     SORT_DESC
      * @return array 排序后的数组
      */
-    public static function arraySort($array, $keys, $sort = SORT_DESC) {
+    public static function arraySort($array, $keys, $sort = SORT_DESC)
+    {
         $keysValue = [];
         foreach ($array as $k => $v) {
             $keysValue[$k] = $v[$keys];
@@ -102,20 +103,17 @@ class Arr
         return $array;
     }
 
-    public static function uniqueByKey($arr, $key){
+    public static function uniqueByKey($arr, $key)
+    {
         $tmp_arr = array();
-        foreach($arr as $k => $v)
-        {
-            if(in_array($v[$key], $tmp_arr))   //搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
-            {
+        foreach ($arr as $k => $v) {
+            if (in_array($v[$key], $tmp_arr)) {   //搜索$v[$key]是否在$tmp_arr数组中存在，若存在返回true
                 unset($arr[$k]); //销毁一个变量  如果$tmp_arr中已存在相同的值就删除该值
-            }
-            else {
+            } else {
                 $tmp_arr[$k] = $v[$key];  //将不同的值放在该数组中保存
             }
         }
         //ksort($arr); //ksort函数对数组进行排序(保留原键值key)  sort为不保留key值
         return $arr;
     }
-
 }

@@ -24,7 +24,7 @@ class User extends AuthBase
                 'type' => $this->type,
                 'number' => $this->number,
                 'username' => $user['username'],
-	            'permission' => $this->permission
+                'permission' => $this->permission
             ];
         }
         return Show::success($res);

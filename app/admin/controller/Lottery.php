@@ -109,12 +109,12 @@ class Lottery extends AdminAuthBase
         $data = input('post.');
         
         if (!$data['user_id']) {
-        	return Show::error('请设置抽奖人');
+            return Show::error('请设置抽奖人');
         }
-	
-	    $departUser = (new DepartmentUser())->getNormalById($data['user_id']);
-	    $user = (new \app\common\services\User())->getNormalUserByNumber($departUser['number']);
-	    $data['user_id'] = $user['id'];
+    
+        $departUser = (new DepartmentUser())->getNormalById($data['user_id']);
+        $user = (new \app\common\services\User())->getNormalUserByNumber($departUser['number']);
+        $data['user_id'] = $user['id'];
 
         try {
             $res = (new LotteryService())->update($id, $data);
@@ -183,7 +183,7 @@ class Lottery extends AdminAuthBase
 
         $data = [];
 
-        foreach ($winList as $k => $v){
+        foreach ($winList as $k => $v) {
             $data[$k]['title']=$lotteryInfo['title'];
             $data[$k]['username']=$userRes[$v['user_id']]['username']??'';
             $data[$k]['number']=$userRes[$v['user_id']]['number']??'';
@@ -197,9 +197,9 @@ class Lottery extends AdminAuthBase
             ['column' => 'number', 'name' => '职工号', 'width' => 15],
             ['column' => 'rank_name', 'name' => '奖项', 'width' => 15],
         ];
-        $download_url=(new ExcelLib())->exportSheelExcel($data,$header,$filename);//获取下载链接
+        $download_url=(new ExcelLib())->exportSheelExcel($data, $header, $filename);//获取下载链接
 
-        if($download_url){
+        if ($download_url) {
             return Show::success(['url' => $download_url]);
         }
 

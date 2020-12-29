@@ -48,23 +48,23 @@ class Rcate extends AdminAuthBase
         
         return Show::success($result);
     }
-	
-	/**
-	 * 详情
-	 * @param $id
-	 * @return Json
-	 */
-	public function read($id)
-	{
-		try {
-			$result = (new CateService())->getNormalCateById($id);
-		} catch (\Exception $e) {
-			Log::error('admin/category/read 错误:' . $e->getMessage());
-			return Show::error($e->getMessage(), $e->getCode());
-		}
-		
-		return Show::success($result);
-	}
+    
+    /**
+     * 详情
+     * @param $id
+     * @return Json
+     */
+    public function read($id)
+    {
+        try {
+            $result = (new CateService())->getNormalCateById($id);
+        } catch (\Exception $e) {
+            Log::error('admin/category/read 错误:' . $e->getMessage());
+            return Show::error($e->getMessage(), $e->getCode());
+        }
+        
+        return Show::success($result);
+    }
     
     /**
      * 更新数据
@@ -76,8 +76,8 @@ class Rcate extends AdminAuthBase
         if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
-	
-	    $id = input("param.id", 0, "intval");
+    
+        $id = input("param.id", 0, "intval");
         $data = input('post.');
         
         $validate = new CateValidate();
@@ -102,8 +102,8 @@ class Rcate extends AdminAuthBase
         if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
-	
-	    $id = input("param.id");
+    
+        $id = input("param.id");
         
         try {
             $res = (new CateService())->delete($id);

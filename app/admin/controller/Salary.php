@@ -37,7 +37,7 @@ class Salary extends AdminAuthBase
         if (!empty($number)) {
             $data['number'] = $number;
         }
-        if(!empty($time)) {
+        if (!empty($time)) {
             $time = explode(" - ", $time);
             $data['start_month'] = $time[0];
             $data['end_month'] = $time[1];

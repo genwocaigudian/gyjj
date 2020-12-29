@@ -29,7 +29,8 @@
         "phpoffice/phpspreadsheet": "^1.14",
         "misuoka/think-oracle": "^2.0",
         "easy-task/easy-task": "^2.4",
-        "tencentcloud/tencentcloud-sdk-php": "^3.0"
+        "tencentcloud/tencentcloud-sdk-php": "^3.0",
+        "topthink/think-view": "^1.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.2",

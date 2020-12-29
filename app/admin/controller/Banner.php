@@ -10,16 +10,16 @@ use think\response\Json;
 
 class Banner extends AdminAuthBase
 {
-	public function index()
-	{
-		try {
-			$res = (new BannerService())->getLists(10);
-		} catch (\Exception $e) {
+    public function index()
+    {
+        try {
+            $res = (new BannerService())->getLists(10);
+        } catch (\Exception $e) {
             $res = Arr::getPaginateDefaultData(10);
-		}
-		
-		return Show::success($res);
-	}
+        }
+        
+        return Show::success($res);
+    }
     
     /**
      * 新增
@@ -46,24 +46,24 @@ class Banner extends AdminAuthBase
         
         return Show::success($result);
     }
-	
-	/**
-	 * 详情
-	 * @param $id
-	 * @return Json
-	 */
-	public function read()
-	{
-		$id = input('param.id', 0, 'intval');
-		try {
-			$result = (new BannerService())->getNormalBannerById($id);
-		} catch (\Exception $e) {
-			Log::error('admin/banner/read 错误:' . $e->getMessage());
-			return Show::error($e->getMessage(), $e->getCode());
-		}
-		
-		return Show::success($result);
-	}
+    
+    /**
+     * 详情
+     * @param $id
+     * @return Json
+     */
+    public function read()
+    {
+        $id = input('param.id', 0, 'intval');
+        try {
+            $result = (new BannerService())->getNormalBannerById($id);
+        } catch (\Exception $e) {
+            Log::error('admin/banner/read 错误:' . $e->getMessage());
+            return Show::error($e->getMessage(), $e->getCode());
+        }
+        
+        return Show::success($result);
+    }
     
     /**
      * 更新数据
@@ -75,8 +75,8 @@ class Banner extends AdminAuthBase
         if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
-	
-	    $id = input("param.id", 0, "intval");
+    
+        $id = input("param.id", 0, "intval");
         $data = input('post.');
         
         $validate = new BannerValidate();
@@ -101,8 +101,8 @@ class Banner extends AdminAuthBase
         if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
-	
-	    $id = input("param.id", 0, "intval");
+    
+        $id = input("param.id", 0, "intval");
         
         try {
             $res = (new BannerService())->delete($id);

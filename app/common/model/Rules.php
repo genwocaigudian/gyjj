@@ -45,7 +45,7 @@ class Rules extends BaseModel
         ];
         
         if (isset($data['uid'])) {
-        	$where['v0'] = $data['uid'];
+            $where['v0'] = $data['uid'];
         }
 
         $result = $this->where($where)->field($field)->select();

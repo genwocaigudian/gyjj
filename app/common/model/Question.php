@@ -166,7 +166,8 @@ class Question extends BaseModel
         return $result;
     }
 
-    public function incCount($id, $num) {
+    public function incCount($id, $num)
+    {
         return $this->where("id", "=", $id)
             ->inc("attend_count", $num)
             ->update();

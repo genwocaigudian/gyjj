@@ -18,15 +18,15 @@ class Selection extends AdminAuthBase
      */
     public function index()
     {
-	    $data = [];
-	    $title = input('param.title', '', 'trim');
-	    $status = input('param.status', '', 'trim');
-	    if (!empty($title)) {
-		    $data['title'] = $title;
-	    }
-	    if (!empty($status)) {
-		    $data['status'] = $status;
-	    }
+        $data = [];
+        $title = input('param.title', '', 'trim');
+        $status = input('param.status', '', 'trim');
+        if (!empty($title)) {
+            $data['title'] = $title;
+        }
+        if (!empty($status)) {
+            $data['status'] = $status;
+        }
         $list = (new SelectionService())->getPaginateList($data, 10);
         
         return Show::success($list);
@@ -122,36 +122,36 @@ class Selection extends AdminAuthBase
 
         return Show::success();
     }
-	
-	/**
-	 * 图表导出
-	 * @return Json
-	 */
-	public function estats()
-	{
-		$data = input('post.');
-		
-		$validate = new SelectionValidate();
-		if (!$validate->scene('export')->check($data)) {
-			return Show::error($validate->getError());
-		}
-		
-		$sid = $data['selection_id'];
-		
-		// 查询要导出的数据
-		$result = (new SresultService())->getGroupOptionCount($sid);
-		
-		if (!$result) {
-			return Show::error('没有数据可导出');
-		}
-		
-		$excel = new ExcelLib();
-		$download_url = $excel->barSheet($result);
-		
-		if($download_url){
-			return Show::success(['url' => $download_url]);
-		}
-		
-		return Show::error();
-	}
+    
+    /**
+     * 图表导出
+     * @return Json
+     */
+    public function estats()
+    {
+        $data = input('post.');
+        
+        $validate = new SelectionValidate();
+        if (!$validate->scene('export')->check($data)) {
+            return Show::error($validate->getError());
+        }
+        
+        $sid = $data['selection_id'];
+        
+        // 查询要导出的数据
+        $result = (new SresultService())->getGroupOptionCount($sid);
+        
+        if (!$result) {
+            return Show::error('没有数据可导出');
+        }
+        
+        $excel = new ExcelLib();
+        $download_url = $excel->barSheet($result);
+        
+        if ($download_url) {
+            return Show::success(['url' => $download_url]);
+        }
+        
+        return Show::error();
+    }
 }

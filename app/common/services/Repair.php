@@ -44,10 +44,10 @@ class Repair extends BaseServices
 
         try {
             $id = $this->add($data);
-	        //发送微信消息通知
-	        if ($noticeOpenId) {
-		        (new Wechat())->Template($noticeOpenId, 'approver');
-	        }
+            //发送微信消息通知
+            if ($noticeOpenId) {
+                (new Wechat())->Template($noticeOpenId, 'approver');
+            }
         } catch (\Exception $e) {
             throw new Exception($e->getMessage());
         }
@@ -95,25 +95,25 @@ class Repair extends BaseServices
         }
         return $result;
     }
-	
-	/**
-	 * @param $data
-	 * @return array
-	 */
-	public function getExportList($data)
-	{
-		$likeKeys = [];
-		if (!empty($data)) {
-			$likeKeys = array_keys($data);
-		}
-		try {
-			$list = $this->model->getExportList($likeKeys, $data);
-			$result = $list->toArray();
-		} catch (\Exception $e) {
-			$result = [];
-		}
-		return $result;
-	}
+    
+    /**
+     * @param $data
+     * @return array
+     */
+    public function getExportList($data)
+    {
+        $likeKeys = [];
+        if (!empty($data)) {
+            $likeKeys = array_keys($data);
+        }
+        try {
+            $list = $this->model->getExportList($likeKeys, $data);
+            $result = $list->toArray();
+        } catch (\Exception $e) {
+            $result = [];
+        }
+        return $result;
+    }
 
     /**
      * @return array
@@ -148,22 +148,22 @@ class Repair extends BaseServices
             $list = $this->model->getPaginateList($likeKeys, $data, $field = '*', $num);
             $result = $list->toArray();
             if ($result['data']) {
-            	$day = 0;
+                $day = 0;
                 $uids = array_unique(array_column($result['data'], 'user_id'));
                 $aids = array_unique(array_column($result['data'], 'approver_id'));
-	            $rids = array_unique(array_column($result['data'], 'repare_id'));
-	            $cateIds = array_unique(array_column($result['data'], 'repair_cate_id'));
-	            $uids = array_unique(array_merge($uids, $aids, $rids));
-	            if ($uids) {
+                $rids = array_unique(array_column($result['data'], 'repare_id'));
+                $cateIds = array_unique(array_column($result['data'], 'repair_cate_id'));
+                $uids = array_unique(array_merge($uids, $aids, $rids));
+                if ($uids) {
                     $users = (new User())->getUserByIds($uids);
                     $userNames = array_column($users, 'username', 'id');
                 }
-	            if ($cateIds) {
-		            $cates = (new RepairCate())->getNormalByIds($cateIds);
-		            $cateNames = array_column($cates, 'name', 'id');
-	            }
+                if ($cateIds) {
+                    $cates = (new RepairCate())->getNormalByIds($cateIds);
+                    $cateNames = array_column($cates, 'name', 'id');
+                }
                 foreach ($result['data'] as &$datum) {
-                	$day = floor((strtotime($datum['update_time'])-strtotime($datum['create_time']))/86400);
+                    $day = floor((strtotime($datum['update_time'])-strtotime($datum['create_time']))/86400);
                     $datum['username'] = $userNames[$datum['user_id']]??'';
                     $datum['approvername'] = $userNames[$datum['approver_id']]??'';
                     $datum['reparename'] = $userNames[$datum['repare_id']]??'';
@@ -196,16 +196,16 @@ class Repair extends BaseServices
         }
         return $this->model->updateById($id, $data);
     }
-	
-	/**
-	 * @param $id
-	 * @return array
-	 * @throws DataNotFoundException
-	 * @throws DbException
-	 * @throws ModelNotFoundException
-	 */
-	public function getNormalById($id)
-	{
+    
+    /**
+     * @param $id
+     * @return array
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getNormalById($id)
+    {
         $res = $this->model->getById($id);
         if (!$res) {
             return [];
@@ -213,7 +213,7 @@ class Repair extends BaseServices
         $info = $res->toArray();
         $info['img_url'] = json_decode($res['img_url']);
         return $info;
-	}
+    }
 
     /**
      * @param $id

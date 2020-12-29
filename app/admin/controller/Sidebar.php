@@ -13,15 +13,15 @@ class Sidebar extends AdminAuthBase
      */
     public function index()
     {
-    	$list = config('sidebar.list');
-    	foreach ($list as $key => $item) {
+        $list = config('sidebar.list');
+        foreach ($list as $key => $item) {
 //    		halt($this->userId, $item['value'], Enforcer::hasRoleForUser($this->userId, $item['value']));
-    		$bool = Enforcer::hasRoleForUser($this->userId, $item['value']);
-    		if (!$bool) {
-    			unset($list[$key]);
-		    }
-	    }
-    	$list = array_values($list);
+            $bool = Enforcer::hasRoleForUser($this->userId, $item['value']);
+            if (!$bool) {
+                unset($list[$key]);
+            }
+        }
+        $list = array_values($list);
         return Show::success($list);
     }
 }

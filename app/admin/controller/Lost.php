@@ -22,10 +22,10 @@ class Lost extends AdminAuthBase
         if (!empty($title)) {
             $data['title'] = $title;
         }
-        if(!empty($time)) {
+        if (!empty($time)) {
             $data['create_time'] = explode(" - ", $time);
         }
-        $list = (new LostService())->getPaginateList($data,10);
+        $list = (new LostService())->getPaginateList($data, 10);
         
         return Show::success($list);
     }

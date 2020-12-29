@@ -17,8 +17,8 @@ class Permission extends AdminAuthBase
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-	public function index()
-	{
+    public function index()
+    {
         $data = [
             'type' => 'p',
             'uid' => input('param.uid', 0, 'intval'),
@@ -30,7 +30,7 @@ class Permission extends AdminAuthBase
         $list = (new RuleService())->getList($data, $field);
 
         return Show::success($list);
-	}
+    }
     
     /**
      * 新增权限
@@ -53,27 +53,27 @@ class Permission extends AdminAuthBase
         Enforcer::addPermissionForUser($admin['username'], '微主页', $data['name'], $data['url']);
         return Show::success();
     }
-	
-	/**
-	 * 详情
-	 * @return Json
-	 */
-	public function read()
-	{
+    
+    /**
+     * 详情
+     * @return Json
+     */
+    public function read()
+    {
         $data = input('param.');
 
         $validate = new PermissionValidate();
         if (!$validate->scene('read')->check($data)) {
             return Show::error($validate->getError());
         }
-		try {
-			$result = (new RuleService())->getNormalById($data['id']);
-		} catch (\Exception $e) {
-			return Show::error($e->getMessage());
-		}
-		
-		return Show::success($result);
-	}
+        try {
+            $result = (new RuleService())->getNormalById($data['id']);
+        } catch (\Exception $e) {
+            return Show::error($e->getMessage());
+        }
+        
+        return Show::success($result);
+    }
 
     /**
      * 更新数据
@@ -106,8 +106,8 @@ class Permission extends AdminAuthBase
         if (!$this->request->isPost()) {
             return Show::error('非法请求');
         }
-	
-	    $id = input("param.id", 0, "intval");
+    
+        $id = input("param.id", 0, "intval");
         
         try {
             $res = (new RuleService())->delete($id);

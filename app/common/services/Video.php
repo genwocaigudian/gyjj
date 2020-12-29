@@ -133,7 +133,7 @@ class Video extends BaseServices
 
             $req = new SearchMediaRequest();
             $params = ["Limit" => 50, "Offest" => 0, "Categories" => ["Video"]];
-//			$params = [];
+            //			$params = [];
             $req->fromJsonString(json_encode($params));
             $resp = $client->SearchMedia($req);
 
@@ -145,9 +145,9 @@ class Video extends BaseServices
         $list = $this->getLimit();
         $ids = array_column($list, 'vid');
         $insertData = [];
-	
-	    foreach ($videoList['MediaInfoSet'] as $item) {
-		    $baseInfo = $item['BasicInfo'];
+    
+        foreach ($videoList['MediaInfoSet'] as $item) {
+            $baseInfo = $item['BasicInfo'];
             $createTime = strtotime($baseInfo['CreateTime']);
             $pathInfo = pathinfo($baseInfo['MediaUrl']);
             if (!in_array($pathInfo['extension'], ['mp4'])) {

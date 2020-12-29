@@ -174,7 +174,8 @@ class Category extends BaseModel
      * @param $condition
      * @return mixed
      */
-    public function getChildCountInPids($condition) {
+    public function getChildCountInPids($condition)
+    {
         $where[] = ["pid", "in", $condition['pid']];
         $res = $this->where($where)
             ->field(["pid", "count(*) as count"])
@@ -189,7 +190,8 @@ class Category extends BaseModel
      * @param $condition
      * @return mixed
      */
-    public function getChildListInPids($condition) {
+    public function getChildListInPids($condition)
+    {
         $where[] = ["pid", "in", $condition['pid']];
         $res = $this->where($where)
             ->field(["id", "pid", "name"])

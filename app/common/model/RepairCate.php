@@ -41,19 +41,19 @@ class RepairCate extends BaseModel
         $res = $this->find($id);
         return $res;
     }
-	
-	/**
-	 * @param $id
-	 * @return array|bool|\think\Model|null
-	 * @throws DataNotFoundException
-	 * @throws DbException
-	 * @throws ModelNotFoundException
-	 */
-	public function getByIds($ids)
-	{
-		$res = $this->whereIn('id', $ids)->select()->toArray();
-		return $res;
-	}
+    
+    /**
+     * @param $id
+     * @return array|bool|\think\Model|null
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getByIds($ids)
+    {
+        $res = $this->whereIn('id', $ids)->select()->toArray();
+        return $res;
+    }
 
     /**
      * @param $where
@@ -78,7 +78,8 @@ class RepairCate extends BaseModel
      * @param $condition
      * @return mixed
      */
-    public function getChildListInPids($condition) {
+    public function getChildListInPids($condition)
+    {
         $where[] = ["pid", "in", $condition['pid']];
         $res = $this->where($where)
             ->field(["id", "pid", "name"])

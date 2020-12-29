@@ -107,39 +107,39 @@ class Selection extends BaseModel
 //        echo $res->getLastSql();exit;
         return $result;
     }
-	
-	/**
-	 * title查询条件表达式
-	 * 调用withSearch方法时触发
-	 * @param $query
-	 * @param $value
-	 */
-	public function searchTitleAttr($query, $value)
-	{
-		$query->where('title', 'like', '%' . $value . '%');
-	}
-	
-	/**
-	 * target查询条件表达式
-	 * 调用withSearch方法时触发
-	 * @param $query
-	 * @param $value
-	 */
-	public function searchTargetAttr($query, $value)
-	{
-		$query->where('target', 'in', [0, $value]);
-	}
-	
-	/**
-	 * status查询条件表达式
-	 * 调用withSearch方法时触发
-	 * @param $query
-	 * @param $value
-	 */
-	public function searchStatusAttr($query, $value)
-	{
-		$query->where('status', '=', $value);
-	}
+    
+    /**
+     * title查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchTitleAttr($query, $value)
+    {
+        $query->where('title', 'like', '%' . $value . '%');
+    }
+    
+    /**
+     * target查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchTargetAttr($query, $value)
+    {
+        $query->where('target', 'in', [0, $value]);
+    }
+    
+    /**
+     * status查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchStatusAttr($query, $value)
+    {
+        $query->where('status', '=', $value);
+    }
 
     /**
      * status查询条件表达式
@@ -177,7 +177,8 @@ class Selection extends BaseModel
         return $result;
     }
 
-    public function incCount($id, $num) {
+    public function incCount($id, $num)
+    {
         return $this->where("id", "=", $id)
             ->inc("attend_count", $num)
             ->update();

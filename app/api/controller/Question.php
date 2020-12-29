@@ -18,18 +18,18 @@ class Question extends AuthBase
     {
         $data = [];
 //        $data['end_time'] = date('Y-m-d');
-	    $date = date("Y-m-d");
+        $date = date("Y-m-d");
         try {
             $list = (new QuestionServices())->getPaginateList($data, 10);
-	        if ($list['data']) {
-		        foreach ($list['data'] as &$value) {
-			        $isExpired = 0;
-			        if ($value['end_time'] < $date) {
-				        $isExpired = 1;
-			        }
-			        $value['is_expired'] = $isExpired;
-		        }
-	        }
+            if ($list['data']) {
+                foreach ($list['data'] as &$value) {
+                    $isExpired = 0;
+                    if ($value['end_time'] < $date) {
+                        $isExpired = 1;
+                    }
+                    $value['is_expired'] = $isExpired;
+                }
+            }
         } catch (\Exception $e) {
             $list = Arr::getPaginateDefaultData(10);
         }

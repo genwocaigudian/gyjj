@@ -11,20 +11,20 @@ use think\model\concern\SoftDelete;
 
 class Salary extends BaseModel
 {
-	use SoftDelete;
-	protected $deleteTime = 'delete_time';
-	protected $dateFormat = 'Y-m-d';
-	
-	protected $type = [
-		'start_time'  =>  'timestamp',
-		'end_time'  =>  'timestamp'
-	];
-	
-	protected $hidden = [
-		'create_time',
-		'update_time',
-		'delete_time',
-	];
+    use SoftDelete;
+    protected $deleteTime = 'delete_time';
+    protected $dateFormat = 'Y-m-d';
+    
+    protected $type = [
+        'start_time'  =>  'timestamp',
+        'end_time'  =>  'timestamp'
+    ];
+    
+    protected $hidden = [
+        'create_time',
+        'update_time',
+        'delete_time',
+    ];
     /**
      * @param $id
      * @return array|bool|\think\Model|null
@@ -96,11 +96,13 @@ class Salary extends BaseModel
         $query->where('username', 'like', '%' . $value . '%');
     }
 
-    public function searchStartMonthAttr($query, $value) {
+    public function searchStartMonthAttr($query, $value)
+    {
         $query->where('month', '>=', $value);
     }
 
-    public function searchEndMonthAttr($query, $value) {
+    public function searchEndMonthAttr($query, $value)
+    {
         $query->where('month', '<=', $value);
     }
 
@@ -131,27 +133,27 @@ class Salary extends BaseModel
 //        echo $this->getLastSql();exit;
         return $result;
     }
-	
-	/**
-	 * @param array $data
-	 * @return Collection
-	 * @throws DataNotFoundException
-	 * @throws DbException
-	 * @throws ModelNotFoundException
-	 */
-	public function getDateGroup($data = [])
-	{
-		$field = 'month';
-		$order = [
-			'month' => 'desc'
-		];
-		
-		$result = $this->where('number', '=', $data['number'])
-			->field($field)
-			->order($order)
-			->group($field)
-			->select();
+    
+    /**
+     * @param array $data
+     * @return Collection
+     * @throws DataNotFoundException
+     * @throws DbException
+     * @throws ModelNotFoundException
+     */
+    public function getDateGroup($data = [])
+    {
+        $field = 'month';
+        $order = [
+            'month' => 'desc'
+        ];
+        
+        $result = $this->where('number', '=', $data['number'])
+            ->field($field)
+            ->order($order)
+            ->group($field)
+            ->select();
 //        echo $this->getLastSql();exit;
-		return $result;
-	}
+        return $result;
+    }
 }

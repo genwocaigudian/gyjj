@@ -38,7 +38,7 @@ class Lost extends AuthBase
     {
         $data = [];
         $data['uid'] = $this->userId;
-        $list = (new LostServices())->getPaginateList($data,10);
+        $list = (new LostServices())->getPaginateList($data, 10);
 
         return Show::success($list);
     }

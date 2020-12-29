@@ -10,7 +10,8 @@ class Key
      * @param $lotteryId
      * @return string
      */
-    public static function LotteryNumIncrKey($lotteryId) {
+    public static function LotteryNumIncrKey($lotteryId)
+    {
         return config('rediskey.lottery_incr_by_id') . $lotteryId;
     }
 
@@ -19,7 +20,8 @@ class Key
      * @param $lotteryId
      * @return string
      */
-    public static function LotteryKey($lotteryId) {
+    public static function LotteryKey($lotteryId)
+    {
         return config('rediskey.lottery_by_id') . $lotteryId;
     }
 
@@ -27,7 +29,8 @@ class Key
      * 后台查看权限密码 key
      * @return string
      */
-    public static function SalaryPassWordKey() {
+    public static function SalaryPassWordKey()
+    {
         return config('rediskey.salary_password');
     }
 }

@@ -1,5 +1,5 @@
 <?php
-declare (strict_types = 1);
+declare(strict_types = 1);
 
 namespace app\api\command;
 
@@ -19,12 +19,12 @@ class Repair extends Command
 
     protected function execute(Input $input, Output $output)
     {
-    	$repairService = new RepairService();
-    	while (true) {
-    		$repairService->testCommond();
-    		sleep(1);
-	    }
-    	// 指令输出
-    	$output->writeln('repair123');
+        $repairService = new RepairService();
+        while (true) {
+            $repairService->testCommond();
+            sleep(1);
+        }
+        // 指令输出
+        $output->writeln('repair123');
     }
 }

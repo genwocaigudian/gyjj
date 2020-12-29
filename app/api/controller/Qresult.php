@@ -42,21 +42,21 @@ class Qresult extends AuthBase
 //            return Show::error($validate->getError());
 //        }
         $qData = [];
-	    foreach ($data['option_res'] as $key => $datum) {
-	        foreach ($datum as $k => $v) {
-	            $temp = [
-	                'question_id' => $questionId,
-	                'problem_id' => $key,
-	                'option_id' => $v,
+        foreach ($data['option_res'] as $key => $datum) {
+            foreach ($datum as $k => $v) {
+                $temp = [
+                    'question_id' => $questionId,
+                    'problem_id' => $key,
+                    'option_id' => $v,
                     'user_id' => $this->userId
                 ];
-	            array_push($qData, $temp);
+                array_push($qData, $temp);
             }
-	    }
+        }
 
         $suggestData = [
-	        'question_id' => $questionId,
-	        'content' => $data['content'],
+            'question_id' => $questionId,
+            'content' => $data['content'],
         ];
 
         try {

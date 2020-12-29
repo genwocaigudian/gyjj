@@ -19,10 +19,10 @@ class News extends AdminAuthBase
         $title = input("param.title", "", "trim");
         $cateId = input("param.cate_id", "0", "intval");
 
-        if(!empty($title)) {
+        if (!empty($title)) {
             $data['title'] = $title;
         }
-        if(!empty($cateId)) {
+        if (!empty($cateId)) {
             $data['cate_id'] = $cateId;
         }
         try {
@@ -43,10 +43,10 @@ class News extends AdminAuthBase
         $title = input("param.title", "", "trim");
         $cateId = input("param.cate_id", "0", "intval");
 
-        if(!empty($title)) {
+        if (!empty($title)) {
             $data['title'] = $title;
         }
-        if(!empty($cateId)) {
+        if (!empty($cateId)) {
             $data['cate_id'] = $cateId;
         }
         try {
@@ -107,7 +107,7 @@ class News extends AdminAuthBase
         }
         
         if (!isset($data['cover_url']) || !$data['cover_url']) {
-        	$data['cover_url'] = [];
+            $data['cover_url'] = [];
         }
 
         $data['user_id'] = $this->userId;
@@ -118,7 +118,7 @@ class News extends AdminAuthBase
         $data['pub_date'] = time();
         
         if ($data['desc']) {
-        	$data['content'] = $data['desc']??$data['title'];
+            $data['content'] = $data['desc']??$data['title'];
         }
 
         try {
@@ -163,7 +163,7 @@ class News extends AdminAuthBase
         $data = $this->request->only(['is_hot', 'is_top', 'title', 'small_title', 'img_urls', 'cover_url', 'desc', 'content'], 'post');
         
         if (!isset($data['cover_url'])) {
-        	$data['cover_url'] = [];
+            $data['cover_url'] = [];
         }
 
         $data['img_urls'] = json_encode($data['img_urls']);

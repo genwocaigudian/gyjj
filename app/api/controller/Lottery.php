@@ -26,17 +26,17 @@ class Lottery extends AuthBase
         $data['target'] = $this->type;
         $data['status'] = config('status.mysql.table_normal');
 //        $data['end_time'] = date('Y-m-d');
-	    $date = date("Y-m-d");
+        $date = date("Y-m-d");
         try {
             $list = (new LotteryServices())->getPaginateList($data, 10);
             if ($list['data']) {
-            	foreach ($list['data'] as &$value) {
-		            $isExpired = 0;
-		            if ($value['end_time'] < $date) {
-			            $isExpired = 1;
-		            }
-		            $value['is_expired'] = $isExpired;
-	            }
+                foreach ($list['data'] as &$value) {
+                    $isExpired = 0;
+                    if ($value['end_time'] < $date) {
+                        $isExpired = 1;
+                    }
+                    $value['is_expired'] = $isExpired;
+                }
             }
         } catch (\Exception $e) {
             $list = Arr::getPaginateDefaultData(10);
@@ -90,25 +90,25 @@ class Lottery extends AuthBase
             }
             
             if ($count == 0) {
-            	$count = 1;
+                $count = 1;
             }
 
             $result = [];
             $i = 0;
             foreach ($setting as $key => $value) {
-            	$i += $value;
-	            $result[$key] = $i;
+                $i += $value;
+                $result[$key] = $i;
             }
 
-	        $rank = current($settingKeys);
+            $rank = current($settingKeys);
             foreach ($result as $k => $v) {
-            	if ($count == end($result)) {
-            		$rank = $k;
-            		break;
-	            }
-            	if ($count >= $v) {
-            		$rank = $k - 1;
-	            }
+                if ($count == end($result)) {
+                    $rank = $k;
+                    break;
+                }
+                if ($count >= $v) {
+                    $rank = $k - 1;
+                }
             }
             $data['rank'] = $rank;
             $data['rank_name'] = $rName[$rank];
@@ -128,11 +128,11 @@ class Lottery extends AuthBase
     public function read()
     {
         $id = input('param.id', 0, 'intval');
-	    $date = date('Y-m-d');
+        $date = date('Y-m-d');
         try {
             $result = (new LotteryServices())->getNormalById($id);
             if ($result['end_time'] < $date) {
-	            return Show::error('此项活动已结束');
+                return Show::error('此项活动已结束');
             }
         } catch (\Exception $e) {
             Log::error('api/lottery/read 错误:' . $e->getMessage());
@@ -185,37 +185,37 @@ class Lottery extends AuthBase
         $res['number'] = Num::fixFourNum($num);
         return Show::success($res);
     }
-	
-	/**
-	 * 读号
-	 * @return mixed
-	 */
-	public function list()
-	{
-		$data = input('param.');
-		
-		$validate = new LotteryValidate();
-		if (!$validate->scene('list')->check($data)) {
-			return Show::error($validate->getError());
-		}
-		$res = (new WinnerServices())->getList($data);
-		if ($res) {
-			$userIds = array_unique(array_column($res, 'user_id'));
-			$userList = (new \app\common\services\User())->getUserByIds($userIds);
-			$userRes = [];
-			if ($userList) {
-				foreach ($userList as $value) {
-					$userRes[$value['id']] = [
-						'id' => $value['id'],
-						'username' => $value['username'],
-					];
-				}
-			}
-			foreach ($res as $k => &$v){
-				$v['username'] = $userRes[$v['user_id']]['username']??'';
-				$v['number'] = Num::fixFourNum($v['number']);
-			}
-		}
-		return Show::success($res);
-	}
+    
+    /**
+     * 读号
+     * @return mixed
+     */
+    public function list()
+    {
+        $data = input('param.');
+        
+        $validate = new LotteryValidate();
+        if (!$validate->scene('list')->check($data)) {
+            return Show::error($validate->getError());
+        }
+        $res = (new WinnerServices())->getList($data);
+        if ($res) {
+            $userIds = array_unique(array_column($res, 'user_id'));
+            $userList = (new \app\common\services\User())->getUserByIds($userIds);
+            $userRes = [];
+            if ($userList) {
+                foreach ($userList as $value) {
+                    $userRes[$value['id']] = [
+                        'id' => $value['id'],
+                        'username' => $value['username'],
+                    ];
+                }
+            }
+            foreach ($res as $k => &$v) {
+                $v['username'] = $userRes[$v['user_id']]['username']??'';
+                $v['number'] = Num::fixFourNum($v['number']);
+            }
+        }
+        return Show::success($res);
+    }
 }

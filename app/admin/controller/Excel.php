@@ -7,7 +7,8 @@ use think\facade\Db;
 
 class Excel extends AdminAuthBase
 {
-    public function export(){
+    public function export()
+    {
         // 查询要导出的数据
         $result = Db::name('repair')->select();
 
@@ -17,7 +18,7 @@ class Excel extends AdminAuthBase
 
         $data = [];
 
-        foreach ($result as $k => $v){
+        foreach ($result as $k => $v) {
             $data[$k]['id']=$v['id'];
             $data[$k]['img_url']=$v['img_url'];
             $data[$k]['repare_cate_id']=$v['repare_cate_id'];
@@ -45,8 +46,8 @@ class Excel extends AdminAuthBase
             ['column' => 'comments', 'name' => '评价', 'width' => 15],
         ];
         $excel=new ExcelLib();
-        $download_url=$excel->exportSheelExcel($data,$header,$filename,'Xlsx', 1);//获取下载链接
-        if($download_url){
+        $download_url=$excel->exportSheelExcel($data, $header, $filename, 'Xlsx', 1);//获取下载链接
+        if ($download_url) {
             return Show::success();
         }
 

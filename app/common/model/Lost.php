@@ -112,7 +112,8 @@ class Lost extends BaseModel
         $query->where('user_id', '=', $value);
     }
 
-    public function searchCreateTimeAttr($query, $value) {
+    public function searchCreateTimeAttr($query, $value)
+    {
         $query->whereBetweenTime('create_time', $value[0], $value[1]);
     }
 

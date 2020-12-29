@@ -28,16 +28,16 @@ class Wechat extends BaseServices
      * @return int
      * @throws \Exception
      */
-	public function Template($openId, $flag = 'approver')
-	{
-	    $date = date('Y-m-d H:i');
-		$url = 'http://web.hfgyxx.net/#/pages/wserve/maintain/index';
-		$tempId = 'fw-S4KCn13bua3ny7cWSZdvqhHLi1AjYCt4Gyjvvgv8';
-		if ($flag == 'approver') {
+    public function Template($openId, $flag = 'approver')
+    {
+        $date = date('Y-m-d H:i');
+        $url = 'http://web.hfgyxx.net/#/pages/wserve/maintain/index';
+        $tempId = 'fw-S4KCn13bua3ny7cWSZdvqhHLi1AjYCt4Gyjvvgv8';
+        if ($flag == 'approver') {
 //            $tempId = '-DN1NXGKouDRI7FwODNlVBLn7kD3V1oyhQlGLqU7l7c';
             $value = '您有一个需要审批的请求';
             $data = '审批请求';
-		} elseif ($flag == 'repair') {
+        } elseif ($flag == 'repair') {
 //            $tempId = 'nrYCufbPi3qjhCqZ-6at1p4Enl9qsL-yAvKLYr3uL80';
             $value = '您有一个需要维修的任务';
             $data = '维修任务';
@@ -50,16 +50,16 @@ class Wechat extends BaseServices
             $value = '您有一个需要审批的请求';
             $data = '审批请求';
         }
-		
-		$arr = [
-			'touser' => $openId,
-			'template_id' => $tempId,
-			'url' => $url,
-			'data' => [
-				'first' => [
-					"value" => $value,
-					"color" => "#173177"
-				],
+        
+        $arr = [
+            'touser' => $openId,
+            'template_id' => $tempId,
+            'url' => $url,
+            'data' => [
+                'first' => [
+                    "value" => $value,
+                    "color" => "#173177"
+                ],
                 'event' => [
                     "value" => $data,
                     "color" => "#173177"
@@ -72,23 +72,23 @@ class Wechat extends BaseServices
                     "value" => [],
 //                    "color" => "#173177"
                 ],
-			],
-		];
-		
-		$json = json_encode($arr);
-		$url = sprintf($this->config['get_at_url'], $this->appId, $this->appSecret);
-		$client = new Client();
-		$response = $client->get($url);
-		$at = json_decode($response->getBody(), true);
-		$accessToken = $at['access_token'];
-		
-		$tempUrl = sprintf($this->config['template_url'], $accessToken);
-		$res = curl_post_json($tempUrl, $json);
-		$res = json_decode($res, true);
-		if ($res['errcode']) {
-			throw new \Exception('微信服务器接口调用失败');
-			return 0;
-		}
-		return 1;
-	}
+            ],
+        ];
+        
+        $json = json_encode($arr);
+        $url = sprintf($this->config['get_at_url'], $this->appId, $this->appSecret);
+        $client = new Client();
+        $response = $client->get($url);
+        $at = json_decode($response->getBody(), true);
+        $accessToken = $at['access_token'];
+        
+        $tempUrl = sprintf($this->config['template_url'], $accessToken);
+        $res = curl_post_json($tempUrl, $json);
+        $res = json_decode($res, true);
+        if ($res['errcode']) {
+            throw new \Exception('微信服务器接口调用失败');
+            return 0;
+        }
+        return 1;
+    }
 }

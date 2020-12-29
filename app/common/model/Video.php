@@ -41,17 +41,17 @@ class Video extends BaseModel
         $res = $this->find($id);
         return $res;
     }
-	
-	/**
-	 * title查询条件表达式
-	 * 调用withSearch方法时触发
-	 * @param $query
-	 * @param $value
-	 */
-	public function searchClassIdAttr($query, $value)
-	{
-		$query->where('class_id', '=', $value);
-	}
+    
+    /**
+     * title查询条件表达式
+     * 调用withSearch方法时触发
+     * @param $query
+     * @param $value
+     */
+    public function searchClassIdAttr($query, $value)
+    {
+        $query->where('class_id', '=', $value);
+    }
 
     /**
      * title查询条件表达式
@@ -102,7 +102,7 @@ class Video extends BaseModel
             "upload_time" => "desc"
         ];
         $result = $this->order($order)->limit($num)->select();
-//		echo $this->getLastSql();exit();
+        //		echo $this->getLastSql();exit();
 
         return $result;
     }

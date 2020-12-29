@@ -8,9 +8,9 @@ use think\model\Relation;
 
 class News extends BaseModel
 {
-	use SoftDelete;
-	protected $deleteTime = 'delete_time';
-	protected $dateFormat = 'Y-m-d';
+    use SoftDelete;
+    protected $deleteTime = 'delete_time';
+    protected $dateFormat = 'Y-m-d';
     public $allowField = [
         'title',
         'small_title',
@@ -180,9 +180,9 @@ class News extends BaseModel
             $query->withField(['content']);
         }])->find($id);
         if (!$res) {
-        	$res = $this->find($id);
+            $res = $this->find($id);
         }
-//	    echo $this->getLastSql();exit();
+        //	    echo $this->getLastSql();exit();
         return $res;
     }
 
@@ -202,34 +202,35 @@ class News extends BaseModel
         $res->NewsContent->update_time = time();
         return $res->together(['NewsContent'])->save($data);
     }
-	
-	/**
-	 * @param $cateId
-	 * @param string $num
-	 * @return \think\Collection
-	 * @throws \think\db\exception\DataNotFoundException
-	 * @throws \think\db\exception\DbException
-	 * @throws \think\db\exception\ModelNotFoundException
-	 */
-	public function getLimitByCateId($cateId = 0, $num = 10)
-	{
-		$where = [
-			"cate_id" => $cateId,
-		];
-		
-		$order = [
-			"pub_date" => "desc"
-		];
-		$result = $this->where($where)
-			->order($order)
-			->limit($num)
-			->select();
-//		echo $this->getLastSql();exit();
+    
+    /**
+     * @param $cateId
+     * @param string $num
+     * @return \think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     */
+    public function getLimitByCateId($cateId = 0, $num = 10)
+    {
+        $where = [
+            "cate_id" => $cateId,
+        ];
+        
+        $order = [
+            "pub_date" => "desc"
+        ];
+        $result = $this->where($where)
+            ->order($order)
+            ->limit($num)
+            ->select();
+        //		echo $this->getLastSql();exit();
 
-		return $result;
-	}
+        return $result;
+    }
 
-    public function incCount($id, $num) {
+    public function incCount($id, $num)
+    {
         return $this->where("id", "=", $id)
             ->inc("read_count", $num)
             ->update();

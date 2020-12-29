@@ -22,27 +22,27 @@ class Repair extends AuthBase
         $data = [];
         $status = input('param.status', '', 'trim');
         switch ($status) {
-            case 'commit' ://已提交
+            case 'commit'://已提交
                 $data['progress_bar'] = [1];
                 $data['user_id'] = $this->userId;
                 break;
-            case 'processing' : //处理中
+            case 'processing': //处理中
                 $data['progress_bar'] = [1,2,3];
                 $data['user_id'] = $this->userId;
                 break;
-            case 'repairing' : //维修中
+            case 'repairing': //维修中
                 $data['progress_bar'] = [3];
                 $data['repare_id'] = $this->userId;
                 break;
-            case 'processed' : //已处理
+            case 'processed': //已处理
                 $data['progress_bar'] = [0,4];
                 $data['user_id'] = $this->userId;
                 break;
-            case 'approve' : //审批中
+            case 'approve': //审批中
                 $data['progress_bar'] = [1,2];
                 $data['approver_id'] = $this->userId;
                 break;
-            case 'hasbeen' : //已审批 或者 已维修
+            case 'hasbeen': //已审批 或者 已维修
                 if ($this->permission == 1) {
                     $data['approver_id'] = $this->userId;
                     $data['progress_bar'] = [0, 3];
@@ -155,8 +155,8 @@ class Repair extends AuthBase
             $res = (new RepairServices())->update($id, $data);
             //发送维修消息模板通知给维修人
             if (isset($data['progress_bar']) && $data['progress_bar']==3 && isset($data['repare_id'])) {
-	            $repair = (new \app\common\services\User())->getNormalUserById($data['repare_id']);
-	            (new \app\common\services\Wechat())->Template($repair['openid'], 'repair');
+                $repair = (new \app\common\services\User())->getNormalUserById($data['repare_id']);
+                (new \app\common\services\Wechat())->Template($repair['openid'], 'repair');
             }
             if (isset($data['rating'])) {
                 $info = (new RepairServices())->getNormalById($id);

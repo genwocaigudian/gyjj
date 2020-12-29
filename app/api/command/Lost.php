@@ -1,5 +1,5 @@
 <?php
-declare (strict_types = 1);
+declare(strict_types = 1);
 
 namespace app\api\command;
 
@@ -21,11 +21,11 @@ class Lost extends Command
     protected function execute(Input $input, Output $output)
     {
         $service = new LostService();
-    	while (true) {
+        while (true) {
             $service->lostCommand();
-    		sleep(1);
-	    }
-    	// 指令输出
-    	$output->writeln('lost command end');
+            sleep(1);
+        }
+        // 指令输出
+        $output->writeln('lost command end');
     }
 }

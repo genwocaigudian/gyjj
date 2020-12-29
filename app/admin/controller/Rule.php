@@ -16,8 +16,8 @@ class Rule extends AdminAuthBase
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-	public function index()
-	{
+    public function index()
+    {
         $data = [
             'type' => 'g',
             'uid' => input('param.uid', 1, 'intval'),
@@ -28,7 +28,7 @@ class Rule extends AdminAuthBase
         $list = (new RuleService())->getList($data, $field);
 
         return Show::success($list);
-	}
+    }
 
     /**
      * 新增角色
@@ -56,11 +56,11 @@ class Rule extends AdminAuthBase
 
         return Show::success();
     }
-	
-	/**
-	 * 给用户赋予角色
-	 * @return Json
-	 */
+    
+    /**
+     * 给用户赋予角色
+     * @return Json
+     */
     public function give()
     {
         if (!$this->request->isPost()) {
@@ -76,62 +76,62 @@ class Rule extends AdminAuthBase
 
         return Show::success();
     }
-	
-	/**
-	 * 取消用户角色
-	 * @return Json
-	 */
-	public function cancel()
-	{
-		if (!$this->request->isPost()) {
-			return Show::error('非法请求');
-		}
-		$data = input('post.');
-		
-		$validate = new RuleValidate();
-		if (!$validate->scene('cancel')->check($data)) {
-			return Show::error($validate->getError());
-		}
-		Enforcer::deleteRoleForUser($data['user_id'], $data['name']);
-		
-		return Show::success();
-	}
-	
-	/**
-	 * 取消用户所有角色
-	 * @return Json
-	 */
-	public function acancel()
-	{
-		if (!$this->request->isPost()) {
-			return Show::error('非法请求');
-		}
-		$data = input('post.');
-		
-		$validate = new RuleValidate();
-		if (!$validate->scene('cancelAll')->check($data)) {
-			return Show::error($validate->getError());
-		}
-		Enforcer::deleteRolesForUser($data['user_id']);
-		
-		return Show::success();
-	}
-	
-	/**
-	 * 获取用户所有角色
-	 * @return Json
-	 */
-	public function getall()
-	{
-		$data = [
-			'type' => 'g',
-			'uid' => input('param.user_id', 1, 'intval'),
-		];
-		
-		$field = 'id, v1';
-		
-		$list = (new RuleService())->getAllRolesByUid($data, $field);
-		
-		return Show::success($list);
-	}
+    
+    /**
+     * 取消用户角色
+     * @return Json
+     */
+    public function cancel()
+    {
+        if (!$this->request->isPost()) {
+            return Show::error('非法请求');
+        }
+        $data = input('post.');
+        
+        $validate = new RuleValidate();
+        if (!$validate->scene('cancel')->check($data)) {
+            return Show::error($validate->getError());
+        }
+        Enforcer::deleteRoleForUser($data['user_id'], $data['name']);
+        
+        return Show::success();
+    }
+    
+    /**
+     * 取消用户所有角色
+     * @return Json
+     */
+    public function acancel()
+    {
+        if (!$this->request->isPost()) {
+            return Show::error('非法请求');
+        }
+        $data = input('post.');
+        
+        $validate = new RuleValidate();
+        if (!$validate->scene('cancelAll')->check($data)) {
+            return Show::error($validate->getError());
+        }
+        Enforcer::deleteRolesForUser($data['user_id']);
+        
+        return Show::success();
+    }
+    
+    /**
+     * 获取用户所有角色
+     * @return Json
+     */
+    public function getall()
+    {
+        $data = [
+            'type' => 'g',
+            'uid' => input('param.user_id', 1, 'intval'),
+        ];
+        
+        $field = 'id, v1';
+        
+        $list = (new RuleService())->getAllRolesByUid($data, $field);
+        
+        return Show::success($list);
+    }
 }

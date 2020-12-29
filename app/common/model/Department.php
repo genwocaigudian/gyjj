@@ -176,7 +176,8 @@ class Department extends BaseModel
      * @param $condition
      * @return mixed
      */
-    public function getChildListInPids($condition) {
+    public function getChildListInPids($condition)
+    {
         $where[] = ["pid", "in", $condition['pid']];
         $res = $this->where($where)
             ->field(["id", "pid", "name"])

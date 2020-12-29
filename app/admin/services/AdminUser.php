@@ -151,16 +151,16 @@ class AdminUser extends AdminBaseServices
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-	public function getAdminUserByIds($ids = [])
-	{
-		$list = $this->model->getAdminUserByIds($ids);
-		if (!$list) {
-			return [];
-		}
-		$result = $list->toArray();
-		$cates = array_column($result, 'username', 'id');
-		return $cates;
-	}
+    public function getAdminUserByIds($ids = [])
+    {
+        $list = $this->model->getAdminUserByIds($ids);
+        if (!$list) {
+            return [];
+        }
+        $result = $list->toArray();
+        $cates = array_column($result, 'username', 'id');
+        return $cates;
+    }
 
     /**
      * 获取列表数据

@@ -15,17 +15,17 @@ class Salary extends AuthBase
      */
     public function index()
     {
-    	$data = [];
-    	$input = input('param.');
-	
-	    $validate = new SalaryValidate();
-	    if (!$validate->scene('index')->check($input)) {
-		    return Show::error($validate->getError());
-	    }
-	
-	    $data['number'] = $this->number;
-	    $data['month'] = $input['date'];
-	    
+        $data = [];
+        $input = input('param.');
+    
+        $validate = new SalaryValidate();
+        if (!$validate->scene('index')->check($input)) {
+            return Show::error($validate->getError());
+        }
+    
+        $data['number'] = $this->number;
+        $data['month'] = $input['date'];
+        
         try {
             $list = (new SalaryServices())->getByWhere($data);
         } catch (\Exception $e) {
@@ -34,23 +34,21 @@ class Salary extends AuthBase
 
         return Show::success($list);
     }
-	
-	/**
-	 * @return Json
-	 */
-	public function group()
-	{
-		$data = [];
-		$data['number'] = $this->number;
-		try {
-			$list = (new SalaryServices())->getDateGroup($data);
-		} catch (\Exception $e) {
-			halt($e->getMessage());
-			$list = [];
-		}
-		
-		return Show::success($list);
-	}
     
-    
+    /**
+     * @return Json
+     */
+    public function group()
+    {
+        $data = [];
+        $data['number'] = $this->number;
+        try {
+            $list = (new SalaryServices())->getDateGroup($data);
+        } catch (\Exception $e) {
+            halt($e->getMessage());
+            $list = [];
+        }
+        
+        return Show::success($list);
+    }
 }

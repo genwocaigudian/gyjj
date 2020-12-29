@@ -110,22 +110,23 @@ class SelectionResult extends BaseModel
         //echo $this->getLastSql();exit;
         return $result;
     }
-	
-	/**
-	 * 分组统计选项结果
-	 * @param $sid
-	 * @return mixed
-	 */
-	public function getGroupOptionCount($sid) {
-		$where = [
-			'selection_id' => $sid
-		];
-		$res = $this->where($where)
-			->field(["option_id", "count(*) as count"])
-			->order(['option_id' => 'asc'])
-			->group("option_id")
-			->select();
-//		echo $this->getLastSql();exit;
-		return $res;
-	}
+    
+    /**
+     * 分组统计选项结果
+     * @param $sid
+     * @return mixed
+     */
+    public function getGroupOptionCount($sid)
+    {
+        $where = [
+            'selection_id' => $sid
+        ];
+        $res = $this->where($where)
+            ->field(["option_id", "count(*) as count"])
+            ->order(['option_id' => 'asc'])
+            ->group("option_id")
+            ->select();
+        //		echo $this->getLastSql();exit;
+        return $res;
+    }
 }

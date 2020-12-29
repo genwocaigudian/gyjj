@@ -16,6 +16,6 @@ class Num
 
     public static function fixFourNum($num)
     {
-        return str_pad((string)$num,4,"0",STR_PAD_LEFT);
+        return str_pad((string)$num, 4, "0", STR_PAD_LEFT);
     }
 }
